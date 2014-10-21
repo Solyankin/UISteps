@@ -27,6 +27,7 @@ public class WebTest extends ThucydidesJUnitStory {
     
     private ClassEnumerator classEnumerator = new ClassEnumerator("com.livejournal.uitests.pages");
 
+
     private void openBrowser() {
         if (!browser.isOpened()) {
             browser.setDriver(driver);

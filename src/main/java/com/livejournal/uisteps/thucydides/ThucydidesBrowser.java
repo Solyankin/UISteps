@@ -41,11 +41,11 @@ public class ThucydidesBrowser extends Browser {
     public ThucydidesBrowser(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
         super(driver, pageFactory, initializer);
         browser = new Browser();
-        browser.setDriver(driver);
-        browser.setStepLibraryFactory(pageFactory);
-        browser.setInitializer(initializer);
-        browser.setCache(cache);
-        browser.setWindowList(windowList);
+        setDriver(driver);
+        setStepLibraryFactory(pageFactory);
+        setInitializer(initializer);
+        setCache(cache);
+        setWindowList(windowList);
     }
 
     public Browser getBrowserWithoutSteps() {
@@ -71,19 +71,19 @@ public class ThucydidesBrowser extends Browser {
     }
 
     @Override
-    public void setName(String name) {
+    public final void setName(String name) {
         super.setName(name);
         browser.setName(name);
     }
 
     @Override
-    public void setWindowList(WindowList windowList) {
+    public final void setWindowList(WindowList windowList) {
         super.setWindowList(windowList);
         browser.setWindowList(windowList);
     }
 
     @Override
-    public void setCache(Cache cache) {
+    public final void setCache(Cache cache) {
         super.setCache(cache);
         browser.setCache(cache);
     }
