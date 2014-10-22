@@ -4,7 +4,7 @@
 
     <groupId>com.livejournal</groupId>
     <artifactId>uisteps</artifactId>
-    <version>0.2.5-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>UISteps</name>
@@ -263,7 +263,6 @@
             </build>
         </profile>
         
-                <!--
         <profile>
             <id>release-sign-artifacts</id>
             <activation>
@@ -291,6 +290,5 @@
                 </plugins>
             </build>
         </profile>
-        -->
     </profiles>
 </project>
