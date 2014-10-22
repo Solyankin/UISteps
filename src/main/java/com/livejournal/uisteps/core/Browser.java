@@ -35,11 +35,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class Browser {
 
-    public Cache cache;
+    private Cache cache;
     private WebDriver driver;
     private StepLibraryFactory stepLibraryFactory;
     private Initializer initializer;
-    public WindowList windowList;
+    private WindowList windowList;
     private String name;
 
     
@@ -48,13 +48,28 @@ public class Browser {
         windowList = new WindowList(this);
     }
     
-    public Browser(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
-        this();
+    public void init(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
         this.driver = driver;
         this.stepLibraryFactory = pageFactory;
         this.initializer = initializer;
     }
+    
+    public void init(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer, Cache cache, WindowList windowList) {
+        init(driver, pageFactory, initializer);
+        this.cache = cache;
+        this.windowList = windowList;
+    }
+    
+    public Browser(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
+        this();
+        init(driver, pageFactory, initializer);
+    }
 
+    public Browser(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer, Cache cache, WindowList windowList) {
+        init(driver, pageFactory, initializer, cache, windowList);
+    }
+    
+    
     public void openUrl(String url) {
         getDriver().get(url);
     }
@@ -204,7 +219,7 @@ public class Browser {
         if (windowList.getCountOfWindows() > 1) {
             windowList.switchToDefaultWindow();
         }
-        getDriver().manage().deleteAllCookies();
+        deleteCookies();
     }
 
     public void deleteCookies() {
@@ -299,18 +314,6 @@ public class Browser {
         });
     }
 
-    public void setDriver(WebDriver driver) {
-        this.driver = driver;
-    }
-
-    public void setStepLibraryFactory(StepLibraryFactory stepLibraryFactory) {
-        this.stepLibraryFactory = stepLibraryFactory;
-    }
-
-    public void setInitializer(Initializer initializer) {
-        this.initializer = initializer;
-    }
-
     public StepLibraryFactory getStepLibraryFactory() {
         return stepLibraryFactory;
     }
@@ -332,15 +335,14 @@ public class Browser {
         }
     }
 
-    public void setCache(Cache cache) {
-        this.cache = cache;
+    public Cache getCache() {
+        return cache;
     }
 
-    public void setWindowList(WindowList windowList) {
-        this.windowList = windowList;
+    public WindowList getWindowList() {
+        return windowList;
     }
     
-  
     public Object startScript(String script) {
         return ((JavascriptExecutor) getDriver()).executeScript(script);
     }

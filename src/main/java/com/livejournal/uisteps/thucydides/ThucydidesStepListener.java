@@ -1,6 +1,5 @@
 package com.livejournal.uisteps.thucydides;
 
-import com.livejournal.uisteps.core.Browser;
 import java.util.Map;
 import net.thucydides.core.model.DataTable;
 import net.thucydides.core.model.Story;
@@ -17,8 +16,10 @@ public class ThucydidesStepListener implements StepListener {
 
     private final ThucydidesBrowser browser;
 
+    
     public ThucydidesStepListener(ThucydidesBrowser browser) {
         this.browser = browser;
+        
     }
 
     @Override
@@ -35,12 +36,11 @@ public class ThucydidesStepListener implements StepListener {
 
     @Override
     public void testStarted(String description) {
-        //     clearBrowserCache();
+        setBrowserToDefaultState();
     }
 
     @Override
     public void testFinished(TestOutcome result) {
-        //      clearBrowserCache();
     }
 
     @Override
@@ -102,7 +102,6 @@ public class ThucydidesStepListener implements StepListener {
 
     @Override
     public void exampleFinished() {
-        setBrowserToDefaultState();
     }
 
     @Override
@@ -110,9 +109,9 @@ public class ThucydidesStepListener implements StepListener {
     }
 
     private void setBrowserToDefaultState() {
-        if (browser != null && browser.isOpened()) {
-            browser.setToDefaultState();
-        }
+        if (browser != null) {
+            browser.getBrowserWithoutSteps().setToDefaultState();
+        } 
     }
 
 }

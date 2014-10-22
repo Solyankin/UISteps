@@ -16,12 +16,10 @@
 package com.livejournal.uisteps.thucydides;
 
 import com.livejournal.uisteps.core.Browser;
-import com.livejournal.uisteps.core.Initializer;
 import com.livejournal.uisteps.core.Page;
-import com.livejournal.uisteps.core.StepLibraryFactory;
 import com.livejournal.uisteps.core.UIBlock;
-import com.livejournal.uisteps.core.WindowList;
 import net.thucydides.core.annotations.Step;
+import net.thucydides.core.pages.Pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsElement;
 
@@ -32,20 +30,16 @@ import org.openqa.selenium.internal.WrapsElement;
 public class ThucydidesBrowser extends Browser {
 
     private final Browser browser;
-    private boolean isOpened;
+    private final Pages pages;
 
-    public ThucydidesBrowser() {
-        browser = new Browser();
-    }
+    public ThucydidesBrowser(Pages pages) {
+        super(pages.getDriver(), new StepLibraryFactory(), new Initializer());
+        this.pages = pages;
+        browser = new Browser(pages.getDriver(), getStepLibraryFactory(), getInitializer(), getCache(), getWindowList());
 
-    public ThucydidesBrowser(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
-        super(driver, pageFactory, initializer);
-        browser = new Browser();
-        setDriver(driver);
-        setStepLibraryFactory(pageFactory);
-        setInitializer(initializer);
-        setCache(cache);
-        setWindowList(windowList);
+        ThucydidesUtils.putToSession("#BROWSER#", this);
+        ThucydidesStepListener listener = new ThucydidesStepListener(this);
+        ThucydidesUtils.registerListener(listener);
     }
 
     public Browser getBrowserWithoutSteps() {
@@ -53,39 +47,9 @@ public class ThucydidesBrowser extends Browser {
     }
 
     @Override
-    public final void setInitializer(Initializer initializer) {
-        super.setInitializer(initializer);
-        browser.setInitializer(initializer);
-    }
-
-    @Override
-    public final void setStepLibraryFactory(StepLibraryFactory stepLibraryFactory) {
-        super.setStepLibraryFactory(stepLibraryFactory);
-        browser.setStepLibraryFactory(stepLibraryFactory);
-    }
-
-    @Override
-    public final void setDriver(WebDriver driver) {
-        super.setDriver(driver);
-        browser.setDriver(driver);
-    }
-
-    @Override
     public final void setName(String name) {
         super.setName(name);
         browser.setName(name);
-    }
-
-    @Override
-    public final void setWindowList(WindowList windowList) {
-        super.setWindowList(windowList);
-        browser.setWindowList(windowList);
-    }
-
-    @Override
-    public final void setCache(Cache cache) {
-        super.setCache(cache);
-        browser.setCache(cache);
     }
 
     @Step
@@ -163,12 +127,9 @@ public class ThucydidesBrowser extends Browser {
         super.openUrl(url);
     }
 
-    public boolean isOpened() {
-        return isOpened;
-    }
-
-    public void isOpened(boolean isOpened) {
-        this.isOpened = isOpened;
+    @Override
+    public WebDriver getDriver() {
+        return pages.getDriver();
     }
 
 }
