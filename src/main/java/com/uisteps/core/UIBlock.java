@@ -15,11 +15,9 @@
  */
 package com.uisteps.core;
 
-
 /**
  *
  * @author ASolyankin
  */
 public interface UIBlock {
-    
 }

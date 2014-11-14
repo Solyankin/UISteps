@@ -1,42 +1,26 @@
 package com.uisteps.thucydides.elements;
 
-
 import com.uisteps.core.Browser;
 import com.uisteps.thucydides.ThucydidesUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import com.uisteps.thucydides.NameConvertor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.qatools.htmlelements.annotations.Block;
-import ru.yandex.qatools.htmlelements.element.TypifiedElement;
+import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class UIElement extends TypifiedElement {
+public class UIBlock extends HtmlElement implements com.uisteps.core.UIBlock {
 
     protected final Browser browser;
 
-    public UIElement(WebElement wrappedElement) {
-        super(wrappedElement);
+    public UIBlock() {
         browser = (Browser) ThucydidesUtils.getFromSession("#BROWSER#");
     }
 
-    public Object click() {
-    /*    UIElement elem = this;
-        WebDriverWait wait = new WebDriverWait(browser.getDriver(), 10);    
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return elem.isDisplayed();
-            }
-        });
-            */
+    @Override
+    public void click() {
         browser.click(this);
-        return null;
     }
 
     public Object moveMouseOver() {
@@ -52,12 +36,21 @@ public class UIElement extends TypifiedElement {
     public <T extends Page> T onOpened(Class<T> pageClass) {
         return browser.onOpened(pageClass);
     }
-    
+
     public <T extends UIBlock> T onDisplayed(Class<T> blockClass) {
         return browser.onDisplayed(blockClass);
     }
-    
+
     public WebDriver getDriver() {
         return browser.getDriver();
+    }
+
+    @Override
+    public String toString() {
+        return NameConvertor.humanize(getClass());
+    }
+
+    public Object startScript(String script) {
+        return browser.startScript(script);
     }
 }

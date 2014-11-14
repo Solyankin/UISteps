@@ -72,12 +72,12 @@ public class Page implements com.uisteps.core.Page {
     public WebDriver getDriver() {
         return browser.getDriver();
     }
-    
-      public Object startScript(String script) {
+
+    public Object startScript(String script) {
         return browser.startScript(script);
     }
-      
-    @Override  
+
+    @Override
     public boolean isOnThisPage() {
         return true;
     }

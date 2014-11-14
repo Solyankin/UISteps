@@ -1,26 +1,37 @@
 package com.uisteps.thucydides.elements;
 
+
 import com.uisteps.core.Browser;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
 import org.openqa.selenium.WebDriver;
-import ru.yandex.qatools.htmlelements.element.HtmlElement;
+import org.openqa.selenium.WebElement;
+import ru.yandex.qatools.htmlelements.element.TypifiedElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class UIBlock extends HtmlElement implements com.uisteps.core.UIBlock {
+public class UIElement extends TypifiedElement {
 
     protected final Browser browser;
-    
-    public UIBlock() {
+
+    public UIElement(WebElement wrappedElement) {
+        super(wrappedElement);
         browser = (Browser) ThucydidesUtils.getFromSession("#BROWSER#");
     }
-    
-    @Override
-    public void click() {
+
+    public Object click() {
+    /*    UIElement elem = this;
+        WebDriverWait wait = new WebDriverWait(browser.getDriver(), 10);    
+        wait.until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                return elem.isDisplayed();
+            }
+        });
+            */
         browser.click(this);
+        return null;
     }
 
     public Object moveMouseOver() {
@@ -43,14 +54,5 @@ public class UIBlock extends HtmlElement implements com.uisteps.core.UIBlock {
     
     public WebDriver getDriver() {
         return browser.getDriver();
-    }
-    
-    @Override
-    public String toString() {
-        return NameConvertor.humanize(getClass());
-    }
-    
-    public Object startScript(String script) {
-        return browser.startScript(script);
     }
 }

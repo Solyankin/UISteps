@@ -15,18 +15,17 @@
  */
 package com.uisteps.core;
 
-
 /**
  *
  * @author ASolyankin
  */
-public interface Page {
-    
+public interface Page extends UIBlock {
+
     Url getDefaultUrl();
-    
+
     Url getUrl();
 
     void setUrl(Url url);
-    
+
     boolean isOnThisPage();
 }
