@@ -83,12 +83,12 @@ public class Browser {
         } else {
             T block = stepLibraryFactory.instatiate(blockClass);
             initializer.initialize(block, this);
-            cache.put(block, blockClass);
             return onDisplayed(block);
         }
     }
 
     public <T extends UIBlock> T onDisplayed(T block) {
+        cache.put(block);
         return block;
     }
 
@@ -96,7 +96,7 @@ public class Browser {
         T page = stepLibraryFactory.instatiate(pageClass);
         open(page.getUrl());
         initializer.initialize(page, this);
-        cache.put(page, pageClass);
+        cache.put(page);
         return open(page);
     }
 
@@ -130,7 +130,7 @@ public class Browser {
         }
         open(page.getUrl());
         initializer.initialize(page, this);
-        cache.put(page, page.getClass());
+        cache.put(page);
         return page;
     }
 
@@ -153,7 +153,7 @@ public class Browser {
         } else {
             T page = stepLibraryFactory.instatiate(pageClass);
             initializer.initialize(page, this);
-            cache.put(page, pageClass);
+            cache.put(page);
             return page;
         }
     }
@@ -348,7 +348,7 @@ public class Browser {
         return windowList;
     }
 
-    public Object startScript(String script) {
+    public Object executeScript(String script) {
         return ((JavascriptExecutor) getDriver()).executeScript(script);
 
     }
@@ -360,15 +360,15 @@ public class Browser {
         private UIBlock block;
         private String blockClass;
 
-        void put(Page page, Class<? extends Page> pageClass) {
+        void put(Page page) {
             clearBlock();
             this.page = page;
-            this.pageClass = NameConvertor.humanize(pageClass);
+            pageClass = NameConvertor.humanize(page.getClass());
         }
 
-        void put(UIBlock block, Class<? extends UIBlock> blockClass) {
+        void put(UIBlock block) {
             this.block = block;
-            this.blockClass = NameConvertor.humanize(blockClass);
+            blockClass = NameConvertor.humanize(block.getClass());
         }
 
         void clear() {

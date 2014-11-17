@@ -92,7 +92,7 @@ public class WebTest extends ThucydidesJUnitStory {
     }
 
     public Object startScript(String script) {
-        return browser.startScript(script);
+        return browser.executeScript(script);
     }
 
     public Class<? extends Page> getPageClassByName(String pageClassName) {

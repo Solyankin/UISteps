@@ -19,7 +19,7 @@ package com.uisteps.core;
  *
  * @author ASolyankin
  */
-public interface Page extends UIBlock {
+public interface Page {
 
     Url getDefaultUrl();
 

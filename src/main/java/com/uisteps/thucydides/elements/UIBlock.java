@@ -40,7 +40,12 @@ public class UIBlock extends HtmlElement implements com.uisteps.core.UIBlock {
     public <T extends UIBlock> T onDisplayed(Class<T> blockClass) {
         return browser.onDisplayed(blockClass);
     }
-
+    
+    public <T extends UIBlock> T onDisplayed(T block) {
+        return browser.onDisplayed(block);
+    }
+    
+    
     public WebDriver getDriver() {
         return browser.getDriver();
     }
@@ -50,7 +55,7 @@ public class UIBlock extends HtmlElement implements com.uisteps.core.UIBlock {
         return NameConvertor.humanize(getClass());
     }
 
-    public Object startScript(String script) {
-        return browser.startScript(script);
+    public Object executeScript(String script) {
+        return browser.executeScript(script);
     }
 }
