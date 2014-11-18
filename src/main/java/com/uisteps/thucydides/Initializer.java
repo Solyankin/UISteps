@@ -40,8 +40,6 @@ import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
  */
 public class Initializer implements com.uisteps.core.Initializer {
 
-    //   void initialize(com.livejournal.uisteps.core2.Page page, Browser browser);
-    //   void initialize(com.livejournal.uisteps.core2.UIBlock block, Browser browser);
     @Override
     public void initialize(Page page, Browser browser) {
         WebDriverWait wait = new WebDriverWait(browser.getDriver(), 10);
