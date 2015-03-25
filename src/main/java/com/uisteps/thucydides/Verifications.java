@@ -1,7 +1,5 @@
 package com.uisteps.thucydides;
 
-import com.uisteps.core.Browser;
-import com.uisteps.thucydides.elements.Page;
 import java.util.ArrayList;
 import java.util.List;
 import net.thucydides.core.annotations.Step;
@@ -13,14 +11,6 @@ import org.junit.Assert;
  */
 public class Verifications {
 
-    private final Browser browser;
-
-    public Verifications() {
-        browser = (Browser) ThucydidesUtils.getFromSession("#BROWSER#");
-    }
-
-    
-    
     public class Condition {
 
         public final boolean value;
@@ -49,15 +39,6 @@ public class Verifications {
         public ExpectedResult that(boolean condition) {
             return new ExpectedResult(conditions, condition);
         }
-
-        public And thatIsOn(Class<? extends Page> pageClass) {
-            String currentUrl = browser.getCurrentUrl();
-            boolean condition = browser.isOn(pageClass);
-            conditions.add(new Condition(condition, NameConvertor.humanize(pageClass) + " is opened",
-                    "Unexpected page by url <a href='" + currentUrl + "'>" + currentUrl + "</a> is opened."));
-            return new And(conditions);
-        }
-
     }
 
     public class ExpectedResult {

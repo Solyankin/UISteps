@@ -27,5 +27,5 @@ public interface Page {
 
     void setUrl(Url url);
 
-    boolean isOnThisPage();
+    boolean isOpened();
 }

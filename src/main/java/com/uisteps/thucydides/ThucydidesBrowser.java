@@ -42,7 +42,7 @@ public class ThucydidesBrowser extends Browser {
         ThucydidesUtils.registerListener(listener);
     }
 
-    public Browser getBrowserWithoutSteps() {
+    public Browser withoutReport() {
         return browser;
     }
 

@@ -16,11 +16,11 @@
  */
 package com.uisteps.thucydides.elements;
 
-import com.uisteps.core.Browser;
 import com.uisteps.core.Url;
 import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.thucydides.UrlFactory;
 import com.uisteps.thucydides.NameConvertor;
+import com.uisteps.thucydides.ThucydidesBrowser;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -29,14 +29,14 @@ import org.openqa.selenium.WebDriver;
  */
 public class Page implements com.uisteps.core.Page {
 
-    private final Browser browser;
+    private final ThucydidesBrowser browser;
     private final UrlFactory urlFactory;
     private Url url;
 
     public Page() {
         urlFactory = new UrlFactory();
         url = urlFactory.getDefaultUrlOfPage(this.getClass());
-        browser = (Browser) ThucydidesUtils.getFromSession("#BROWSER#");
+        browser = (ThucydidesBrowser) ThucydidesUtils.getFromSession("#BROWSER#");
     }
 
     @Override
@@ -82,7 +82,7 @@ public class Page implements com.uisteps.core.Page {
     }
 
     @Override
-    public boolean isOnThisPage() {
+    public boolean isOpened() {
         return true;
     }
 }

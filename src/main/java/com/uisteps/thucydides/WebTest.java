@@ -8,6 +8,7 @@ import com.uisteps.thucydides.Verifications.That;
 import com.uisteps.utils.ClassEnumerator;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.jbehave.ThucydidesJUnitStory;
+import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
@@ -21,7 +22,7 @@ public class WebTest extends ThucydidesJUnitStory {
     @Steps
     Verifications verifications;
 
-    private final ClassEnumerator classEnumerator = new ClassEnumerator("com.cox.pages");
+    private final ClassEnumerator classEnumerator = new ClassEnumerator("com.tickets.pages");
 
     public Browser getCurrentBrowser() {
         return browser;
@@ -95,6 +96,22 @@ public class WebTest extends ThucydidesJUnitStory {
         return browser.executeScript(script);
     }
 
+    public boolean isOn(Class<? extends Page> pageClass) {
+        return browser.isOn(pageClass);
+    }
+    
+    public boolean isDisplayed(WrapsElement element) {
+        return element.getWrappedElement().isDisplayed();
+    }
+    
+    public boolean isEnabled(WrapsElement element) {
+        return element.getWrappedElement().isEnabled();
+    }
+    
+    public boolean isSelected(WrapsElement element) {
+        return element.getWrappedElement().isSelected();
+    }
+    
     public Class<? extends Page> getPageClassByName(String pageClassName) {
         Class<?> klass = classEnumerator.getClassBySimpleName(pageClassName);
         if (!browser.isPage(klass)) {

@@ -110,7 +110,7 @@ public class ThucydidesStepListener implements StepListener {
 
     private void setBrowserToDefaultState() {
         if (browser != null) {
-            browser.getBrowserWithoutSteps().setToDefaultState();
+            browser.withoutReport().setToDefaultState();
         } 
     }
 

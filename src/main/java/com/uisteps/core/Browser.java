@@ -321,13 +321,10 @@ public class Browser {
         return initializer;
     }
 
-    public boolean isOn(Class<? extends Page> klass) {
-        if (cache.contains(klass)) {
-            return true;
-        }
+    public boolean isOn(Class<? extends Page> klass) throws AssertionError {
         try {
-            if (klass.newInstance().isOnThisPage()) {
-                return true;
+            if (!klass.newInstance().isOpened()) {
+                return false;
             }
         } catch (InstantiationException | IllegalAccessException ex) {
             throw new AssertionError("Cannot instantiate " + klass + "!\n" + ex);
@@ -335,9 +332,7 @@ public class Browser {
         UrlFactory urlFactory = new UrlFactory();
         Url pageUrl = urlFactory.getDefaultUrlOfPage((Class<? extends Page>) klass);
         String currentUrl = getCurrentUrl();
-        Pattern pattern = Pattern.compile(pageUrl.getProtocol() + "(.*)" + pageUrl.getPrefix() + "(.*)" + pageUrl.getPostfix());
-        Matcher matcher = pattern.matcher(currentUrl);
-        return matcher.find();
+        return currentUrl.contains(pageUrl.toString().replace(pageUrl.getUser() + ":" + pageUrl.getPassword(), ""));
     }
 
     public Cache getCache() {

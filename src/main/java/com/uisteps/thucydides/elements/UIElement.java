@@ -1,7 +1,7 @@
 package com.uisteps.thucydides.elements;
 
 
-import com.uisteps.core.Browser;
+import com.uisteps.thucydides.ThucydidesBrowser;
 import com.uisteps.thucydides.ThucydidesUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,23 +13,14 @@ import ru.yandex.qatools.htmlelements.element.TypifiedElement;
  */
 public class UIElement extends TypifiedElement {
 
-    protected final Browser browser;
+    protected final ThucydidesBrowser browser;
 
     public UIElement(WebElement wrappedElement) {
         super(wrappedElement);
-        browser = (Browser) ThucydidesUtils.getFromSession("#BROWSER#");
+        browser = (ThucydidesBrowser) ThucydidesUtils.getFromSession("#BROWSER#");
     }
 
     public Object click() {
-    /*    UIElement elem = this;
-        WebDriverWait wait = new WebDriverWait(browser.getDriver(), 10);    
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver driver) {
-                return elem.isDisplayed();
-            }
-        });
-            */
         browser.click(this);
         return null;
     }
