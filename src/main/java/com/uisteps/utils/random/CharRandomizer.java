@@ -69,7 +69,7 @@ public class CharRandomizer {
         }
     }
 
-    public String getRandomCharSet() {
+    public String getRandomString() {
         String word = "";
         for(int i = 0; i < simbolsCount; i++) {
             word += getRandomChar();
