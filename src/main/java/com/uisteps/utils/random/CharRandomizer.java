@@ -52,14 +52,36 @@ public class CharRandomizer {
         this.simbolsCount = simbolsCount;
     }
 
+    
+    public String getRandomCharWithoutRepeation() {
+        return getRandomChar(true);
+    }
+
+    public String getRandomStringWithoutRepeation() {
+        return getRandomString(true);
+    }
+    
+    
     public String getRandomChar() {
+        return getRandomChar(false);
+    }
+
+    public String getRandomString() {
+        return getRandomString(false);
+    }
+    
+    private String getRandomChar(boolean withoutRepeation) {
         String randomChar = getRandom();
-        possibleValues = possibleValues.replace(randomChar, "");
+        
+        
+        if(withoutRepeation) {
+            possibleValues = possibleValues.replace(randomChar, "");
 
-        if (possibleValues.length() == 0) {
-            reset();
+            if (possibleValues.length() == 0) {
+                reset();
+            }
         }
-
+        
         inUpperCase = !inUpperCase && in.upperCase() && in.onlyThisCase();
 
         if (inUpperCase) {
@@ -69,10 +91,10 @@ public class CharRandomizer {
         }
     }
 
-    public String getRandomString() {
+    String getRandomString(boolean withoutRepeation) {
         String word = "";
         for(int i = 0; i < simbolsCount; i++) {
-            word += getRandomChar();
+            word += getRandomChar(withoutRepeation);
         }
         return word;
     }

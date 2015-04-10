@@ -24,11 +24,23 @@ import java.util.List;
  */
 public class StringRandomizer {
 
+    public static String getWithoutRepeation(int simbolsCount, List<CharRandomizer> randomizers) {
+        return getWithoutRepeation(simbolsCount, 1, randomizers)[0];
+    }
+
+    public static String[] getWithoutRepeation(int simbolsCount, int wordsCount, List<CharRandomizer> randomizers) {
+        return get(simbolsCount, wordsCount, randomizers, true);
+    }
+
     public static String get(int simbolsCount, List<CharRandomizer> randomizers) {
         return get(simbolsCount, 1, randomizers)[0];
     }
 
     public static String[] get(int simbolsCount, int wordsCount, List<CharRandomizer> randomizers) {
+        return get(simbolsCount, wordsCount, randomizers, false);
+    }
+
+    private static String[] get(int simbolsCount, int wordsCount, List<CharRandomizer> randomizers, boolean withoutRepeation) {
 
         String[] words = new String[wordsCount];
         Iterator<CharRandomizer> iterator = randomizers.iterator();
@@ -37,7 +49,7 @@ public class StringRandomizer {
             String word = "";
             while (word.length() < simbolsCount) {
                 if (iterator.hasNext()) {
-                    word += iterator.next().getRandomString();
+                    word += iterator.next().getRandomString(withoutRepeation);
                 } else {
                     iterator = randomizers.iterator();
                 }
