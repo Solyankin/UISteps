@@ -37,7 +37,7 @@ public class StringRandomizer {
             String word = "";
             while (word.length() < simbolsCount) {
                 if (iterator.hasNext()) {
-                    word += iterator.next().getRandomChar();
+                    word += iterator.next().getRandomCharSet();
                 } else {
                     iterator = randomizers.iterator();
                 }

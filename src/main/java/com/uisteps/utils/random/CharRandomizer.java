@@ -25,23 +25,31 @@ public class CharRandomizer {
 
     private String possibleValues;
     private String alphabit;
-    private In in;
+    private In in = In.LOWER_CASE;
     private boolean inUpperCase;
+    private int simbolsCount;
 
     public CharRandomizer(String alphabit) {
+        this(alphabit, 0);
+    }
+
+    public CharRandomizer(String alphabit, int simbolsCount) {
         if (alphabit != null) {
             this.alphabit = alphabit;
         }
-        possibleValues = this.alphabit;
+        this.simbolsCount = simbolsCount;
     }
-
+    
     public CharRandomizer(String alphabit, In in) {
-        this(alphabit);
+        this(alphabit, in , 0);
+    }
+    
+    public CharRandomizer(String alphabit, In in, int simbolsCount) {
+        this(alphabit, simbolsCount);
         if (in != null) {
             this.in = in;
-        } else {
-            this.in = In.LOWER_CASE;
         }
+        this.simbolsCount = simbolsCount;
     }
 
     public String getRandomChar() {
@@ -49,7 +57,7 @@ public class CharRandomizer {
         possibleValues = possibleValues.replace(randomChar, "");
 
         if (possibleValues.length() == 0) {
-            possibleValues = alphabit;
+            reset();
         }
 
         inUpperCase = !inUpperCase && in.upperCase() && in.onlyThisCase();
@@ -61,6 +69,14 @@ public class CharRandomizer {
         }
     }
 
+    public String getRandomCharSet() {
+        String word = "";
+        for(int i = 0; i < simbolsCount; i++) {
+            word += getRandomChar();
+        }
+        return word;
+    }
+    
     public void reset() {
         possibleValues = alphabit;
     }
