@@ -53,7 +53,7 @@ public class CharRandomizer {
     }
 
     public String getRandomChar() {
-        String randomChar = getRandomCharFrom(possibleValues);
+        String randomChar = getRandom();
         possibleValues = possibleValues.replace(randomChar, "");
 
         if (possibleValues.length() == 0) {
@@ -81,13 +81,13 @@ public class CharRandomizer {
         possibleValues = alphabit;
     }
 
-    private String getRandomCharFrom(String alphabit) {
+    private String getRandom() {
         Random rand = new Random();
-        int count = alphabit.length() - 1;
+        int count = possibleValues.length() - 1;
         if (count < 1) {
             count = 1;
         }
-        char c = alphabit.charAt(rand.nextInt(count));
+        char c = possibleValues.charAt(rand.nextInt(count));
         return String.valueOf(c);
     }
 
