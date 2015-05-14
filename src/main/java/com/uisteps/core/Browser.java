@@ -19,8 +19,6 @@ package com.uisteps.core;
 import com.uisteps.thucydides.NameConvertor;
 import com.uisteps.thucydides.elements.Link;
 import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -281,7 +279,6 @@ public class Browser {
     public void clear(WrapsElement input) {
         try {
             input.getWrappedElement().clear();
-
         } catch (Exception ex) {
             throw new AssertionError("Cannot clear " + input + "!\n" + ex);
         }

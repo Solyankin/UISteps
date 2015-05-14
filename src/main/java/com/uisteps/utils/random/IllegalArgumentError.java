@@ -19,34 +19,13 @@ package com.uisteps.utils.random;
  *
  * @author ASolyankin
  */
-public class In {
+public class IllegalArgumentError extends Exception {
 
-    public final static In UPPER_CASE = new In();
-
-    public final static In LOWER_CASE = new In() {
-
-        @Override
-        public boolean upperCase() {
-            return false;
-        }
-    };
-
-    public final static In UPPER_OR_LOWER_CASE = new In() {
-        @Override
-        public boolean onlyThisCase() {
-            return false;
-        }
-    };
-
-    private In() {
+    public IllegalArgumentError() {
     }
 
-    public boolean onlyThisCase() {
-        return true;
-    }
-
-    public boolean upperCase() {
-        return true;
+    public IllegalArgumentError(String message) {
+        super(message);
     }
 
 }
