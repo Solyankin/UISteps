@@ -1,5 +1,8 @@
 package com.uisteps.core;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  *
  * @author ASolyankin
@@ -13,6 +16,15 @@ public class Url {
     private String host = "";
     private Integer port = -1;
     private String postfix = "";
+
+    public Url() {
+    }
+
+    public Url(URL url) {
+        protocol = url.getProtocol();
+        host = url.getHost();
+        port = url.getPort();
+    }
 
     public String getProtocol() {
         return protocol;
@@ -46,7 +58,7 @@ public class Url {
         }
         return this;
     }
-    
+
     public String getHost() {
         return host;
     }
@@ -122,7 +134,7 @@ public class Url {
     @Override
     public String toString() {
         String url = protocol + "://";
-        if(!user.equals("") && !password.equals("")) {
+        if (!user.equals("") && !password.equals("")) {
             url += user + ":" + password + "@";
         }
         url += prefix + host;
@@ -131,5 +143,9 @@ public class Url {
         }
         url += postfix;
         return url;
+    }
+
+    public URL getURL() throws MalformedURLException {
+        return new URL(this.toString());
     }
 }
