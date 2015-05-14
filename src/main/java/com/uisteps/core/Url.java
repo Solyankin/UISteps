@@ -20,10 +20,20 @@ public class Url {
     public Url() {
     }
 
+    public Url(String url) throws MalformedURLException {
+        this(new URL(url));
+    }
+    
     public Url(URL url) {
         protocol = url.getProtocol();
-        host = url.getHost();
         port = url.getPort();
+
+        String userInfo[] = url.getUserInfo().split(":");
+        user = userInfo[0];
+        password = userInfo[1];
+        
+        host = url.getHost();
+        postfix = url.getFile();
     }
 
     public String getProtocol() {
@@ -31,6 +41,7 @@ public class Url {
     }
 
     public Url setProtocol(String value) {
+
         if (value != null) {
             protocol = value;
         }
@@ -42,6 +53,7 @@ public class Url {
     }
 
     public Url setUser(String value) {
+
         if (value != null) {
             user = value;
         }
@@ -53,6 +65,7 @@ public class Url {
     }
 
     public Url setPassword(String value) {
+
         if (value != null) {
             password = value;
         }
@@ -64,6 +77,7 @@ public class Url {
     }
 
     public Url setHost(String value) {
+
         if (value != null) {
             host = value;
         }
@@ -75,6 +89,7 @@ public class Url {
     }
 
     public Url setPort(Integer value) {
+
         if (value != null) {
             port = value;
         }
@@ -86,6 +101,7 @@ public class Url {
     }
 
     public Url setPrefix(String value) {
+
         if (value != null) {
             prefix = value;
         }
@@ -93,6 +109,7 @@ public class Url {
     }
 
     public Url appendPrefix(String value) {
+
         if (value != null) {
             prefix += value;
         }
@@ -100,6 +117,7 @@ public class Url {
     }
 
     public Url prependPrefix(String value) {
+
         if (value != null) {
             prefix = value + prefix;
         }
@@ -111,6 +129,7 @@ public class Url {
     }
 
     public Url setPostfix(String value) {
+
         if (value != null) {
             postfix = value;
         }
@@ -118,6 +137,7 @@ public class Url {
     }
 
     public Url appendPostfix(String value) {
+
         if (value != null) {
             postfix += value;
         }
@@ -125,6 +145,7 @@ public class Url {
     }
 
     public Url prependPostfix(String value) {
+
         if (value != null) {
             postfix = value + postfix;
         }
@@ -134,14 +155,18 @@ public class Url {
     @Override
     public String toString() {
         String url = protocol + "://";
+
         if (!user.equals("") && !password.equals("")) {
             url += user + ":" + password + "@";
         }
         url += prefix + host;
+
         if (port > -1) {
             url += ":" + port;
         }
+
         url += postfix;
+
         return url;
     }
 
