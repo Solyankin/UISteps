@@ -15,6 +15,8 @@
  */
 package com.uisteps.utils.random;
 
+import com.uisteps.utils.IllegalArgumentError;
+
 /**
  *
  * @author ASolyankin

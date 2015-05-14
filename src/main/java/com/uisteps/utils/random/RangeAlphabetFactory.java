@@ -15,6 +15,7 @@
  */
 package com.uisteps.utils.random;
 
+import com.uisteps.utils.IllegalArgumentError;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

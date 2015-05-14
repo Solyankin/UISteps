@@ -15,6 +15,7 @@
  */
 package com.uisteps.utils.random;
 
+import com.uisteps.utils.IllegalArgumentError;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;

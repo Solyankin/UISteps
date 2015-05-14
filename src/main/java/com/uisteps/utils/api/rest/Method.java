@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.random;
+package com.uisteps.utils.api.rest;
 
 /**
  *
  * @author ASolyankin
  */
-public class IllegalArgumentError extends Exception {
-
-    public IllegalArgumentError() {
-    }
-
-    public IllegalArgumentError(String message) {
-        super(message);
-    }
-
+public enum Method {
+    
+    GET, POST;
+    
 }
