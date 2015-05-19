@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,5 +19,10 @@ package com.uisteps.core;
  *
  * @author ASolyankin
  */
-public interface UIBlock extends UIObject {
+public class NoWindowException extends RuntimeException{
+
+    public NoWindowException() {
+        super("No windows to switch!");
+    }
+    
 }

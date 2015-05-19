@@ -21,7 +21,5 @@ package com.uisteps.core;
  */
 public interface Initializer {
     
-    void initialize(Page page, Browser browser);
-    
-    void initialize(UIBlock block, Browser browser);
+    void initialize(UIObject uiObject, Browser browser);
 }

@@ -19,7 +19,7 @@ package com.uisteps.core;
  *
  * @author ASolyankin
  */
-public interface Page {
+public interface Page extends UIObject {
 
     Url getDefaultUrl();
 

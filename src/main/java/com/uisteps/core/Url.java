@@ -23,17 +23,30 @@ public class Url {
     public Url(String url) throws MalformedURLException {
         this(new URL(url));
     }
-    
+
     public Url(URL url) {
         protocol = url.getProtocol();
         port = url.getPort();
 
-        String userInfo[] = url.getUserInfo().split(":");
-        user = userInfo[0];
-        password = userInfo[1];
+        if (url.getUserInfo() != null) {
+            String[] userInfo = url.getUserInfo().split(":");
+
+            if (userInfo.length > 0) {
+                user = userInfo[0];
+            }
+
+            if (userInfo.length > 1) {
+                password = userInfo[1];
+            }
+        }
         
-        host = url.getHost();
-        postfix = url.getFile();
+        if(url.getHost() != null) {
+            host = url.getHost();
+        }
+        
+        if(url.getFile() != null) {
+            postfix = url.getFile();
+        }
     }
 
     public String getProtocol() {
@@ -168,6 +181,10 @@ public class Url {
         url += postfix;
 
         return url;
+    }
+
+    public String getLink() {
+        return "<a href='" + this + "'>" + this + "</a>";
     }
 
     public URL getURL() throws MalformedURLException {

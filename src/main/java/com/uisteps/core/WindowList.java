@@ -1,9 +1,6 @@
 package com.uisteps.core;
 
-
-import com.uisteps.thucydides.ThucydidesUtils;
 import java.util.Set;
-import junit.framework.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,9 +13,11 @@ public class WindowList {
 
     private int currentHandleIndex;
     private final Browser browser;
+    private final long timeOutInSeconds;
 
-    public WindowList(Browser browser) {
+    public WindowList(Browser browser, long timeOutInSeconds) {
         this.browser = browser;
+        this.timeOutInSeconds = timeOutInSeconds;
     }
 
     public void switchToNextWindow() {
@@ -33,32 +32,34 @@ public class WindowList {
         switchToWindowByIndex(0);
     }
 
-    public void reloadCurrentIndexCounter() {
-        currentHandleIndex = 0;
-    }
-    
-    public void switchToWindowByIndex(int index) {
+    public void switchToWindowByIndex(int index) throws NoWindowException {
         WebDriver driver = browser.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, ThucydidesUtils.getImplementTimeoutInSec());
         Set<String> setHandles = driver.getWindowHandles();
-        if (index < 0 || index >= setHandles.size()) {
-            Assert.fail("Cannot switch to window by index: " + index + "!\n");
+
+        if (setHandles.isEmpty()) {
+            throw new NoWindowException();
         }
-        wait.until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver d) {
-                Set<String> setHandles = driver.getWindowHandles();
-                Object[] handles = setHandles.toArray();
-                return !handles[handles.length - 1].equals("");
-            }
-        });
-        setHandles = driver.getWindowHandles();
-        Object[] handles = setHandles.toArray();
-        driver.switchTo().window((String) handles[index]);
-        currentHandleIndex = index;
+
+        if (index < 0 || index >= setHandles.size()) {
+            switchToDefaultWindow();
+        } else {
+            browser.waitUntil(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver d) {
+                    Set<String> setHandles = driver.getWindowHandles();
+                    Object[] handles = setHandles.toArray();
+                    return !handles[handles.length - 1].equals("");
+                }
+            }, timeOutInSeconds);
+
+            setHandles = driver.getWindowHandles();
+            Object[] handles = setHandles.toArray();
+            driver.switchTo().window((String) handles[index]);
+            currentHandleIndex = index;
+        }
     }
-    
-    public int getCountOfWindows(){
+
+    public int getCountOfWindows() {
         return this.browser.getDriver().getWindowHandles().size();
-    } 
+    }
 }

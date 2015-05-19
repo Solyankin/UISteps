@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,5 +19,14 @@ package com.uisteps.core;
  *
  * @author ASolyankin
  */
-public interface UIBlock extends UIObject {
+public class BrowserListIsEmptyException extends NoBrowserException {
+
+    public BrowserListIsEmptyException() {
+        super("List of browsers is empty!");
+    }
+
+    public BrowserListIsEmptyException(String message) {
+        super(message);
+    }
+    
 }

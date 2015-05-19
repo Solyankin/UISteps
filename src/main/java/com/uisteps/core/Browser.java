@@ -16,8 +16,6 @@
  */
 package com.uisteps.core;
 
-import com.uisteps.thucydides.NameConvertor;
-import com.uisteps.thucydides.elements.Link;
 import java.util.Arrays;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -26,7 +24,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.uisteps.thucydides.UrlFactory;
 
 /**
  *
@@ -34,37 +31,29 @@ import com.uisteps.thucydides.UrlFactory;
  */
 public class Browser {
 
-    private Cache cache;
     private WebDriver driver;
     private StepLibraryFactory stepLibraryFactory;
     private Initializer initializer;
-    private WindowList windowList;
-    private String name;
+    private long timeOutInSeconds;
+    private final WindowList windowList = new WindowList(this, timeOutInSeconds);
 
-    public Browser() {
-        cache = new Cache();
-        windowList = new WindowList(this);
+    public Browser(long timeOutInSeconds) {
+        this.timeOutInSeconds = timeOutInSeconds;
     }
 
-    public void init(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
+    public Browser() {
+        this(10);
+    }
+
+    public final void init(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
         this.driver = driver;
         this.stepLibraryFactory = pageFactory;
         this.initializer = initializer;
     }
 
-    public void init(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer, Cache cache, WindowList windowList) {
-        init(driver, pageFactory, initializer);
-        this.cache = cache;
-        this.windowList = windowList;
-    }
-
     public Browser(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer) {
         this();
         init(driver, pageFactory, initializer);
-    }
-
-    public Browser(WebDriver driver, StepLibraryFactory pageFactory, Initializer initializer, Cache cache, WindowList windowList) {
-        init(driver, pageFactory, initializer, cache, windowList);
     }
 
     public void openUrl(String url) {
@@ -75,27 +64,17 @@ public class Browser {
         getDriver().get(url.toString());
     }
 
-    public <T extends UIBlock> T onDisplayed(Class<T> blockClass) {
-        if (cache.contains(blockClass)) {
-            return (T) cache.getBlock();
-        } else {
-            T block = stepLibraryFactory.instatiate(blockClass);
-            initializer.initialize(block, this);
-            return onDisplayed(block);
-        }
-    }
-
-    public <T extends UIBlock> T onDisplayed(T block) {
-        cache.put(block);
-        return block;
+    public <T extends UIObject> T onDisplayed(Class<T> uiObjectClass) {
+        T uiObject = stepLibraryFactory.instatiate(uiObjectClass);
+        initializer.initialize(uiObject, this);
+        return uiObject;
     }
 
     public <T extends Page> T open(Class<T> pageClass) {
         T page = stepLibraryFactory.instatiate(pageClass);
         open(page.getUrl());
         initializer.initialize(page, this);
-        cache.put(page);
-        return open(page);
+        return page;
     }
 
     public <T extends Page> T open(Class<T> rootClass, String pageName) {
@@ -111,55 +90,6 @@ public class Browser {
         throw new AssertionError("" + klass.getName() + " is not assigned from " + rootClass + "!");
     }
 
-    public <T extends Page> T open(Class<T> pageClass, Url url) {
-        T page = stepLibraryFactory.instatiate(pageClass);
-        if (url != null) {
-            Url pageUrl = page.getUrl();
-            pageUrl.prependPrefix(url.getPrefix())
-                    .appendPostfix(url.getPostfix());
-            String urlHost = url.getHost();
-            if (!urlHost.equals("")) {
-                pageUrl.setHost(urlHost);
-            }
-            Integer urlPort = url.getPort();
-            if (urlPort != -1) {
-                pageUrl.setPort(urlPort);
-            }
-        }
-        open(page.getUrl());
-        initializer.initialize(page, this);
-        cache.put(page);
-        return page;
-    }
-
-    public <T extends Page> T onOpened(Class<T> rootClass, String pageName) {
-        Class<?> klass = null;
-        try {
-            klass = Class.forName(pageName);
-        } catch (ClassNotFoundException ex) {
-            throw new AssertionError("Cannot find class with such name: " + pageName);
-        }
-        if (rootClass.isAssignableFrom(klass)) {
-            return onOpened((Class<T>) klass);
-        }
-        throw new AssertionError("" + klass.getName() + " is not assigned from " + rootClass + "!");
-    }
-
-    public <T extends Page> T onOpened(Class<T> pageClass) {
-        if (cache.contains(pageClass)) {
-            return (T) cache.getPage();
-        } else {
-            T page = stepLibraryFactory.instatiate(pageClass);
-            initializer.initialize(page, this);
-            cache.put(page);
-            return page;
-        }
-    }
-
-    public <T extends Page> T open(T page) {
-        return page;
-    }
-
     public WebDriver getDriver() {
         return driver;
     }
@@ -172,16 +102,12 @@ public class Browser {
         return isBlock(obj.getClass());
     }
 
-    public
-            boolean isPage(Class<?> klass) {
-        return Page.class
-                .isAssignableFrom(klass);
+    public boolean isPage(Class<?> klass) {
+        return Page.class.isAssignableFrom(klass);
     }
 
-    public
-            boolean isBlock(Class<?> klass) {
-        return UIBlock.class
-                .isAssignableFrom(klass);
+    public boolean isBlock(Class<?> klass) {
+        return UIBlock.class.isAssignableFrom(klass);
     }
 
     public String getCurrentUrl() {
@@ -212,36 +138,19 @@ public class Browser {
         getDriver().navigate().refresh();
     }
 
-    public void setToDefaultState() {
-        cache.clear();
-        if (windowList.getCountOfWindows() > 1) {
-            windowList.switchToDefaultWindow();
-        }
-        deleteCookies();
-    }
-
     public void deleteCookies() {
         getDriver().manage().deleteAllCookies();
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void click(WrapsElement element) {
-        boolean needToSwitch = false;
+        
         try {
             WebElement webElement = element.getWrappedElement();
-            if (element instanceof Link) {
-                String attrTarget = webElement.getAttribute("target");
-                needToSwitch = attrTarget != null && !attrTarget.equals("") && !attrTarget.equals("_self");
-            }
             webElement.click();
-            if (needToSwitch) {
+            
+            String attrTarget = webElement.getAttribute("target");
+            
+            if (attrTarget != null && !attrTarget.equals("") && !attrTarget.equals("_self")) {
                 switchToNextWindow();
             }
         } catch (Exception ex) {
@@ -301,13 +210,17 @@ public class Browser {
         }
     }
 
-    public void waitUntil(ExpectedCondition<Boolean> condition) {
-        WebDriverWait wait = new WebDriverWait(getDriver(), 10);
+    public void waitUntil(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(getDriver(), timeOutInSeconds);
         wait.until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return condition.apply(driver);
             }
         });
+    }
+
+    public void waitUntil(ExpectedCondition<Boolean> condition) {
+        this.waitUntil(condition, timeOutInSeconds);
     }
 
     public StepLibraryFactory getStepLibraryFactory() {
@@ -318,78 +231,16 @@ public class Browser {
         return initializer;
     }
 
-    public boolean isOn(Class<? extends Page> klass) throws AssertionError {
-        try {
-            if (!klass.newInstance().isOpened()) {
-                return false;
-            }
-        } catch (InstantiationException | IllegalAccessException ex) {
-            throw new AssertionError("Cannot instantiate " + klass + "!\n" + ex);
-        }
-        UrlFactory urlFactory = new UrlFactory();
-        Url pageUrl = urlFactory.getDefaultUrlOfPage((Class<? extends Page>) klass);
-        String currentUrl = getCurrentUrl();
-        return currentUrl.contains(pageUrl.toString().replace(pageUrl.getUser() + ":" + pageUrl.getPassword(), ""));
-    }
-
-    public Cache getCache() {
-        return cache;
-    }
-
     public WindowList getWindowList() {
         return windowList;
     }
 
     public Object executeScript(String script) {
         return ((JavascriptExecutor) getDriver()).executeScript(script);
-
     }
 
-    public class Cache {
-
-        private Page page;
-        private String pageClass;
-        private UIBlock block;
-        private String blockClass;
-
-        void put(Page page) {
-            clearBlock();
-            this.page = page;
-            pageClass = NameConvertor.humanize(page.getClass());
-        }
-
-        void put(UIBlock block) {
-            this.block = block;
-            blockClass = NameConvertor.humanize(block.getClass());
-        }
-
-        void clear() {
-            clearBlock();
-            clearPage();
-        }
-
-        void clearBlock() {
-            block = null;
-            blockClass = null;
-        }
-
-        void clearPage() {
-            page = null;
-            pageClass = null;
-        }
-
-        Page getPage() {
-            return page;
-        }
-
-        UIBlock getBlock() {
-            return block;
-        }
-
-        public boolean contains(Class<?> klass) {
-            String klassName = NameConvertor.humanize(klass);
-            return klassName.equals(pageClass) || klassName.equals(blockClass);
-        }
+    @Override
+    public String toString() {
+        return executeScript("return navigator.userAgent;").toString();
     }
-
 }
