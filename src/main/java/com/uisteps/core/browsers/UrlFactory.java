@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 ASolyankin.
+ * Copyright 2014 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.core.browsers;
+
+import com.uisteps.core.elements.Page;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
-    
-    OPTIONS, GET, POST;
-    
+public interface UrlFactory {
+
+    Url getDefaultUrlOfPage(Class<? extends Page> pageClass);
 }

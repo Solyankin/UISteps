@@ -1,34 +1,20 @@
 package com.uisteps.thucydides.elements;
 
+import com.uisteps.core.browsers.Browser;
+import com.uisteps.thucydides.utils.ThucydidesUtils;
 import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class TextField extends UIElement {
+public class TextField extends com.uisteps.core.elements.TextField {
 
     public TextField(WebElement wrappedElement) {
-        super(wrappedElement);
+        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
     }
 
-    public void sendKeys(CharSequence... keys) {
-        type(keys);
-    }
-
-    public void type(CharSequence... keys) {
-        browser.typeInto(this, keys);
-    }
-
-    public void clear() {
-        browser.clear(this);
-    }
-
-    public void enter(CharSequence... text) {
-        browser.enterInto(this, text);
-    }
-
-    public String getText() {
-        return browser.getTextFrom(this);
+    public TextField(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
     }
 }

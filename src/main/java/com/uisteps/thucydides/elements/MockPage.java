@@ -13,14 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.thucydides.elements;
+
+import com.uisteps.core.browsers.Url;
+import java.net.MalformedURLException;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
+public class MockPage extends Page {
+
+    public MockPage(Url url) {
+        super();
+        this.setUrl(url);
+    }
+
+    public MockPage(String url) throws MalformedURLException {
+        super();
+        this.setUrl(new Url(url));
+    }
     
-    OPTIONS, GET, POST;
-    
+    @Override
+    public String toString() {
+        return super.toString().replace(getName(), "page");
+    }
+
 }

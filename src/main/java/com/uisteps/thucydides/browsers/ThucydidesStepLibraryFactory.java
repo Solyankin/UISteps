@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 ASolyankin.
+ * Copyright 2014 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.thucydides.browsers;
+
+import com.uisteps.thucydides.utils.ThucydidesUtils;
+import com.uisteps.core.browsers.BrowserFactory;
+import com.uisteps.core.browsers.StepLibraryFactory;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
-    
-    OPTIONS, GET, POST;
-    
+public class ThucydidesStepLibraryFactory implements StepLibraryFactory, BrowserFactory {
+
+    @Override
+    public <T> T instatiate(Class<T> uiObjectClass) {
+        return ThucydidesUtils.getNewStepLibrary(uiObjectClass);
+    }
+
 }

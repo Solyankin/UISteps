@@ -13,14 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.thucydides.tests;
+
+import com.uisteps.thucydides.browsers.Verifications;
+import net.thucydides.core.annotations.Steps;
+import net.thucydides.junit.runners.ThucydidesRunner;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
-    
-    OPTIONS, GET, POST;
-    
+@RunWith(ThucydidesRunner.class)
+public class SimpleTest {
+
+    @Steps
+    Verifications verifications;
+
+    public com.uisteps.core.verifications.Verifications.That verify() {
+        return verifications.verify();
+    }
 }

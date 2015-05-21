@@ -1,18 +1,20 @@
 package com.uisteps.thucydides.elements;
 
+import com.uisteps.core.browsers.Browser;
+import com.uisteps.thucydides.utils.ThucydidesUtils;
 import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class TextBlock extends UIElement {
+public class TextBlock extends com.uisteps.core.elements.TextBlock {
 
     public TextBlock(WebElement wrappedElement) {
-        super(wrappedElement);
+        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
     }
 
-    public String getText() {
-        return browser.getTextFrom(this);
+    public TextBlock(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
     }
 }

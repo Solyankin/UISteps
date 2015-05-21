@@ -13,14 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.core.browsers;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
+public class NoBrowserException  extends RuntimeException{
+
+    public NoBrowserException() {
+        super("No browser to switch!");
+    }
+
+    public NoBrowserException(String message) {
+        super(message);
+    }
     
-    OPTIONS, GET, POST;
     
 }

@@ -13,14 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.thucydides.tests;
+
+import net.thucydides.core.annotations.Steps;
+import net.thucydides.jbehave.ThucydidesJUnitStory;
+import com.uisteps.core.verifications.Verifications.That;
+import com.uisteps.thucydides.browsers.Verifications;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
-    
-    OPTIONS, GET, POST;
-    
+public class SimpleStoryTest extends ThucydidesJUnitStory {
+
+    @Steps
+    Verifications verifications;
+
+    public That verify() {
+        return verifications.verify();
+    }
 }

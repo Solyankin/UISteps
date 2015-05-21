@@ -16,73 +16,32 @@
  */
 package com.uisteps.thucydides.elements;
 
-import com.uisteps.core.Url;
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.UrlFactory;
-import com.uisteps.thucydides.NameConvertor;
-import com.uisteps.thucydides.ThucydidesBrowser;
-import org.openqa.selenium.WebDriver;
+import com.uisteps.core.browsers.Browser;
+import com.uisteps.core.browsers.UrlFactory;
+import com.uisteps.thucydides.utils.ThucydidesUtils;
+import com.uisteps.thucydides.browsers.ThucydidesUrlFactory;
+import com.uisteps.thucydides.utils.NameConvertor;
 
 /**
  *
  * @author ASolyankin
  */
-public class Page implements com.uisteps.core.Page {
-
-    private final ThucydidesBrowser browser;
-    private final UrlFactory urlFactory;
-    private Url url;
+public class Page extends com.uisteps.core.elements.Page {
 
     public Page() {
-        urlFactory = new UrlFactory();
-        url = urlFactory.getDefaultUrlOfPage(this.getClass());
-        browser = (ThucydidesBrowser) ThucydidesUtils.getFromSession("#BROWSER#");
+        super(ThucydidesUtils.getCurrentBrowser(), new ThucydidesUrlFactory());
     }
 
-    @Override
-    public Url getDefaultUrl() {
-        return urlFactory.getDefaultUrlOfPage(this.getClass());
+    public Page(Browser browser, UrlFactory urlFactory) {
+        super(browser, urlFactory);
     }
 
-    @Override
-    public Url getUrl() {
-        return url;
+    public String getName() {
+        return NameConvertor.humanize(getClass());
     }
-
-    @Override
-    public void setUrl(Url url) {
-        this.url = url;
-    }
-
+    
     @Override
     public String toString() {
-        return NameConvertor.humanize(getClass())
-                .replace("dot", "\\.")
-                + " by url <a href='" + getUrl() + "'>" + getUrl() + "</a>";
-    }
-
-    public <T extends Page> T onOpened(Class<T> pageClass) {
-        return browser.onOpened(pageClass);
-    }
-
-    public <T extends UIBlock> T onDisplayed(Class<T> blockClass) {
-        return browser.onDisplayed(blockClass);
-    }
-    
-    public <T extends UIBlock> T onDisplayed(T block) {
-        return browser.onDisplayed(block);
-    }
-    
-    public WebDriver getDriver() {
-        return browser.getDriver();
-    }
-
-    public Object executeScript(String script) {
-        return browser.executeScript(script);
-    }
-
-    @Override
-    public boolean isOpened() {
-        return true;
+        return getName() + " by url <a href='" + this.getUrl() + "'>" + this.getUrl() + "</a> with title " + this.getTitle();
     }
 }

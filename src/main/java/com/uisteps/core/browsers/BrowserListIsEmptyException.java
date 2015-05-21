@@ -13,14 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.core.browsers;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
-    
-    OPTIONS, GET, POST;
+public class BrowserListIsEmptyException extends NoBrowserException {
+
+    public BrowserListIsEmptyException() {
+        super("List of browsers is empty!");
+    }
+
+    public BrowserListIsEmptyException(String message) {
+        super(message);
+    }
     
 }

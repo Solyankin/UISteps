@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.utils.api.rest;
+package com.uisteps.core.elements;
+
+import com.uisteps.core.browsers.Browser;
+import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public enum Method {
-    
-    OPTIONS, GET, POST;
-    
+public class Button extends UIElement {
+
+    public Button(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
+    }
+
 }
