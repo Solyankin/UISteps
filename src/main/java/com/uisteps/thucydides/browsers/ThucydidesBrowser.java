@@ -24,8 +24,6 @@ import com.uisteps.core.elements.UIObject;
 import com.uisteps.core.browsers.Url;
 import com.uisteps.thucydides.elements.MockPage;
 import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsElement;

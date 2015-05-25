@@ -29,8 +29,7 @@ import net.thucydides.core.annotations.Step;
 public class ThucydidesBrowsers extends Browsers {
 
     public ThucydidesBrowsers() {
-        super(new ThucydidesStepLibraryFactory(), ThucydidesBrowser.class);
-        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+        this(new ThucydidesStepLibraryFactory(), ThucydidesBrowser.class);
     }
 
     public ThucydidesBrowsers(BrowserFactory getBrowserFactory, Class<? extends Browser> browserClass) {

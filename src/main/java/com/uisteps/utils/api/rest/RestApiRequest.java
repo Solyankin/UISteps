@@ -145,20 +145,16 @@ public class RestApiRequest {
 
     }
 
-    private String readStreamToString(InputStream in, String encoding) throws RestApiException {
-        try {
-            StringBuilder builder = new StringBuilder();
-            InputStreamReader reader = new InputStreamReader(in, encoding);
-            int c;
+    private String readStreamToString(InputStream in, String encoding) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        InputStreamReader reader = new InputStreamReader(in, encoding);
+        int c;
 
-            while ((c = reader.read()) != -1) {
-                builder.append((char) c);
-            }
-
-            return builder.toString();
-        } catch (IOException ex) {
-            throw new RestApiException(ex.toString());
+        while ((c = reader.read()) != -1) {
+            builder.append((char) c);
         }
+
+        return builder.toString();
     }
 
 }

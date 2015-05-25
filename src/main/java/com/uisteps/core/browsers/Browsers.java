@@ -22,16 +22,16 @@ package com.uisteps.core.browsers;
 public class Browsers {
 
     private final BrowserList browserList = new BrowserList();
-    private final BrowserFactory getBrowserFactory;
+    private final BrowserFactory browserFactory;
     private final Class<? extends Browser> browserClass;
 
-    public Browsers(BrowserFactory getBrowserFactory, Class<? extends Browser> browserClass) {
-        this.getBrowserFactory = getBrowserFactory;
+    public Browsers(BrowserFactory browserFactory, Class<? extends Browser> browserClass) {
+        this.browserFactory = browserFactory;
         this.browserClass = browserClass;
     }
 
     public Browser openNewBrowser() {
-        Browser browser = getBrowserFactory.instatiate(browserClass);
+        Browser browser = browserFactory.instatiate(browserClass);
         return browserList.add(browser);
     }
 
