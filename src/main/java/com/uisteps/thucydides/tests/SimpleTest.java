@@ -15,7 +15,9 @@
  */
 package com.uisteps.thucydides.tests;
 
+import com.uisteps.thucydides.browsers.ThucydidesStepListener;
 import com.uisteps.thucydides.browsers.Verifications;
+import com.uisteps.thucydides.utils.ThucydidesUtils;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.junit.runners.ThucydidesRunner;
 import org.junit.runner.RunWith;
@@ -29,6 +31,10 @@ public class SimpleTest {
 
     @Steps
     Verifications verifications;
+
+    public SimpleTest() {
+        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+    }
 
     public com.uisteps.core.verifications.Verifications.That verify() {
         return verifications.verify();

@@ -18,7 +18,9 @@ package com.uisteps.thucydides.tests;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.jbehave.ThucydidesJUnitStory;
 import com.uisteps.core.verifications.Verifications.That;
+import com.uisteps.thucydides.browsers.ThucydidesStepListener;
 import com.uisteps.thucydides.browsers.Verifications;
+import com.uisteps.thucydides.utils.ThucydidesUtils;
 
 /**
  *
@@ -28,6 +30,10 @@ public class SimpleStoryTest extends ThucydidesJUnitStory {
 
     @Steps
     Verifications verifications;
+
+    public SimpleStoryTest() {
+        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+    }
 
     public That verify() {
         return verifications.verify();

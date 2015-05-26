@@ -24,9 +24,11 @@ import net.thucydides.core.Thucydides;
 import net.thucydides.core.ThucydidesSystemProperties;
 import net.thucydides.core.ThucydidesSystemProperty;
 import net.thucydides.core.guice.Injectors;
+import net.thucydides.core.steps.BaseStepListener;
 import net.thucydides.core.steps.StepEventBus;
 import net.thucydides.core.steps.StepFactory;
 import net.thucydides.core.steps.StepListener;
+import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.webdriver.Configuration;
 import net.thucydides.core.webdriver.SupportedWebDriver;
 import net.thucydides.core.webdriver.ThucydidesWebdriverManager;
@@ -36,6 +38,7 @@ import net.thucydides.core.webdriver.WebdriverInstances;
 import net.thucydides.core.webdriver.WebdriverManager;
 import net.thucydides.core.webdriver.WebdriverProxyFactory;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  *
@@ -103,14 +106,21 @@ public class ThucydidesUtils extends Thucydides {
     }
 
     public static WebDriver getNewDriver() {
+        
+        WebdriverManager webdriverManager = getWebdriverManager();
 
-        WebdriverManager webdriverManager = new ThucydidesWebdriverManager(new WebDriverFactory(), getConfiguration());
-        WebDriver driver = webdriverManager.getWebdriver();
-        geDriversMap().put("#" + (++driverCounter), driver);
+        String driverName = "#" + (++driverCounter);
+        String driverType = getConfiguration().getDriverType().name().toLowerCase();
+        
+        WebDriver driver = webdriverManager.getWebdriver(driverType);
+        
+        getDrivers().registerDriverCalled(driverName).forDriver(driver);
+        getBaseStepListener().setDriver(driver);
+        getDriversMap().remove(driverType);
         return driver;
     }
 
-    public static Map<String, WebDriver> geDriversMap() {
+    public static Map<String, WebDriver> getDriversMap() {
         String fieldName = "driverMap";
 
         try {
@@ -122,6 +132,19 @@ public class ThucydidesUtils extends Thucydides {
         }
     }
 
+    public static void removeMockDriver() {
+        String fieldName = "mockDriver";
+
+        try {
+            Field field = WebdriverProxyFactory.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(WebdriverProxyFactory.getFactory(), null);
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException ex) {
+            throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + WebdriverProxyFactory.class + "!\nCause: " + ex);
+        }
+    }
+    
+    
     public static WebdriverInstances getDrivers() {
         Field webdriverInstancesThreadLocalField = null;
         String fieldName = "webdriverInstancesThreadLocal";
@@ -140,6 +163,20 @@ public class ThucydidesUtils extends Thucydides {
         }
     }
 
+    
+    public static BaseStepListener getBaseStepListener() {
+        String methodName = "getBaseStepListener";
+
+        try {
+            Method method = StepEventBus.class.getDeclaredMethod(methodName);
+            method.setAccessible(true);
+            return (BaseStepListener) method.invoke(StepEventBus.getEventBus());
+        } catch (InvocationTargetException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException ex) {
+            throw new RuntimeException("Cannot invoke method by name " + methodName + " in class " + StepEventBus.class + "!\nCause: " + ex);
+        }
+    }
+    
+    
     public static WebdriverManager getWebdriverManager() {
         WebdriverManager webdriverManager = null;
         String methodName = "getWebdriverManager";

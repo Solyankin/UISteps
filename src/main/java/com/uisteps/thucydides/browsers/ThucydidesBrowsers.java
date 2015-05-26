@@ -79,6 +79,7 @@ public class ThucydidesBrowsers extends Browsers {
     private ThucydidesBrowser register(Browser browser) {
         ThucydidesBrowser thucydidesBrowser = (ThucydidesBrowser) (browser);
         ThucydidesUtils.putToSession(thucydidesBrowser);
+        ThucydidesUtils.getBaseStepListener().setDriver(thucydidesBrowser.getDriver());
         return thucydidesBrowser;
     }
 

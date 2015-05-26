@@ -6,6 +6,7 @@ import com.uisteps.core.elements.UIObject;
 import com.uisteps.core.elements.Page;
 import com.uisteps.thucydides.browsers.ThucydidesBrowser;
 import com.uisteps.thucydides.browsers.ThucydidesBrowsers;
+import com.uisteps.thucydides.browsers.ThucydidesStepListener;
 import com.uisteps.thucydides.utils.ThucydidesUtils;
 import net.thucydides.core.annotations.Steps;
 import org.openqa.selenium.internal.WrapsElement;
