@@ -48,6 +48,7 @@ public abstract class Page implements UIObject {
         this.url = url;
     }
     
+    @Override
     public boolean isDisplayed() {
         return executeScript("return document.readyState").equals("complete");
     }

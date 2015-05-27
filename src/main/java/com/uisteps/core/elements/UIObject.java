@@ -20,4 +20,6 @@ package com.uisteps.core.elements;
  * @author ASolyankin
  */
 public interface UIObject {
+
+    boolean isDisplayed();
 }

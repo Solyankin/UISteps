@@ -28,9 +28,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 import com.uisteps.core.browsers.Initializer;
-import com.uisteps.core.elements.UIBlock;
 import com.uisteps.core.elements.UIObject;
-import com.uisteps.thucydides.elements.Page;
 
 /**
  *
@@ -40,57 +38,27 @@ public class ThucydidesInitializer implements Initializer {
 
     @Override
     public void initialize(UIObject uiObject, Browser browser) {
-
-        if (browser.isPage(uiObject)) {
-            initialize((Page) uiObject, browser);
-        } else if (browser.isBlock(uiObject)) {
-            initialize((UIBlock) uiObject, browser);
-        } else {
-            throw new RuntimeException("No initializer for " + uiObject);
-        }
-    }
-
-    public void initialize(Page page, Browser browser) {
         WebDriverWait wait = new WebDriverWait(browser.getDriver(), 10);
-        
+
         try {
             wait.until(new ExpectedCondition<Boolean>() {
-                
+
                 @Override
                 public Boolean apply(WebDriver driver) {
-                    return page.isDisplayed();
+                    return uiObject.isDisplayed();
                 }
             });
         } catch (Exception ex) {
-            throw new AssertionError("Page " + page + " is not displayed!\n" + ex);
+            throw new AssertionError(uiObject + " is not displayed!\n" + ex);
         }
-        
-        HtmlElementLoader.populate(page, browser.getDriver());
-        callMethodsWhenOpens(page);
-    }
 
-    public void initialize(UIBlock block, Browser browser) {
-        WebDriverWait wait = new WebDriverWait(browser.getDriver(), 10);
-        
-        try {
-            wait.until(new ExpectedCondition<Boolean>() {
-                
-                @Override
-                public Boolean apply(WebDriver driver) {
-                    return block.isDisplayed();
-                }
-            });
-        } catch (Exception ex) {
-            throw new AssertionError("" + block + " is not displayed!\n");
-        }
-        
-        HtmlElementLoader.populate(block, browser.getDriver());
-        callMethodsWhenOpens(block);
+        HtmlElementLoader.populate(uiObject, browser.getDriver());
+        callMethodsWhenOpens(uiObject);
     }
 
     private void callMethodsWhenOpens(Object uiObject) {
         Class<?> fieldClass = uiObject.getClass();
-        
+
         if (fieldClass.getName().contains("$$")) {
             callWhenUIObjectOpensMethods(uiObject, fieldClass.getSuperclass());
         } else {
@@ -99,11 +67,11 @@ public class ThucydidesInitializer implements Initializer {
     }
 
     private void callWhenUIObjectOpensMethods(Object uiObject, Class<?> clazz) {
-        
+
         if (!RootAnalizer.isRoot(clazz)) {
             callWhenUIObjectOpensMethods(uiObject, clazz.getSuperclass());
         }
-        
+
         List<Method> methods = Arrays.asList(clazz.getDeclaredMethods());
         Collections.sort(methods, new Comparator<Method>() {
             @Override
@@ -111,11 +79,11 @@ public class ThucydidesInitializer implements Initializer {
                 return a.getName().compareTo(b.getName());
             }
         });
-        
+
         for (Method method : methods) {
-            
+
             if (method.isAnnotationPresent(WhenPageOpens.class)) {
-                
+
                 try {
                     method.setAccessible(true);
                     method.invoke(uiObject);
