@@ -15,12 +15,19 @@
  */
 package com.uisteps.thucydides.tests;
 
+import com.uisteps.core.browsers.NoBrowserException;
+import com.uisteps.core.elements.Page;
+import com.uisteps.core.elements.UIObject;
+import com.uisteps.thucydides.browsers.ThucydidesBrowser;
+import com.uisteps.thucydides.browsers.ThucydidesBrowsers;
 import com.uisteps.thucydides.browsers.ThucydidesStepListener;
 import com.uisteps.thucydides.browsers.Verifications;
 import com.uisteps.thucydides.utils.ThucydidesUtils;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.junit.runners.ThucydidesRunner;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.internal.WrapsElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
  *
@@ -30,6 +37,8 @@ import org.junit.runner.RunWith;
 public class SimpleTest {
 
     @Steps
+    ThucydidesBrowsers browsers;
+    @Steps
     Verifications verifications;
 
     public SimpleTest() {
@@ -38,5 +47,97 @@ public class SimpleTest {
 
     public com.uisteps.core.verifications.Verifications.That verify() {
         return verifications.verify();
+    }
+
+    private ThucydidesBrowser getBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
+    }
+
+    public <T extends Page> T open(Class<T> pageClass) {
+        return getBrowser().open(pageClass);
+    }
+
+    public <T extends Page> T open(Class<T> rootClass, String pageName) {
+        return getBrowser().open(rootClass, pageName);
+    }
+
+    public <T extends UIObject> T onDisplayed(Class<T> uiObject) {
+        return getBrowser().onDisplayed(uiObject);
+    }
+
+    public void openUrl(String url) {
+        getBrowser().openUrl(url);
+    }
+
+    public String getCurrentUrl() {
+        return getBrowser().getCurrentUrl();
+    }
+
+    public String getCurrentTitle() {
+        return getBrowser().getCurrentTitle();
+    }
+
+    public void switchToNextWindow() {
+        getBrowser().switchToNextWindow();
+    }
+
+    public void switchToPreviousWindow() {
+        getBrowser().switchToPreviousWindow();
+    }
+
+    public void switchToDefaultWindow() {
+        getBrowser().switchToWindowByIndex(0);
+    }
+
+    public void switchToWindowByIndex(int index) {
+        getBrowser().switchToWindowByIndex(index);
+    }
+
+    public void refreshCurrentPage() {
+        getBrowser().refreshCurrentPage();
+    }
+
+    public void waitUntil(ExpectedCondition<Boolean> condition) {
+        getBrowser().waitUntil(condition);
+    }
+
+    public Object executeScript(String script) {
+        return getBrowser().executeScript(script);
+    }
+
+    public boolean isDisplayed(WrapsElement element) {
+        return element.getWrappedElement().isDisplayed();
+    }
+
+    public boolean isEnabled(WrapsElement element) {
+        return element.getWrappedElement().isEnabled();
+    }
+
+    public boolean isSelected(WrapsElement element) {
+        return element.getWrappedElement().isSelected();
+    }
+
+    public void openNewBrowser() {
+        browsers.openNewBrowser();
+    }
+
+    public void openNewWindow() {
+        getBrowser().openNewWindow();
+    }
+
+    public void switchToNextBrowser() {
+        browsers.switchToNextBrowser();
+    }
+
+    public void switchToPreviousBrowser() {
+        browsers.switchToPreviousBrowser();
+    }
+
+    public void switchToDefaultBrowser() {
+        browsers.switchToDefaultBrowser();
+    }
+
+    public void switchToBrowserByIndex(int index) throws NoBrowserException {
+        browsers.switchToBrowserByIndex(index);
     }
 }

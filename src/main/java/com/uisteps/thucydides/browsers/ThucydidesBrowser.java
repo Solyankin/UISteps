@@ -22,7 +22,6 @@ import com.uisteps.core.browsers.StepLibraryFactory;
 import com.uisteps.core.elements.Page;
 import com.uisteps.core.elements.UIObject;
 import com.uisteps.core.browsers.Url;
-import com.uisteps.thucydides.elements.MockPage;
 import java.net.MalformedURLException;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
@@ -116,9 +115,12 @@ public class ThucydidesBrowser extends Browser {
 
     @Override
     public void openUrl(String url) {
+        
         try {
             super.openUrl(url);
-            open(new MockPage(url));
+            com.uisteps.thucydides.elements.Page page = new com.uisteps.thucydides.elements.Page();
+            page.setUrl(new Url(url));
+            open(page);
         } catch (MalformedURLException ex) {
             throw new AssertionError("Incorrect url " + url);
         }

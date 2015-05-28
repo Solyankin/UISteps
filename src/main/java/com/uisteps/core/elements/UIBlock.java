@@ -55,7 +55,7 @@ public abstract class UIBlock extends HtmlElement implements UIObject {
         return browser.onDisplayed(uiObjectClass);
     }
 
-    public Object executeScript(String script) {
+    protected Object executeScript(String script) {
         return browser.executeScript(script);
     }
 

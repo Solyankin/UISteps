@@ -61,7 +61,7 @@ public abstract class Page implements UIObject {
         return browser.onDisplayed(uiObjectClass);
     }
 
-    public Object executeScript(String script) {
+    protected Object executeScript(String script) {
         return browser.executeScript(script);
     }
 
@@ -87,10 +87,6 @@ public abstract class Page implements UIObject {
 
     public void refresh() {
         browser.refreshCurrentPage();
-    }
-
-    public void deleteCookies() {
-        browser.deleteCookies();
     }
 
     protected void waitUntil(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {

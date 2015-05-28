@@ -38,6 +38,8 @@ public class ThucydidesInitializer implements Initializer {
 
     @Override
     public void initialize(UIObject uiObject, Browser browser) {
+        HtmlElementLoader.populate(uiObject, browser.getDriver());
+        
         WebDriverWait wait = new WebDriverWait(browser.getDriver(), 10);
 
         try {
@@ -52,7 +54,6 @@ public class ThucydidesInitializer implements Initializer {
             throw new AssertionError(uiObject + " is not displayed!\n" + ex);
         }
 
-        HtmlElementLoader.populate(uiObject, browser.getDriver());
         callMethodsWhenOpens(uiObject);
     }
 

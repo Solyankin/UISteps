@@ -63,7 +63,7 @@ public class Browser {
 
     public <T extends Page> T open(Class<T> pageClass) {
         T page = stepLibraryFactory.instatiate(pageClass);
-        openUrl(page.getUrl());
+        getDriver().get(page.getUrl().toString());
         initializer.initialize(page, this);
         return page;
     }
@@ -83,22 +83,6 @@ public class Browser {
 
     public WebDriver getDriver() {
         return driver;
-    }
-
-    public boolean isPage(Object obj) {
-        return isPage(obj.getClass());
-    }
-
-    public boolean isBlock(Object obj) {
-        return isBlock(obj.getClass());
-    }
-
-    public boolean isPage(Class<?> klass) {
-        return Page.class.isAssignableFrom(klass);
-    }
-
-    public boolean isBlock(Class<?> klass) {
-        return UIBlock.class.isAssignableFrom(klass);
     }
 
     public String getCurrentUrl() {
@@ -209,6 +193,8 @@ public class Browser {
     public void waitUntil(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {
         WebDriverWait wait = new WebDriverWait(getDriver(), timeOutInSeconds);
         wait.until(new ExpectedCondition<Boolean>() {
+            
+            @Override
             public Boolean apply(WebDriver driver) {
                 return condition.apply(driver);
             }
