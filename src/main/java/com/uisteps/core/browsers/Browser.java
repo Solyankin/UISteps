@@ -126,10 +126,10 @@ public class Browser {
 
         try {
             WebElement webElement = element.getWrappedElement();
-            webElement.click();
-
             String attrTarget = webElement.getAttribute("target");
-
+            
+            webElement.click();
+            
             if (attrTarget != null && !attrTarget.equals("") && !attrTarget.equals("_self")) {
                 switchToNextWindow();
             }
