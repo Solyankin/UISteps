@@ -102,14 +102,18 @@ public class ThucydidesUtils extends Thucydides {
     }
 
     public static WebDriver getNewDriver() {
-        
+        return getNewDriver(getConfiguration().getDriverType());
+    }
+
+    public static WebDriver getNewDriver(SupportedWebDriver SupportedDriver) {
+
         WebdriverManager webdriverManager = getWebdriverManager();
 
         String driverName = "#" + (++driverCounter);
-        String driverType = getConfiguration().getDriverType().name().toLowerCase();
-        
+        String driverType = SupportedDriver.name().toLowerCase();
+
         WebDriver driver = webdriverManager.getWebdriver(driverType);
-        
+
         getDrivers().registerDriverCalled(driverName).forDriver(driver);
         getBaseStepListener().setDriver(driver);
         getDriversMap().remove(driverType);
@@ -128,19 +132,6 @@ public class ThucydidesUtils extends Thucydides {
         }
     }
 
-    public static void removeMockDriver() {
-        String fieldName = "mockDriver";
-
-        try {
-            Field field = WebdriverProxyFactory.class.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            field.set(WebdriverProxyFactory.getFactory(), null);
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException ex) {
-            throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + WebdriverProxyFactory.class + "!\nCause: " + ex);
-        }
-    }
-    
-    
     public static WebdriverInstances getDrivers() {
         Field webdriverInstancesThreadLocalField = null;
         String fieldName = "webdriverInstancesThreadLocal";
@@ -159,7 +150,6 @@ public class ThucydidesUtils extends Thucydides {
         }
     }
 
-    
     public static BaseStepListener getBaseStepListener() {
         String methodName = "getBaseStepListener";
 
@@ -171,8 +161,7 @@ public class ThucydidesUtils extends Thucydides {
             throw new RuntimeException("Cannot invoke method by name " + methodName + " in class " + StepEventBus.class + "!\nCause: " + ex);
         }
     }
-    
-    
+
     public static WebdriverManager getWebdriverManager() {
         WebdriverManager webdriverManager = null;
         String methodName = "getWebdriverManager";
