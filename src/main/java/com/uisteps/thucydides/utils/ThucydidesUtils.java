@@ -15,7 +15,7 @@
  */
 package com.uisteps.thucydides.utils;
 
-import com.uisteps.thucydides.browsers.ThucydidesBrowser;
+import com.uisteps.core.browser.Browser;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -28,17 +28,13 @@ import net.thucydides.core.steps.BaseStepListener;
 import net.thucydides.core.steps.StepEventBus;
 import net.thucydides.core.steps.StepFactory;
 import net.thucydides.core.steps.StepListener;
-import net.thucydides.core.util.EnvironmentVariables;
 import net.thucydides.core.webdriver.Configuration;
 import net.thucydides.core.webdriver.SupportedWebDriver;
 import net.thucydides.core.webdriver.ThucydidesWebdriverManager;
-import net.thucydides.core.webdriver.WebDriverFacade;
-import net.thucydides.core.webdriver.WebDriverFactory;
 import net.thucydides.core.webdriver.WebdriverInstances;
 import net.thucydides.core.webdriver.WebdriverManager;
 import net.thucydides.core.webdriver.WebdriverProxyFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  *
@@ -49,12 +45,12 @@ public class ThucydidesUtils extends Thucydides {
     public static String BROWSER_SESSION_KEY = "#BROWSER#";
     private static int driverCounter = 0;
 
-    public static void putToSession(ThucydidesBrowser browser) {
+    public static void putToSession(Browser browser) {
         putToSession(BROWSER_SESSION_KEY, browser);
     }
 
-    public static ThucydidesBrowser getCurrentBrowser() {
-        return (ThucydidesBrowser) getFromSession(BROWSER_SESSION_KEY);
+    public static Browser getCurrentBrowser() {
+        return (Browser) getFromSession(BROWSER_SESSION_KEY);
     }
 
     public static <T> T getNewStepLibrary(Class<T> stepLibraryClass) {
