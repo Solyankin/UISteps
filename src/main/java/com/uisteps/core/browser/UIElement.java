@@ -33,7 +33,11 @@ public class UIElement extends TypifiedElement {
         return null;
     }
     
-    protected <T extends UIObject> T toDisplay(Class<T> uiObject) {
+    protected <T extends UIObject> T displayed(Class<T> uiObject) {
+        return browser.displayed(uiObject);
+    }
+
+    protected <T extends UIObject> T displayed(T uiObject) {
         return browser.displayed(uiObject);
     }
     

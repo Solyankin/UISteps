@@ -49,8 +49,12 @@ public class Page implements UIObject {
         return browser;
     }
 
-    protected <T extends UIObject> T toDisplay(Class<T> uiObjectClass) {
-        return browser.displayed(uiObjectClass);
+    protected <T extends UIObject> T displayed(Class<T> uiObject) {
+        return browser.displayed(uiObject);
+    }
+
+    protected <T extends UIObject> T displayed(T uiObject) {
+        return browser.displayed(uiObject);
     }
 
     protected Object executeScript(String script) {
