@@ -13,12 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.tests;
+package com.uisteps.core.browser;
 
 /**
  *
  * @author ASolyankin
  */
-public class WebUserTest extends UserTest {
- 
+public class NoBrowserException  extends RuntimeException{
+
+    public NoBrowserException() {
+        super("No browser to switch!");
+    }
+
+    public NoBrowserException(String message) {
+        super(message);
+    }
+    
+    
 }

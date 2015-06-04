@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides;
-
-import com.uisteps.thucydides.verifications.ThucydidesVerify;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.jbehave.ThucydidesJUnitStory;
+package com.uisteps.core.verify;
 
 /**
  *
  * @author ASolyankin
  */
-public class Story extends ThucydidesJUnitStory {
-    
-    @Steps
-    protected ThucydidesVerify verify;
+public class LastActualResult extends Actual {
+
+    public LastActualResult(Verify verify, boolean condition, String expectedResult) {
+        super(verify, condition, expectedResult);
+    }
+
+    public void ifElse(String actualResult) {
+        verify(actualResult);
+    }
 }

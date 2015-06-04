@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides;
-
-import com.uisteps.thucydides.utils.ThucydidesUtils;
-import com.uisteps.core.user.BrowserFactory;
-import com.uisteps.core.browser.PageFactory;
+package com.uisteps.core.verify;
 
 /**
  *
  * @author ASolyankin
  */
-public class ThucydidesStepLibraryFactory implements PageFactory, BrowserFactory {
+public class LastExpectedResult extends Expected {
 
-    @Override
-    public <T> T instatiate(Class<T> uiObjectClass) {
-        return ThucydidesUtils.getNewStepLibrary(uiObjectClass);
+    public LastExpectedResult(Verify verify, boolean condition) {
+        super(verify, condition);
     }
 
+    @Override
+    public LastActualResult ifResultIsExpected(String expectedDescription) {
+        return new LastActualResult(getVerify(), getCondition(), expectedDescription);
+    }
 }

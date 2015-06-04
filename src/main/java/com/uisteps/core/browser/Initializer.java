@@ -15,8 +15,6 @@
  */
 package com.uisteps.core.browser;
 
-import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.UIObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,18 +26,16 @@ import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
  */
 public class Initializer {
 
-    private final WebDriver driver;
-    private final long timeOutInSeconds;
+    private final Browser browser;
 
-    public Initializer(WebDriver driver, long timeOutInSeconds) {
-        this.driver = driver;
-        this.timeOutInSeconds = timeOutInSeconds;
+    public Initializer(Browser browser) {
+        this.browser = browser;
     }
 
-    public void initialize(UIObject uiObject) {
-        HtmlElementLoader.populate(uiObject, driver);
-        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+    public void initialize(UIObject uiObject) {    
+        HtmlElementLoader.populate(uiObject, browser.getDriver());
         
+        WebDriverWait wait = new WebDriverWait(browser.getDriver(), browser.getTimeOutInSeconds());
         wait.until(new ExpectedCondition<Boolean>() {
 
             @Override

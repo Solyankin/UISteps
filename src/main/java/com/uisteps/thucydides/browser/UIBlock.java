@@ -1,8 +1,8 @@
 package com.uisteps.thucydides.browser;
 
 import com.uisteps.core.browser.Browser;
-import com.uisteps.thucydides.utils.ThucydidesUtils;
-import com.uisteps.thucydides.utils.NameConvertor;
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.NameConvertor;
 
 /**
  *

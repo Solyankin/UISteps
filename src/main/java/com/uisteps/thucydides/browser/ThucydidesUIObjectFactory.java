@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 ASolyankin.
  *
@@ -16,27 +15,19 @@
  */
 package com.uisteps.thucydides.browser;
 
-import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.Url;
+import com.uisteps.core.browser.UIObjectFactory;
+import com.uisteps.core.browser.UIObject;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
 
 /**
  *
  * @author ASolyankin
  */
-public class Page extends com.uisteps.core.browser.Page {
-
-    public Page() {
-        super(ThucydidesUtils.getCurrentBrowser(), new ThucydidesUrlFactory());
-    }
-
-    public Page(Browser browser, Url url) {
-        super(browser, url);
-    }
+public class ThucydidesUIObjectFactory implements UIObjectFactory {
 
     @Override
-    public String getName() {
-        return NameConvertor.humanize(getClass());
+    public <T extends UIObject> T instatiate(Class<T> uiObject) {
+        return ThucydidesUtils.getNewStepLibrary(uiObject);
     }
+
 }

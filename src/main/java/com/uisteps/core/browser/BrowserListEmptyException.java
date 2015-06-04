@@ -13,35 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verifications;
+package com.uisteps.core.browser;
 
 /**
  *
  * @author ASolyankin
  */
-public class Condition {
+public class BrowserListEmptyException extends NoBrowserException {
 
-    private final boolean value;
-    private final String expectedDescription;
-    private final String actualDescription;
-
-    public Condition(boolean value, String expectedDescription, String actualDescription) {
-        this.value = value;
-        this.expectedDescription = expectedDescription;
-        this.actualDescription = actualDescription;
+    public BrowserListEmptyException() {
+        super("List of browsers is empty!");
     }
 
-    public boolean isValue() {
-        return value;
+    public BrowserListEmptyException(String message) {
+        super(message);
     }
-
-    public String getExpectedDescription() {
-        return expectedDescription;
-    }
-
-    public String getActualDescription() {
-        return actualDescription;
-    }
-    
     
 }

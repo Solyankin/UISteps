@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.browser;
+package com.uisteps.thucydides.run;
+
+import com.uisteps.thucydides.ThucydidesStepListener;
+import net.thucydides.core.annotations.Steps;
+import com.uisteps.thucydides.user.ThucydidesUser;
+import com.uisteps.thucydides.ThucydidesUtils;
 
 /**
  *
  * @author ASolyankin
  */
-public interface PageFactory {
+public class UserStory extends Story {
 
-    <T extends Object> T instatiate(Class<T> uiObjectClass);
+    @Steps
+    protected ThucydidesUser user;
+
+    public UserStory() {
+        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+    }
 }

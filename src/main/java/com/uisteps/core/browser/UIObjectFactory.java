@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 ASolyankin.
+ * Copyright 2014 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides;
-
-import com.uisteps.thucydides.verifications.ThucydidesVerify;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
+package com.uisteps.core.browser;
 
 /**
  *
  * @author ASolyankin
  */
-@RunWith(ThucydidesRunner.class)
-public class Test {
+public interface UIObjectFactory {
 
-    @Steps
-    protected ThucydidesVerify verify;
+    <T extends UIObject> T instatiate(Class<T> uiObject);
 }

@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user;
+package com.uisteps.thucydides.run;
 
 /**
  *
  * @author ASolyankin
  */
-public interface BrowserFactory {
-
-    <T extends Object> T instatiate(Class<T> browserClass);
+public class WebUserTest extends UserTest {
+ 
 }

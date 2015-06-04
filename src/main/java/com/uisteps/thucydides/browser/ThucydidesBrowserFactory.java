@@ -1,6 +1,5 @@
-
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,26 +16,24 @@
 package com.uisteps.thucydides.browser;
 
 import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.Url;
+import com.uisteps.core.browser.BrowserFactory;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
+import org.openqa.selenium.WebDriver;
 
 /**
  *
  * @author ASolyankin
  */
-public class Page extends com.uisteps.core.browser.Page {
+public class ThucydidesBrowserFactory extends BrowserFactory {
 
-    public Page() {
-        super(ThucydidesUtils.getCurrentBrowser(), new ThucydidesUrlFactory());
-    }
-
-    public Page(Browser browser, Url url) {
-        super(browser, url);
+    @Override
+    public WebDriver getDefaultDriver() {
+        return ThucydidesUtils.getNewDriver();
     }
 
     @Override
-    public String getName() {
-        return NameConvertor.humanize(getClass());
+    protected <T extends Browser> T getInstanceOf(Class<T> browser) {
+        return ThucydidesUtils.getNewStepLibrary(browser);
     }
+
 }

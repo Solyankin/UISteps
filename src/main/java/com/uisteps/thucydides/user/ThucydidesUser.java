@@ -15,14 +15,15 @@
  */
 package com.uisteps.thucydides.user;
 
-import com.uisteps.thucydides.ThucydidesStepLibraryFactory;
-import com.uisteps.thucydides.utils.ThucydidesUtils;
+import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.core.browser.Browser;
-import com.uisteps.core.user.BrowserFactory;
+import com.uisteps.core.browser.BrowserFactory;
 import com.uisteps.core.user.User;
-import com.uisteps.core.user.NoBrowserException;
+import com.uisteps.core.browser.NoBrowserException;
+import com.uisteps.thucydides.browser.ThucydidesBrowserFactory;
 import com.uisteps.thucydides.browser.ThucydidesBrowser;
 import net.thucydides.core.annotations.Step;
+import net.thucydides.core.webdriver.SupportedWebDriver;
 
 /**
  *
@@ -31,7 +32,7 @@ import net.thucydides.core.annotations.Step;
 public class ThucydidesUser extends User {
 
     public ThucydidesUser() {
-        this(new ThucydidesStepLibraryFactory(), ThucydidesBrowser.class);
+        this(new ThucydidesBrowserFactory(), ThucydidesBrowser.class);
     }
 
     public ThucydidesUser(BrowserFactory browserFactory, Class<? extends Browser> browser) {
@@ -75,7 +76,15 @@ public class ThucydidesUser extends User {
 
     @Override
     public Browser openNewBrowser() {
-        return openNewBrowser(register(super.openNewBrowser()));
+        return openNewBrowser(super.openNewBrowser());
+    }
+
+    public Browser openNewBrowser(String withDriver) {
+        return openNewBrowser(SupportedWebDriver.valueOf(withDriver.toUpperCase()));
+    }
+
+    public Browser openNewBrowser(SupportedWebDriver withDriver) {
+        return openNewBrowser(super.openNewBrowser(ThucydidesUtils.getNewDriver(withDriver)));
     }
 
     private Browser register(Browser browser) {
@@ -84,6 +93,4 @@ public class ThucydidesUser extends User {
         return browser;
     }
 
-    
-    
 }

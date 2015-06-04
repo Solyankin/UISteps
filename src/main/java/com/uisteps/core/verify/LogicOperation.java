@@ -1,6 +1,5 @@
-
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.browser;
-
-import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.Url;
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
+package com.uisteps.core.verify;
 
 /**
  *
  * @author ASolyankin
  */
-public class Page extends com.uisteps.core.browser.Page {
+public enum LogicOperation {
+    
+    AND {
 
-    public Page() {
-        super(ThucydidesUtils.getCurrentBrowser(), new ThucydidesUrlFactory());
-    }
+        @Override
+        public boolean execute(boolean firstCondition, boolean secondCondition) {
+            return firstCondition && secondCondition;
+        }
+    },OR {
 
-    public Page(Browser browser, Url url) {
-        super(browser, url);
-    }
-
-    @Override
-    public String getName() {
-        return NameConvertor.humanize(getClass());
-    }
+        @Override
+        public boolean execute(boolean firstCondition, boolean secondCondition) {
+            return firstCondition || secondCondition;
+        }
+    };
+    
+    public abstract boolean execute(boolean firstCondition, boolean secondCondition);
+    
 }

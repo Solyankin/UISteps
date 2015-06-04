@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user;
+package com.uisteps.core.browser;
 
 import com.uisteps.core.browser.Browser;
 import java.util.ArrayList;

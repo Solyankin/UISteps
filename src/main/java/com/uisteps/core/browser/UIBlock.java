@@ -15,7 +15,6 @@
  */
 package com.uisteps.core.browser;
 
-import com.uisteps.core.browser.Browser;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 

@@ -21,16 +21,18 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  *
  * @author ASolyankin
  */
+@Root
 public class Page implements UIObject {
 
     private final Url url;
     private final Browser browser;
-    
+    private boolean isMock;
+
     public Page(Browser browser, UrlFactory urlFactory) {
         this.url = urlFactory.getUrlOf(this.getClass());
         this.browser = browser;
     }
-    
+
     public Page(Browser browser, Url url) {
         this.url = url;
         this.browser = browser;
@@ -38,6 +40,14 @@ public class Page implements UIObject {
 
     public Url getUrl() {
         return url;
+    }
+
+    protected boolean isMock() {
+        return isMock;
+    }
+
+    protected void isMock(boolean isMock) {
+        this.isMock = isMock;
     }
 
     @Override
@@ -99,7 +109,7 @@ public class Page implements UIObject {
 
     @Override
     public String toString() {
-        return getName() + " by url <a href='" + this.getUrl() + "'>" + this.getUrl() + "</a> with title " + this.getTitle();
+        return getName() + " by url <a href='" + this.getUrl() + "' target='blank'>" + this.getUrl() + "</a> with title " + this.getTitle();
     }
 
 }

@@ -13,21 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user;
+package com.uisteps.core.browser;
 
 /**
  *
  * @author ASolyankin
  */
-public class NoBrowserException  extends RuntimeException{
-
-    public NoBrowserException() {
-        super("No browser to switch!");
-    }
-
-    public NoBrowserException(String message) {
-        super(message);
+public class MockPage {
+    
+    private final Page page;
+    
+    public MockPage(Class<? extends Page> page, Browser browser) {
+        this.page = browser.getPageFactory().instatiate(page);
+        open(this.page, browser);
     }
     
+    public MockPage(Page page, Browser browser) {
+        this.page = page;
+        open(page, browser);
+    }
+
+    private void open(Page page, Browser browser) {
+        browser.getDriver().get(page.getUrl().toString());
+    }
     
+    @Override
+    public String toString() {
+        return page.toString();
+    }
+
+    public Page getPage() {
+        return page;
+    }
 }

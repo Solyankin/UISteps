@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.utils;
+package com.uisteps.thucydides;
 
 import com.uisteps.core.browser.Browser;
 import java.lang.reflect.Field;
@@ -105,12 +105,12 @@ public class ThucydidesUtils extends Thucydides {
         return getNewDriver(getConfiguration().getDriverType());
     }
 
-    public static WebDriver getNewDriver(SupportedWebDriver SupportedDriver) {
+    public static WebDriver getNewDriver(SupportedWebDriver supportedDriver) {
 
         WebdriverManager webdriverManager = getWebdriverManager();
 
         String driverName = "#" + (++driverCounter);
-        String driverType = SupportedDriver.name().toLowerCase();
+        String driverType = supportedDriver.name().toLowerCase();
 
         WebDriver driver = webdriverManager.getWebdriver(driverType);
 
@@ -131,7 +131,7 @@ public class ThucydidesUtils extends Thucydides {
             throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + WebdriverInstances.class + "!\nCause: " + ex);
         }
     }
-
+/*
     public static WebdriverInstances getDrivers() {
         Field webdriverInstancesThreadLocalField = null;
         String fieldName = "webdriverInstancesThreadLocal";
@@ -144,12 +144,30 @@ public class ThucydidesUtils extends Thucydides {
         }
 
         try {
+            if(((ThreadLocal<WebdriverInstances>) webdriverInstancesThreadLocalField.get(null)).get() == null) {
+                throw new AssertionError("#################################FUCK");
+            }
+        
             return ((ThreadLocal<WebdriverInstances>) webdriverInstancesThreadLocalField.get(null)).get();
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             throw new RuntimeException("Cannot get drivers!\nCause: " + ex);
         }
     }
+ */   
+    public static WebdriverInstances getDrivers() {
+        String methodName = "inThisTestThread";
 
+        try {
+            Method method = ThucydidesWebdriverManager.class.getDeclaredMethod(methodName);
+            method.setAccessible(true);
+            
+            return (WebdriverInstances) method.invoke(null);
+        } catch (InvocationTargetException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException ex) {
+            throw new RuntimeException("Cannot invoke method by name " + methodName + " in class " + ThucydidesWebdriverManager.class + "!\nCause: " + ex);
+        }
+    }
+    
+    
     public static BaseStepListener getBaseStepListener() {
         String methodName = "getBaseStepListener";
 
@@ -179,4 +197,5 @@ public class ThucydidesUtils extends Thucydides {
         }
         return webdriverManager;
     }
+    
 }

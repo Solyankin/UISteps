@@ -1,6 +1,5 @@
-
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.browser;
+package com.uisteps.thucydides.run;
 
-import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.Url;
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
+import com.uisteps.core.user.User;
+import com.uisteps.thucydides.user.ThucydidesUserFactory;
+import net.thucydides.core.annotations.Steps;
 
 /**
  *
  * @author ASolyankin
  */
-public class Page extends com.uisteps.core.browser.Page {
+public class MultiUserTest extends Test {
 
-    public Page() {
-        super(ThucydidesUtils.getCurrentBrowser(), new ThucydidesUrlFactory());
+    @Steps
+    protected ThucydidesUserFactory users;
+
+    public <T extends User> T by(Class<T> user) {
+        return users.by(user);
     }
 
-    public Page(Browser browser, Url url) {
-        super(browser, url);
+    public <T extends User> T by(T user) {
+        return users.by(user);
     }
 
-    @Override
-    public String getName() {
-        return NameConvertor.humanize(getClass());
-    }
 }

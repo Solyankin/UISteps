@@ -1,4 +1,4 @@
-package com.uisteps.thucydides.utils;
+package com.uisteps.thucydides;
 
 import net.thucydides.core.util.NameConverter;
 

@@ -1,6 +1,5 @@
 package com.uisteps.thucydides;
 
-import com.uisteps.thucydides.utils.ThucydidesUtils;
 import java.util.Map;
 import net.thucydides.core.model.DataTable;
 import net.thucydides.core.model.Story;
@@ -8,6 +7,7 @@ import net.thucydides.core.model.TestOutcome;
 import net.thucydides.core.steps.ExecutedStepDescription;
 import net.thucydides.core.steps.StepFailure;
 import net.thucydides.core.steps.StepListener;
+import net.thucydides.core.webdriver.WebdriverInstances;
 
 /**
  *
@@ -104,7 +104,16 @@ public class ThucydidesStepListener implements StepListener {
     }
 
     private void closeAllBrowserrs () {
-        ThucydidesUtils.getDrivers().closeAllDrivers();
+        WebdriverInstances drivers = ThucydidesUtils.getDrivers();
+        drivers.closeAllDrivers();
+    }
+
+    @Override
+    public void testSkipped() {
+    }
+
+    @Override
+    public void testPending() {
     }
     
 }

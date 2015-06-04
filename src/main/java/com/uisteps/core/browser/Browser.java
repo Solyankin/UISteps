@@ -32,28 +32,32 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class Browser {
 
-    private final WebDriver driver;
-    private final PageFactory stepLibraryFactory;
-    private final Initializer initializer;
+    private WebDriver driver;
+    private final UIObjectFactory pageFactory;
+    private Initializer initializer;
     private final long timeOutInSeconds;
     private final WindowList windowList;
 
-    public Browser(long timeOutInSeconds, WebDriver driver, PageFactory pageFactory) {
-        this(timeOutInSeconds, driver, pageFactory, new Initializer(driver, timeOutInSeconds));
-    }
-
-    public Browser(long timeOutInSeconds, WebDriver driver, PageFactory pageFactory, Initializer initializer) {
+    public Browser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, Initializer initializer) {
         this.timeOutInSeconds = timeOutInSeconds;
         windowList = new WindowList(this, timeOutInSeconds);
         this.driver = driver;
-        this.stepLibraryFactory = pageFactory;
+        this.pageFactory = pageFactory;
+        this.initializer = initializer;
+    }
+
+    public Browser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory) {
+        this(timeOutInSeconds, driver, pageFactory, null);
+        initializer = new Initializer(this);
+    }
+
+    protected void setInitializer(Initializer initializer) {
         this.initializer = initializer;
     }
 
     public Page openUrl(String url) {
-
         try {
-            return Browser.this.open(new Url(url));
+            return open(new Url(url));
         } catch (MalformedURLException ex) {
             throw new AssertionError("Cannot open url " + url + "\nCause:" + ex);
         }
@@ -63,6 +67,18 @@ public class Browser {
         return open(new Page(this, url));
     }
 
+    public <T extends Page> T open(Class<T> page) {
+        return displayed((T) open(new MockPage(page, this)));
+    }
+
+    public <T extends Page> T open(T page) {
+        return displayed((T) open(new MockPage(page, this)));
+    }
+    
+    protected Page open(MockPage mock) {
+        return mock.getPage();
+    }
+    
     public <T extends UIObject> T onDisplayed(Class<T> uiObject) {
         return displayed(uiObject);
     }
@@ -71,23 +87,17 @@ public class Browser {
         return displayed(uiObject);
     }
 
-    protected <T extends UIObject> T displayed(Class<T> uiObject) {
-        return displayed(stepLibraryFactory.instatiate(uiObject));
+    public <T extends UIObject> T displayed(Class<T> uiObject) {
+        return displayed(pageFactory.instatiate(uiObject));
     }
 
-    protected <T extends UIObject> T displayed(T uiObject) {
+    public <T extends UIObject> T displayed(T uiObject) {
         initializer.initialize(uiObject);
         return uiObject;
     }
 
-    public <T extends Page> T open(Class<T> page) {
-        return open(stepLibraryFactory.instatiate(page));
-    }
-
-    public <T extends Page> T open(T page) {
-        getDriver().get(page.getUrl().toString());
-        initializer.initialize(page);
-        return page;
+    protected void setDriver(WebDriver driver) {
+        this.driver = driver;
     }
 
     public WebDriver getDriver() {
@@ -220,12 +230,20 @@ public class Browser {
         this.waitUntil(condition, timeOutInSeconds);
     }
 
-    public PageFactory getStepLibraryFactory() {
-        return stepLibraryFactory;
+    public UIObjectFactory getStepLibraryFactory() {
+        return pageFactory;
     }
 
     public Initializer getInitializer() {
         return initializer;
+    }
+
+    public UIObjectFactory getPageFactory() {
+        return pageFactory;
+    }
+
+    public long getTimeOutInSeconds() {
+        return timeOutInSeconds;
     }
 
     public WindowList getWindowList() {

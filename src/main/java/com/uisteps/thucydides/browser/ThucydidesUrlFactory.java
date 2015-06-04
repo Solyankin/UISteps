@@ -16,7 +16,7 @@
 package com.uisteps.thucydides.browser;
 
 import com.uisteps.core.browser.RootAnalizer;
-import com.uisteps.thucydides.utils.ThucydidesUtils;
+import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.core.browser.Url;
 import com.uisteps.core.browser.Page;
 import java.util.regex.Matcher;

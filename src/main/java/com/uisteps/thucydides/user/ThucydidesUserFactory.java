@@ -1,6 +1,5 @@
-
 /*
- * Copyright 2014 ASolyankin.
+ * Copyright 2015 ASolyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.browser;
+package com.uisteps.thucydides.user;
 
 import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.Url;
+import com.uisteps.core.browser.BrowserFactory;
+import com.uisteps.core.user.User;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
+import net.thucydides.core.annotations.Step;
+import org.openqa.selenium.WebDriver;
 
 /**
  *
  * @author ASolyankin
  */
-public class Page extends com.uisteps.core.browser.Page {
+public class ThucydidesUserFactory {
 
-    public Page() {
-        super(ThucydidesUtils.getCurrentBrowser(), new ThucydidesUrlFactory());
+    public <T extends User> T by(Class<T> user) {
+        return by(getInstanceOf(user));
     }
 
-    public Page(Browser browser, Url url) {
-        super(browser, url);
+    @Step
+    public <T extends User> T by(T user) {
+        return user;
     }
 
-    @Override
-    public String getName() {
-        return NameConvertor.humanize(getClass());
+    protected <T extends User> T getInstanceOf(Class<T> user) {
+        return ThucydidesUtils.getNewStepLibrary(user);
     }
+
 }

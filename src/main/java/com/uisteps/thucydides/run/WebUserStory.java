@@ -1,4 +1,4 @@
-package com.uisteps.thucydides.tests;
+package com.uisteps.thucydides.run;
 
 /**
  *

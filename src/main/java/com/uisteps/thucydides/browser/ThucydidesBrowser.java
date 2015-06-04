@@ -15,13 +15,13 @@
  */
 package com.uisteps.thucydides.browser;
 
-import com.uisteps.thucydides.utils.ThucydidesUtils;
+import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.core.browser.Browser;
 import com.uisteps.core.browser.Initializer;
-import com.uisteps.core.browser.PageFactory;
+import com.uisteps.core.browser.MockPage;
+import com.uisteps.core.browser.UIObjectFactory;
 import com.uisteps.core.browser.Page;
 import com.uisteps.core.browser.UIObject;
-import com.uisteps.thucydides.ThucydidesStepLibraryFactory;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsElement;
@@ -34,10 +34,10 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 public class ThucydidesBrowser extends Browser {
 
     public ThucydidesBrowser() {
-        super(ThucydidesUtils.getImplementTimeout(), ThucydidesUtils.getNewDriver(), new ThucydidesStepLibraryFactory());
+        super(ThucydidesUtils.getImplementTimeout(), null, new ThucydidesUIObjectFactory());
     }
 
-    public ThucydidesBrowser(long timeOutInSeconds, WebDriver driver, PageFactory pageFactory, Initializer initializer) {
+    public ThucydidesBrowser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, Initializer initializer) {
         super(timeOutInSeconds, driver, pageFactory, initializer);
     }
 
@@ -85,8 +85,8 @@ public class ThucydidesBrowser extends Browser {
     
     @Step
     @Override
-    public <T extends Page> T open(T page) {
-        return super.open(page);
+    protected Page open(MockPage mock) {
+        return super.open(mock);
     }
 
     @Step
@@ -137,5 +137,5 @@ public class ThucydidesBrowser extends Browser {
     public void waitUntil(ExpectedCondition<Boolean> condition) {
         super.waitUntil(condition, ThucydidesUtils.getImplementTimeout());
     }
-
+    
 }

@@ -13,22 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.tests;
+package com.uisteps.thucydides.run;
 
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.jbehave.ThucydidesJUnitStory;
 import com.uisteps.thucydides.user.ThucydidesUser;
-import com.uisteps.thucydides.verifications.ThucydidesVerify;
+import com.uisteps.thucydides.ThucydidesStepListener;
+import com.uisteps.thucydides.ThucydidesUtils;
+import net.thucydides.core.annotations.Steps;
+import net.thucydides.junit.runners.ThucydidesRunner;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author ASolyankin
  */
-public class UserStory extends ThucydidesJUnitStory {
+@RunWith(ThucydidesRunner.class)
+public class UserTest extends Test {
 
     @Steps
     protected ThucydidesUser user;
-    @Steps
-    protected ThucydidesVerify verifications;
 
+    public UserTest() {
+        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+    }
 }

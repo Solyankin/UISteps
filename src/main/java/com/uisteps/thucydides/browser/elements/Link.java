@@ -1,7 +1,7 @@
 package com.uisteps.thucydides.browser.elements;
 
 import com.uisteps.core.browser.Browser;
-import com.uisteps.thucydides.utils.ThucydidesUtils;
+import com.uisteps.thucydides.ThucydidesUtils;
 import org.openqa.selenium.WebElement;
 
 /**
