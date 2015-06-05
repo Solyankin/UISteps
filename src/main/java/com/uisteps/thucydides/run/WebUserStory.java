@@ -6,4 +6,8 @@ package com.uisteps.thucydides.run;
  */
 public class WebUserStory extends UserStory {
 
+    public WebUserStory() {
+        //user.openNewBrowser();
+    }
+
 }

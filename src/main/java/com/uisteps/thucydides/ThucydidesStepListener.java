@@ -83,6 +83,14 @@ public class ThucydidesStepListener implements StepListener {
     }
 
     @Override
+    public void testSkipped() {
+    }
+
+    @Override
+    public void testPending() {
+    }
+    
+    @Override
     public void notifyScreenChange() {
     }
 
@@ -106,14 +114,6 @@ public class ThucydidesStepListener implements StepListener {
     private void closeAllBrowserrs () {
         WebdriverInstances drivers = ThucydidesUtils.getDrivers();
         drivers.closeAllDrivers();
-    }
-
-    @Override
-    public void testSkipped() {
-    }
-
-    @Override
-    public void testPending() {
     }
     
 }
