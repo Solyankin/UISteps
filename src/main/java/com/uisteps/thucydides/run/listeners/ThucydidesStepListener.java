@@ -1,5 +1,6 @@
 package com.uisteps.thucydides.run.listeners;
 
+import com.uisteps.core.verify.Verify;
 import com.uisteps.thucydides.ThucydidesUtils;
 import java.util.Map;
 import net.thucydides.core.model.DataTable;
@@ -111,7 +112,7 @@ public class ThucydidesStepListener implements StepListener {
     @Override
     public void assumptionViolated(String message) {
     }
-
+    
     protected void closeAllBrowser() {
         WebdriverInstances drivers = ThucydidesUtils.getDrivers();
         drivers.closeAllDrivers();

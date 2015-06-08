@@ -23,8 +23,6 @@ import java.util.Iterator;
  */
 public class Result extends ConditionContainer {
 
-    private boolean hasLastCondition;
-
     public Result() {
         reset();
     }
@@ -32,16 +30,7 @@ public class Result extends ConditionContainer {
     @Override
     public final void reset() {
         super.reset();
-        hasLastCondition = false;
         add(new ConditionPool());
-    }
-
-    public boolean hasLastCondition() {
-        return hasLastCondition;
-    }
-
-    public void hasLastCondition(boolean hasLastCondition) {
-        this.hasLastCondition = hasLastCondition;
     }
 
     public void add(Condition condition) {

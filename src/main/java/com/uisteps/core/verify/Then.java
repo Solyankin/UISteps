@@ -19,13 +19,25 @@ package com.uisteps.core.verify;
  *
  * @author ASolyankin
  */
-public class ActualResult extends Actual {
+public class Then {
+    
+    private final Verify verify;
 
-    public ActualResult(Verify verify, boolean condition, String expectedResult) {
-        super(verify, condition, expectedResult);
+    public Then(Verify verify) {
+        this.verify = verify;
     }
 
-    public Then ifElse(String actualResult) {
-        return verify(actualResult);
+    public Verify and() {
+        return then(LogicOperation.AND);
     }
+
+    public Verify or() {
+        return then(LogicOperation.OR);
+    }
+
+    private Verify then(LogicOperation logicOperation) {
+        verify.getResult().add(new ConditionPool().set(logicOperation));
+        return verify;
+    }
+    
 }

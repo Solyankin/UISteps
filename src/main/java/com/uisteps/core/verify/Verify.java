@@ -18,37 +18,22 @@ public class Verify {
         this.result = result;
     }
 
-    public Verify and() {
-        return then(LogicOperation.AND);
-    }
-
-    public Verify or() {
-        return then(LogicOperation.OR);
-    }
-
-    private Verify then(LogicOperation logicOperation) {
-        result.add(new ConditionPool().set(logicOperation));
-        return this;
-    }
-
     public ExpectedResult _that(boolean condition) {
         return new ExpectedResult(this, condition);
     }
 
-    public Verify _that(Condition condition) {
+    public Then _that(Condition condition) {
         result.add(condition);
-        return this;
+        return new Then(this);
     }
 
     public LastExpectedResult that(boolean condition) {
-        result.hasLastCondition(true);
         return new LastExpectedResult(this, condition);
     }
 
-    public void that(Condition condition) {
-        that(condition.isSuccessful())
-                .ifResultIsExpected(condition.getExpectedResult())
-                .ifElse(condition.getActualResult());
+    public Result that(Condition condition) {
+        result.add(condition);
+        return result();
     }
 
     public Result verify(Result result) {
@@ -64,7 +49,7 @@ public class Verify {
     }
 
     public Result result() {
-        return verify(getResult());
+        return verify(result);
     }
 
     public boolean isSuccessful() {

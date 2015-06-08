@@ -31,14 +31,12 @@ public abstract class Actual {
         this.expectedResult = expectedResult;
     }
 
-    protected Verify verify(String actualResult) {
-        verify._that(new Condition(condition, expectedResult, actualResult));
-        Result result = verify.getResult();
-        
-        if (result.hasLastCondition()) {
-            verify.verify(result);
-        }
-        
+    protected Verify verify() {
         return verify;
+    }
+    
+    protected Then verify(String actualResult) {
+        verify._that(new Condition(condition, expectedResult, actualResult));
+        return new Then(verify);
     }
 }

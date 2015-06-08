@@ -25,7 +25,8 @@ public class LastActualResult extends Actual {
         super(verify, condition, expectedResult);
     }
 
-    public void ifElse(String actualResult) {
+    public Result ifElse(String actualResult) {
         verify(actualResult);
+        return verify().result();
     }
 }
