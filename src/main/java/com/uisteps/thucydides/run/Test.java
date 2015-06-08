@@ -15,6 +15,8 @@
  */
 package com.uisteps.thucydides.run;
 
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.junit.runners.ThucydidesRunner;
@@ -29,5 +31,9 @@ public class Test {
 
     @Steps
     protected ThucydidesVerify verify;
+    
+    public Test() {
+        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+    }
 
 }

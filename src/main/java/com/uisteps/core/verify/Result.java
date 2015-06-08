@@ -15,9 +15,7 @@
  */
 package com.uisteps.core.verify;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  *
@@ -34,6 +32,7 @@ public class Result extends ConditionContainer {
     @Override
     public final void reset() {
         super.reset();
+        hasLastCondition = false;
         add(new ConditionPool());
     }
 
@@ -59,19 +58,19 @@ public class Result extends ConditionContainer {
 
         resultBuilder.append("<tr bgcolor='#ededed'>");
 
-        if (this.isSuccessful()) {
-            resultBuilder.append("<th colspan='2'>");
+        if (this.hasFailures()) {
+            resultBuilder.append("<td>");
         } else {
-            resultBuilder.append("<th>");
+            resultBuilder.append("<td colspan='2'>");
         }
 
-        resultBuilder.append("<b>Expected result</b></th>");
+        resultBuilder.append("<b>Expected result</b></td>");
 
-        if (!this.isSuccessful()) {
-            resultBuilder.append("<th><b>Actual result</b></th>");
+        if (this.hasFailures()) {
+            resultBuilder.append("<td><b>Actual result</b></td>");
         }
 
-        resultBuilder.append("<th><b>Status</b></th>");
+        resultBuilder.append("<td><b>Status</b></td>");
         resultBuilder.append("</tr>");
 
         Iterator<WithLogicOperation> iterator = getConditions().iterator();
@@ -81,9 +80,8 @@ public class Result extends ConditionContainer {
             ConditionPool condition = (ConditionPool) iterator.next();
 
             resultBuilder.append("<tbody>");
-
+            
             if (getConditions().indexOf(condition) != 0) {
-
                 resultBuilder.append("<tr bgcolor='#ededed'><td colspan='3'><b>");
                 resultBuilder.append(condition.getLogicOperation());
                 resultBuilder.append("</b></td></tr>");

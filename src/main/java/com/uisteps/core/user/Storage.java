@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
-
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
-import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
+package com.uisteps.core.user;
 
 /**
  *
  * @author ASolyankin
  */
-@RunWith(ThucydidesRunner.class)
-public class UserTest extends Test {
+public interface Storage {
+    
+    public abstract void remember(String key, Object value);
 
-    @Steps
-    protected ThucydidesUser user;
+    default <T> T remembered(String key, Class<T> type) {
+        return (T) remembered(key);
+    }
+
+    public abstract Object remembered(String key);
 }

@@ -13,22 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
+package com.uisteps.core.run;
 
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
-import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
+import com.uisteps.core.user.User;
 
 /**
  *
  * @author ASolyankin
  */
-@RunWith(ThucydidesRunner.class)
-public class UserTest extends Test {
-
-    @Steps
-    protected ThucydidesUser user;
+public interface WithUser {
+    
+    User user();
+    
 }

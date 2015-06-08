@@ -13,22 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
+package com.uisteps.thucydides.user.browser;
 
+import com.uisteps.core.user.browser.BrowserFactory;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
-import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
+import org.openqa.selenium.WebDriver;
 
 /**
  *
  * @author ASolyankin
  */
-@RunWith(ThucydidesRunner.class)
-public class UserTest extends Test {
+public class ThucydidesBrowserFactory implements BrowserFactory {
 
-    @Steps
-    protected ThucydidesUser user;
+    @Override
+    public ThucydidesBrowser getBrowser(WebDriver withDriver) {
+        ThucydidesBrowser browser = ThucydidesUtils.getNewStepLibrary(ThucydidesBrowser.class);
+        browser.setDriver(withDriver);
+        return browser;
+    }
+
+    @Override
+    public ThucydidesBrowser getBrowser() {
+        return getBrowser(ThucydidesUtils.getNewDriver());
+    }
+    
 }

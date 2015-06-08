@@ -25,7 +25,8 @@ public class ConditionContainer extends WithLogicOperation {
 
     private ArrayList<WithLogicOperation> conditions = new ArrayList();
     private boolean modified;
-    private boolean result = true;
+    private boolean isSuccessful = true;
+    private boolean hasFailures = false;
 
     @Override
     public boolean isSuccessful() {
@@ -34,24 +35,44 @@ public class ConditionContainer extends WithLogicOperation {
 
             for (WithLogicOperation condition : conditions) {
 
-                result = condition.getLogicOperation().execute(result, condition.isSuccessful());
+                isSuccessful = condition.getLogicOperation().execute(isSuccessful, condition.isSuccessful());
 
-                if (conditions.indexOf(condition) != 0 && condition.getLogicOperation() == LogicOperation.AND && !result) {
+                if (conditions.indexOf(condition) != 0 && condition.getLogicOperation() == LogicOperation.AND && !isSuccessful) {
                     break;
                 }
 
-                if (condition.getLogicOperation() == LogicOperation.OR && result) {
+                if (condition.getLogicOperation() == LogicOperation.OR && isSuccessful) {
                     break;
                 }
             }
 
+            for (WithLogicOperation condition : conditions) {
+                
+                hasFailures = !condition.isSuccessful();
+                
+                if(hasFailures) {
+                    break;
+                }
+            }
+            
             modified = false;
         }
 
-        return result;
+        return isSuccessful;
     }
 
+    public boolean hasFailures() {
+
+        if (modified) {
+            isSuccessful() ;
+        }
+
+        return hasFailures;
+    }
+    
     public void reset() {
+        modified = false;
+        isSuccessful = true;
         conditions = new ArrayList();
     }
 

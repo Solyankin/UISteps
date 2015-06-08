@@ -13,22 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
-
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
-import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
+package com.uisteps.core.user.browser.pages;
 
 /**
  *
  * @author ASolyankin
  */
-@RunWith(ThucydidesRunner.class)
-public class UserTest extends Test {
+public interface UIObject {
 
-    @Steps
-    protected ThucydidesUser user;
+    boolean isDisplayed();
 }

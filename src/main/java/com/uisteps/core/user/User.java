@@ -15,13 +15,13 @@
  */
 package com.uisteps.core.user;
 
-import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.BrowserFactory;
-import com.uisteps.core.browser.BrowserList;
-import com.uisteps.core.browser.NoBrowserException;
-import com.uisteps.core.browser.Page;
-import com.uisteps.core.browser.UIObject;
-import com.uisteps.core.browser.Url;
+import com.uisteps.core.user.browser.BrowserList;
+import com.uisteps.core.user.browser.NoBrowserException;
+import com.uisteps.core.user.browser.BrowserFactory;
+import com.uisteps.core.user.browser.Browser;
+import com.uisteps.core.user.browser.pages.Page;
+import com.uisteps.core.user.browser.pages.UIObject;
+import com.uisteps.core.user.browser.pages.Url;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -34,25 +34,28 @@ public class User {
 
     private final BrowserList browserList = new BrowserList();
     private final BrowserFactory browserFactory;
-    private final Class<? extends Browser> browser;
+    private Storage storage;
     private String name = "user";
-    
 
-    public User(BrowserFactory browserFactory, Class<? extends Browser> browser) {
+    public User(BrowserFactory browserFactory, Storage storage) {
         this.browserFactory = browserFactory;
-        this.browser = browser;
+        this.storage = storage;
     }
 
     public Browser inOpenedBrowser() {
+
+        if (browserList.isEmpty()) {
+            openNewBrowser();
+        }
         return browserList.getCurrentBrowser();
     }
 
     public Browser openNewBrowser(WebDriver withDriver) {
-        return in(browserFactory.instatiate(browser, withDriver));
+        return in(browserFactory.getBrowser(withDriver));
     }
-    
+
     public Browser openNewBrowser() {
-        return in(browserFactory.instatiate(browser));
+        return in(browserFactory.getBrowser());
     }
 
     public Browser in(Browser browser) {
@@ -170,11 +173,11 @@ public class User {
     public Object executeScript(String script) {
         return inOpenedBrowser().executeScript(script);
     }
-    
+
     public boolean see(UIObject uiObject) {
         return uiObject.isDisplayed();
     }
-    
+
     public boolean see(Class<? extends UIObject> uiObject) {
         return see(inOpenedBrowser().displayed(uiObject));
     }
@@ -191,4 +194,25 @@ public class User {
     public String toString() {
         return name;
     }
+
+    public void remember(String key, Object value) {
+        storage.remember(key, value);
+    }
+
+    public <T> T remembered(String key, Class<T> type) {
+        return storage.remembered(key, type);
+    }
+
+    public Object remembered(String key) {
+        return storage.remembered(key);
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
 }

@@ -15,7 +15,7 @@
  */
 package com.uisteps.thucydides;
 
-import com.uisteps.core.browser.Browser;
+import com.uisteps.core.user.browser.Browser;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -131,29 +131,7 @@ public class ThucydidesUtils extends Thucydides {
             throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + WebdriverInstances.class + "!\nCause: " + ex);
         }
     }
-/*
-    public static WebdriverInstances getDrivers() {
-        Field webdriverInstancesThreadLocalField = null;
-        String fieldName = "webdriverInstancesThreadLocal";
-
-        try {
-            webdriverInstancesThreadLocalField = ThucydidesWebdriverManager.class.getDeclaredField(fieldName);
-            webdriverInstancesThreadLocalField.setAccessible(true);
-        } catch (NoSuchFieldException ex) {
-            throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + ThucydidesWebdriverManager.class + "!\nCause: " + ex);
-        }
-
-        try {
-            if(((ThreadLocal<WebdriverInstances>) webdriverInstancesThreadLocalField.get(null)).get() == null) {
-                throw new AssertionError("#################################FUCK");
-            }
-        
-            return ((ThreadLocal<WebdriverInstances>) webdriverInstancesThreadLocalField.get(null)).get();
-        } catch (IllegalArgumentException | IllegalAccessException ex) {
-            throw new RuntimeException("Cannot get drivers!\nCause: " + ex);
-        }
-    }
- */   
+    
     public static WebdriverInstances getDrivers() {
         String methodName = "inThisTestThread";
 

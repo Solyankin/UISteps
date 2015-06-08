@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
+package com.uisteps.thucydides.user;
 
+import com.uisteps.core.user.Storage;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
-import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
 
 /**
  *
  * @author ASolyankin
  */
-@RunWith(ThucydidesRunner.class)
-public class UserTest extends Test {
+public class ThucydidesStorage implements Storage {
 
-    @Steps
-    protected ThucydidesUser user;
+    @Override
+    public void remember(String key, Object value) {
+        ThucydidesUtils.putToSession(key, value);
+    }
+
+    @Override
+    public Object remembered(String key) {
+        return ThucydidesUtils.getFromSession(key);
+    }
 }

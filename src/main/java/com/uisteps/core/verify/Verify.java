@@ -46,11 +46,13 @@ public class Verify {
     }
 
     public void that(Condition condition) {
-        result.hasLastCondition(true);
-        _that(condition);
+        that(condition.isSuccessful())
+                .ifResultIsExpected(condition.getExpectedResult())
+                .ifElse(condition.getActualResult());
     }
 
     public Result verify(Result result) {
+
         try {
             Assert.assertTrue(result.isSuccessful());
             return result;

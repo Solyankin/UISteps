@@ -35,5 +35,6 @@ public class MultiUserStory extends Story {
     public <T extends User> T by(T user) {
         return users.by(user);
     }
+    
 
 }

@@ -16,12 +16,12 @@
 package com.uisteps.thucydides.user;
 
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.BrowserFactory;
+import com.uisteps.core.user.browser.Browser;
+import com.uisteps.core.user.browser.BrowserFactory;
 import com.uisteps.core.user.User;
-import com.uisteps.core.browser.NoBrowserException;
-import com.uisteps.thucydides.browser.ThucydidesBrowserFactory;
-import com.uisteps.thucydides.browser.ThucydidesBrowser;
+import com.uisteps.core.user.browser.NoBrowserException;
+import com.uisteps.core.user.Storage;
+import com.uisteps.thucydides.user.browser.ThucydidesBrowserFactory;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.webdriver.SupportedWebDriver;
 
@@ -32,11 +32,11 @@ import net.thucydides.core.webdriver.SupportedWebDriver;
 public class ThucydidesUser extends User {
 
     public ThucydidesUser() {
-        this(new ThucydidesBrowserFactory(), ThucydidesBrowser.class);
+        this(new ThucydidesBrowserFactory(), new ThucydidesStorage());
     }
 
-    public ThucydidesUser(BrowserFactory browserFactory, Class<? extends Browser> browser) {
-        super(browserFactory, browser);
+    public ThucydidesUser(BrowserFactory browserFactory, Storage storage) {
+        super(browserFactory, storage);
     }
 
     @Step

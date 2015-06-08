@@ -15,6 +15,8 @@
  */
 package com.uisteps.thucydides.run;
 
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.jbehave.ThucydidesJUnitStory;
@@ -24,7 +26,11 @@ import net.thucydides.jbehave.ThucydidesJUnitStory;
  * @author ASolyankin
  */
 public class Story extends ThucydidesJUnitStory {
-    
+
     @Steps
     protected ThucydidesVerify verify;
+    
+    public Story() {
+        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+    }
 }

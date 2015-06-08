@@ -15,21 +15,16 @@
  */
 package com.uisteps.thucydides.run;
 
-import com.uisteps.thucydides.ThucydidesStepListener;
-import net.thucydides.core.annotations.Steps;
 import com.uisteps.thucydides.user.ThucydidesUser;
-import com.uisteps.thucydides.ThucydidesUtils;
+import net.thucydides.core.annotations.Steps;
 
 /**
  *
  * @author ASolyankin
  */
 public class UserStory extends Story {
-
+    
     @Steps
     protected ThucydidesUser user;
-
-    public UserStory() {
-        ThucydidesUtils.registerListener(new ThucydidesStepListener());
-    }
+    
 }

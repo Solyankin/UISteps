@@ -15,12 +15,9 @@
  */
 package com.uisteps.thucydides.user;
 
-import com.uisteps.core.browser.Browser;
-import com.uisteps.core.browser.BrowserFactory;
 import com.uisteps.core.user.User;
 import com.uisteps.thucydides.ThucydidesUtils;
 import net.thucydides.core.annotations.Step;
-import org.openqa.selenium.WebDriver;
 
 /**
  *

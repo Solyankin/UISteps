@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
+package com.uisteps.core.user.browser.pages.elements;
 
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
-import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
+import com.uisteps.core.user.browser.pages.UIElement;
+import com.uisteps.core.user.browser.Browser;
+import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-@RunWith(ThucydidesRunner.class)
-public class UserTest extends Test {
+public class TextBlock extends UIElement {
 
-    @Steps
-    protected ThucydidesUser user;
+    public TextBlock(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
+    }
+
+    public String getText() {
+        return browser.getTextFrom(this);
+    }
+
 }
