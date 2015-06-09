@@ -18,7 +18,7 @@ package com.uisteps.thucydides.user.browser;
 import com.uisteps.thucydides.user.browser.pages.ThucydidesUIObjectFactory;
 import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.core.user.browser.Browser;
-import com.uisteps.core.user.browser.pages.Initializer;
+import com.uisteps.core.user.browser.pages.UIObjectInitializer;
 import com.uisteps.core.user.browser.pages.MockPage;
 import com.uisteps.core.user.browser.pages.UIObjectFactory;
 import com.uisteps.core.user.browser.pages.Page;
@@ -37,7 +37,7 @@ public class ThucydidesBrowser extends Browser {
         super(ThucydidesUtils.getImplementTimeout(), null, new ThucydidesUIObjectFactory());
     }
 
-    public ThucydidesBrowser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, Initializer initializer) {
+    public ThucydidesBrowser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, UIObjectInitializer initializer) {
         super(timeOutInSeconds, driver, pageFactory, initializer);
     }
 

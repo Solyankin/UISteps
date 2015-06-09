@@ -13,28 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.thucydides.verify.results;
+
+import com.uisteps.core.verify.results.LastActualResult;
+import com.uisteps.core.verify.Then;
+import com.uisteps.core.verify.Verify;
 
 /**
  *
  * @author ASolyankin
  */
-public enum LogicOperation {
-    
-    AND {
+public class ThucydidesLastActualResult extends LastActualResult {
 
-        @Override
-        public boolean execute(boolean firstCondition, boolean secondCondition) {
-            return firstCondition && secondCondition;
-        }
-    },OR {
-
-        @Override
-        public boolean execute(boolean firstCondition, boolean secondCondition) {
-            return firstCondition || secondCondition;
-        }
-    };
+    public ThucydidesLastActualResult(Verify verify, boolean condition, String expectedResult) {
+        super(verify, condition, expectedResult);
+    }
     
-    public abstract boolean execute(boolean firstCondition, boolean secondCondition);
-    
+    @Override
+    public Then ifElse(String actualResult) {
+        return verify(actualResult);
+    }
 }

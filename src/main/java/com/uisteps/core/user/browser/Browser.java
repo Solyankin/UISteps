@@ -16,7 +16,7 @@
  */
 package com.uisteps.core.user.browser;
 
-import com.uisteps.core.user.browser.pages.Initializer;
+import com.uisteps.core.user.browser.pages.UIObjectInitializer;
 import com.uisteps.core.user.browser.pages.MockPage;
 import com.uisteps.core.user.browser.pages.Page;
 import com.uisteps.core.user.browser.pages.UIObject;
@@ -40,11 +40,11 @@ public class Browser {
 
     private WebDriver driver;
     private final UIObjectFactory pageFactory;
-    private Initializer initializer;
+    private UIObjectInitializer initializer;
     private final long timeOutInSeconds;
     private final WindowList windowList;
 
-    public Browser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, Initializer initializer) {
+    public Browser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, UIObjectInitializer initializer) {
         this.timeOutInSeconds = timeOutInSeconds;
         windowList = new WindowList(this, timeOutInSeconds);
         this.driver = driver;
@@ -54,10 +54,10 @@ public class Browser {
 
     public Browser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory) {
         this(timeOutInSeconds, driver, pageFactory, null);
-        initializer = new Initializer(this);
+        initializer = new UIObjectInitializer(this);
     }
 
-    protected void setInitializer(Initializer initializer) {
+    protected void setInitializer(UIObjectInitializer initializer) {
         this.initializer = initializer;
     }
 
@@ -240,7 +240,7 @@ public class Browser {
         return pageFactory;
     }
 
-    public Initializer getInitializer() {
+    public UIObjectInitializer getInitializer() {
         return initializer;
     }
 

@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.verify.conditions;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -60,6 +59,13 @@ public class ConditionPool extends ConditionContainer {
                 resultBuilder.append("<td bgcolor='#fd989b'><b>FAILURE</b></td>");
             }
 
+            resultBuilder.append("<td bgcolor='#ededed'>");
+            
+            if(iterator.hasNext()) {
+                resultBuilder.append(condition.getLogicOperation());
+            }
+            
+            resultBuilder.append("</td>");
             resultBuilder.append("</tr>");
         }
 

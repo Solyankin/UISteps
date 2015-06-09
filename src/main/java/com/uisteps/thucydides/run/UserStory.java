@@ -15,6 +15,8 @@
  */
 package com.uisteps.thucydides.run;
 
+import com.uisteps.core.run.WithUser;
+import com.uisteps.core.user.User;
 import com.uisteps.thucydides.user.ThucydidesUser;
 import net.thucydides.core.annotations.Steps;
 
@@ -22,9 +24,14 @@ import net.thucydides.core.annotations.Steps;
  *
  * @author ASolyankin
  */
-public class UserStory extends Story {
+public class UserStory extends Story implements WithUser {
     
     @Steps
     protected ThucydidesUser user;
+
+    @Override
+    public ThucydidesUser user() {
+        return user;
+    }
     
 }

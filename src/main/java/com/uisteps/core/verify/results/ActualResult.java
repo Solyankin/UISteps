@@ -13,29 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.verify.results;
+
+import com.uisteps.core.verify.conditions.Condition;
+import com.uisteps.core.verify.Then;
+import com.uisteps.core.verify.Verify;
 
 /**
  *
  * @author ASolyankin
  */
-public abstract class Expected {
+public class ActualResult {
 
     private final Verify verify;
     private final boolean condition;
+    private final String expectedResult;
 
-    public Expected(Verify verify, boolean condition) {
+    public ActualResult(Verify verify, boolean condition, String expectedResult) {
         this.verify = verify;
         this.condition = condition;
+        this.expectedResult = expectedResult;
     }
 
-    public Verify getVerify() {
+    protected Verify verify() {
         return verify;
     }
-
-    public boolean getCondition() {
-        return condition;
-    }
     
-    public abstract Actual ifResultIsExpected(String expectedDescription);
+    protected Then verify(String actualResult) {
+        verify._that(new Condition(condition, expectedResult, actualResult));
+        return new Then(verify);
+    }
+
+    public Then ifElse(String actualResult) {
+        return verify(actualResult);
+    }
 }

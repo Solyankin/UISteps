@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.verify.conditions;
 
 import java.util.Iterator;
 
@@ -22,7 +22,7 @@ import java.util.Iterator;
  * @author ASolyankin
  */
 public class Result extends ConditionContainer {
-
+    
     public Result() {
         reset();
     }
@@ -33,9 +33,12 @@ public class Result extends ConditionContainer {
         add(new ConditionPool());
     }
 
-    public void add(Condition condition) {
-        ConditionPool lastConditionPool = (ConditionPool) getConditions().get(getConditions().size() - 1 );
-        lastConditionPool.add(condition);
+    public void add(Condition... conditions) {
+        
+        for (Condition condition : conditions) {
+            ConditionPool lastConditionPool = (ConditionPool) getConditions().get(getConditions().size() - 1);
+            lastConditionPool.add(condition);
+        }
     }
 
     @Override
@@ -60,7 +63,7 @@ public class Result extends ConditionContainer {
         }
 
         resultBuilder.append("<td><b>Status</b></td>");
-        resultBuilder.append("</tr>");
+        resultBuilder.append("<td></td></tr>");
 
         Iterator<WithLogicOperation> iterator = getConditions().iterator();
 
@@ -69,9 +72,9 @@ public class Result extends ConditionContainer {
             ConditionPool condition = (ConditionPool) iterator.next();
 
             resultBuilder.append("<tbody>");
-            
+
             if (getConditions().indexOf(condition) != 0) {
-                resultBuilder.append("<tr bgcolor='#ededed'><td colspan='3'><b>");
+                resultBuilder.append("<tr bgcolor='#ededed'><td colspan='4'><b>");
                 resultBuilder.append(condition.getLogicOperation());
                 resultBuilder.append("</b></td></tr>");
             }

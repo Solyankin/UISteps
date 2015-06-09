@@ -16,6 +16,7 @@
 package com.uisteps.thucydides.user;
 
 import com.uisteps.core.user.User;
+import com.uisteps.core.user.UserFactory;
 import com.uisteps.thucydides.ThucydidesUtils;
 import net.thucydides.core.annotations.Step;
 
@@ -23,18 +24,24 @@ import net.thucydides.core.annotations.Step;
  *
  * @author ASolyankin
  */
-public class ThucydidesUserFactory {
+public class ThucydidesUserFactory extends UserFactory {
 
-    public <T extends User> T by(Class<T> user) {
-        return by(getInstanceOf(user));
+    public ThucydidesUserFactory() {
+        super(ThucydidesUser.class);
+    }
+
+    public ThucydidesUserFactory(Class<? extends User> user) {
+        super(user);
     }
 
     @Step
-    public <T extends User> T by(T user) {
-        return user;
+    @Override
+    public User by(String user) {
+        return super.by(user);
     }
 
-    protected <T extends User> T getInstanceOf(Class<T> user) {
+    @Override
+    public <T extends User> T getInstanceOf(Class<T> user) {
         return ThucydidesUtils.getNewStepLibrary(user);
     }
 

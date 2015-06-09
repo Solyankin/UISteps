@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.verify.conditions;
 
 /**
  *
  * @author ASolyankin
  */
-public abstract class WithLogicOperation {
- 
-    private LogicOperation logicOperation = LogicOperation.AND;
+public enum LogicOperation {
     
-    public abstract boolean isSuccessful();
+    AND {
 
-    public LogicOperation getLogicOperation() {
-        return logicOperation;
-    }
+        @Override
+        public boolean execute(boolean firstCondition, boolean secondCondition) {
+            return firstCondition && secondCondition;
+        }
+    },OR {
 
-    public WithLogicOperation set(LogicOperation logicOperation) {
-        this.logicOperation = logicOperation;
-        return this;
-    }
+        @Override
+        public boolean execute(boolean firstCondition, boolean secondCondition) {
+            return firstCondition || secondCondition;
+        }
+    };
+    
+    public abstract boolean execute(boolean firstCondition, boolean secondCondition);
+    
 }

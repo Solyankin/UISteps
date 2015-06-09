@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user;
+package com.uisteps.core.verify.results;
+
+import com.uisteps.core.verify.Verify;
 
 /**
  *
  * @author ASolyankin
  */
-public interface Storage {
-    
-    public abstract void remember(String key, Object value);
+public class LastExpectedResult extends ExpectedResult {
 
-    default <T> T remembered(String key, Class<T> type) {
-        return (T) remembered(key);
+    public LastExpectedResult(Verify verify, boolean condition) {
+        super(verify, condition);
     }
 
-    public abstract Object remembered(String key);
+    @Override
+    public LastActualResult ifResultIsExpected(String expectedDescription) {
+        return new LastActualResult(verify(), getCondition(), expectedDescription);
+    }
 }

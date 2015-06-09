@@ -2,6 +2,7 @@ package com.uisteps.thucydides.run.listeners;
 
 import com.uisteps.core.verify.Verify;
 import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.verify.ThucydidesVerify;
 import java.util.Map;
 import net.thucydides.core.model.DataTable;
 import net.thucydides.core.model.Story;
@@ -16,6 +17,12 @@ import net.thucydides.core.webdriver.WebdriverInstances;
  * @author m.prytkova
  */
 public class ThucydidesStepListener implements StepListener {
+    
+    private final ThucydidesVerify verify;
+
+    public ThucydidesStepListener(ThucydidesVerify verify) {
+        this.verify = verify;
+    }
     
     @Override
     public void testSuiteStarted(Class<?> storyClass) {
@@ -73,6 +80,9 @@ public class ThucydidesStepListener implements StepListener {
 
     @Override
     public void stepFinished() {
+        if(!verify.complited()) {
+            verify.result();
+        }
     }
 
     @Override
@@ -111,6 +121,10 @@ public class ThucydidesStepListener implements StepListener {
 
     @Override
     public void assumptionViolated(String message) {
+    }
+    
+    protected Verify verify() {
+        return verify;
     }
     
     protected void closeAllBrowser() {

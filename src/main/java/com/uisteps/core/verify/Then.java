@@ -15,6 +15,9 @@
  */
 package com.uisteps.core.verify;
 
+import com.uisteps.core.verify.conditions.ConditionPool;
+import com.uisteps.core.verify.conditions.LogicOperation;
+
 /**
  *
  * @author ASolyankin

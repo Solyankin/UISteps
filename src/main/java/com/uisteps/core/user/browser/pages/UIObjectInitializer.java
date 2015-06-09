@@ -25,11 +25,11 @@ import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
  *
  * @author ASolyankin
  */
-public class Initializer {
+public class UIObjectInitializer {
 
     private final Browser browser;
 
-    public Initializer(Browser browser) {
+    public UIObjectInitializer(Browser browser) {
         this.browser = browser;
     }
 

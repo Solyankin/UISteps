@@ -34,12 +34,10 @@ public class User {
 
     private final BrowserList browserList = new BrowserList();
     private final BrowserFactory browserFactory;
-    private Storage storage;
     private String name = "user";
 
-    public User(BrowserFactory browserFactory, Storage storage) {
+    public User(BrowserFactory browserFactory) {
         this.browserFactory = browserFactory;
-        this.storage = storage;
     }
 
     public Browser inOpenedBrowser() {
@@ -193,26 +191,6 @@ public class User {
     @Override
     public String toString() {
         return name;
-    }
-
-    public void remember(String key, Object value) {
-        storage.remember(key, value);
-    }
-
-    public <T> T remembered(String key, Class<T> type) {
-        return storage.remembered(key, type);
-    }
-
-    public Object remembered(String key) {
-        return storage.remembered(key);
-    }
-
-    public Storage getStorage() {
-        return storage;
-    }
-
-    public void setStorage(Storage storage) {
-        this.storage = storage;
     }
 
 }

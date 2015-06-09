@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.run;
 
 /**
  *
  * @author ASolyankin
  */
-public class ActualResult extends Actual {
+public interface WithStorage {
 
-    public ActualResult(Verify verify, boolean condition, String expectedResult) {
-        super(verify, condition, expectedResult);
-    }
+    public abstract void remember(String key, Object value);
 
-    public Then ifElse(String actualResult) {
-        return verify(actualResult);
-    }
+    public abstract Object remembered(String key);
 }

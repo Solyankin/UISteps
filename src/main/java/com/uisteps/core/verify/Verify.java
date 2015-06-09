@@ -1,5 +1,9 @@
 package com.uisteps.core.verify;
 
+import com.uisteps.core.verify.conditions.Result;
+import com.uisteps.core.verify.conditions.Condition;
+import com.uisteps.core.verify.results.ExpectedResult;
+import com.uisteps.core.verify.results.LastExpectedResult;
 import org.junit.Assert;
 
 /**
@@ -13,7 +17,7 @@ public class Verify {
     public Verify() {
         this(new Result());
     }
-
+    
     public Verify(Result result) {
         this.result = result;
     }
@@ -22,22 +26,22 @@ public class Verify {
         return new ExpectedResult(this, condition);
     }
 
-    public Then _that(Condition condition) {
-        result.add(condition);
+    public Then _that(Condition... conditions) {
+        result.add(conditions);
         return new Then(this);
     }
-
+    
     public LastExpectedResult that(boolean condition) {
         return new LastExpectedResult(this, condition);
     }
 
-    public Result that(Condition condition) {
-        result.add(condition);
-        return result();
+    public Then that(Condition... conditions) {
+        Then then = _that(conditions);
+        this.result();
+        return then;
     }
 
-    public Result verify(Result result) {
-
+    public Result result(Result result) {
         try {
             Assert.assertTrue(result.isSuccessful());
             return result;
@@ -49,7 +53,7 @@ public class Verify {
     }
 
     public Result result() {
-        return verify(result);
+        return result(result);
     }
 
     public boolean isSuccessful() {

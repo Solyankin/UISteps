@@ -15,7 +15,9 @@
  */
 package com.uisteps.thucydides.run;
 
+import com.uisteps.core.run.ByUser;
 import com.uisteps.core.user.User;
+import com.uisteps.thucydides.user.ThucydidesUser;
 import com.uisteps.thucydides.user.ThucydidesUserFactory;
 import net.thucydides.core.annotations.Steps;
 
@@ -23,17 +25,34 @@ import net.thucydides.core.annotations.Steps;
  *
  * @author ASolyankin
  */
-public class MultiUserTest extends Test {
+public class MultiUserTest extends Test implements ByUser {
 
     @Steps
     protected ThucydidesUserFactory users;
 
+    @Override
+    public ThucydidesUser by(String user) {
+        return (ThucydidesUser) users.by(user);
+    }
+
+    @Override
     public <T extends User> T by(Class<T> user) {
         return users.by(user);
     }
 
-    public <T extends User> T by(T user) {
+    @Override
+    public <T extends User> T by(String name, Class<T> user) {
         return users.by(user);
+    }
+
+    @Override
+    public void add(String user) {
+        users.add(user);
+    }
+
+    @Override
+    public void add(String name, Class<? extends User> user) {
+        users.add(name, user);
     }
 
 }

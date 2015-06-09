@@ -13,20 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.verify.results;
+
+import com.uisteps.core.verify.Then;
+import com.uisteps.core.verify.Verify;
 
 /**
  *
  * @author ASolyankin
  */
-public class LastActualResult extends Actual {
+public class LastActualResult extends ActualResult {
 
     public LastActualResult(Verify verify, boolean condition, String expectedResult) {
         super(verify, condition, expectedResult);
     }
 
-    public Result ifElse(String actualResult) {
-        verify(actualResult);
-        return verify().result();
+    @Override
+    public Then ifElse(String actualResult) {
+        Then then = super.ifElse( actualResult);
+        verify().result();
+        return then;
     }
 }

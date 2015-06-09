@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.user;
+package com.uisteps.thucydides.verify.results;
 
-import com.uisteps.core.user.Storage;
-import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.core.verify.Verify;
+import com.uisteps.core.verify.results.LastActualResult;
+import com.uisteps.core.verify.results.LastExpectedResult;
 
 /**
  *
  * @author ASolyankin
  */
-public class ThucydidesStorage implements Storage {
+public class ThucydidesLastExpectedResult extends LastExpectedResult {
 
-    @Override
-    public void remember(String key, Object value) {
-        ThucydidesUtils.putToSession(key, value);
+    public ThucydidesLastExpectedResult(Verify verify, boolean condition) {
+        super(verify, condition);
     }
 
     @Override
-    public Object remembered(String key) {
-        return ThucydidesUtils.getFromSession(key);
+    public LastActualResult ifResultIsExpected(String expectedDescription) {
+        return new ThucydidesLastActualResult(verify(), getCondition(), expectedDescription);
     }
+
 }

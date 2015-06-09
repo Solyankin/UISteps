@@ -13,30 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.verify.conditions;
 
 /**
  *
  * @author ASolyankin
  */
-public abstract class Actual {
-
-    private final Verify verify;
-    private final boolean condition;
-    private final String expectedResult;
-
-    public Actual(Verify verify, boolean condition, String expectedResult) {
-        this.verify = verify;
-        this.condition = condition;
-        this.expectedResult = expectedResult;
-    }
-
-    protected Verify verify() {
-        return verify;
-    }
+public abstract class WithLogicOperation {
+ 
+    private LogicOperation logicOperation = LogicOperation.AND;
     
-    protected Then verify(String actualResult) {
-        verify._that(new Condition(condition, expectedResult, actualResult));
-        return new Then(verify);
+    public abstract boolean isSuccessful();
+
+    public LogicOperation getLogicOperation() {
+        return logicOperation;
+    }
+
+    public WithLogicOperation set(LogicOperation logicOperation) {
+        this.logicOperation = logicOperation;
+        return this;
     }
 }

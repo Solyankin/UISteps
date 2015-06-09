@@ -15,8 +15,7 @@
  */
 package com.uisteps.thucydides.run;
 
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
+import com.uisteps.core.run.WithUser;
 import com.uisteps.thucydides.user.ThucydidesUser;
 import net.thucydides.core.annotations.Steps;
 import net.thucydides.junit.runners.ThucydidesRunner;
@@ -27,8 +26,13 @@ import org.junit.runner.RunWith;
  * @author ASolyankin
  */
 @RunWith(ThucydidesRunner.class)
-public class UserTest extends Test {
+public class UserTest extends Test implements WithUser {
 
     @Steps
     protected ThucydidesUser user;
+
+    @Override
+    public ThucydidesUser user() {
+        return user;
+    }
 }

@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.run;
+
+import com.uisteps.core.user.User;
 
 /**
  *
  * @author ASolyankin
  */
-public class ExpectedResult extends Expected {
+public interface ByUser {
 
-    public ExpectedResult(Verify verify, boolean condition) {
-        super(verify, condition);
-    }
+    public void add(String user);
 
-    @Override
-    public ActualResult ifResultIsExpected(String expectedDescription) {
-        return new ActualResult(getVerify(), getCondition(), expectedDescription);
-    }
+    public void add(String name, Class<? extends User> user);
+
+    User by(String user);
+
+    <T extends User> T by(Class<T> user);
+
+    <T extends User> T by(String name, Class<T> user);
 }

@@ -15,10 +15,11 @@
  */
 package com.uisteps.thucydides.run;
 
+import com.uisteps.core.run.WithStorage;
+import com.uisteps.core.run.Verify;
 import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
-import net.thucydides.core.annotations.Steps;
 import net.thucydides.junit.runners.ThucydidesRunner;
 import org.junit.runner.RunWith;
 
@@ -27,13 +28,28 @@ import org.junit.runner.RunWith;
  * @author ASolyankin
  */
 @RunWith(ThucydidesRunner.class)
-public class Test {
+public class Test implements Verify, WithStorage  {
 
-    @Steps
     protected ThucydidesVerify verify;
-    
+
     public Test() {
-        ThucydidesUtils.registerListener(new ThucydidesStepListener());
+        verify = ThucydidesUtils.getNewStepLibrary(ThucydidesVerify.class);
+        ThucydidesUtils.registerListener(new ThucydidesStepListener(verify));
     }
 
+    @Override
+    public ThucydidesVerify verify() {
+        return verify;
+    }
+
+
+    @Override
+    public void remember(String key, Object value) {
+        ThucydidesUtils.putToSession(key, value);
+    }
+
+    @Override
+    public Object remembered(String key) {
+        return ThucydidesUtils.getFromSession(key);
+    }
 }

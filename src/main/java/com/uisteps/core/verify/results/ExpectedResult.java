@@ -13,20 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.verify;
+package com.uisteps.core.verify.results;
+
+import com.uisteps.core.verify.Verify;
 
 /**
  *
  * @author ASolyankin
  */
-public class LastExpectedResult extends Expected {
+public class ExpectedResult {
 
-    public LastExpectedResult(Verify verify, boolean condition) {
-        super(verify, condition);
+    private final Verify verify;
+    private final boolean condition;
+
+    public ExpectedResult(Verify verify, boolean condition) {
+        this.verify = verify;
+        this.condition = condition;
     }
 
-    @Override
-    public LastActualResult ifResultIsExpected(String expectedDescription) {
-        return new LastActualResult(getVerify(), getCondition(), expectedDescription);
+    public Verify verify() {
+        return verify;
     }
+
+    public boolean getCondition() {
+        return condition;
+    }
+    
+
+    public ActualResult ifResultIsExpected(String expectedDescription) {
+        return new ActualResult(verify(), getCondition(), expectedDescription);
+    }
+    
 }

@@ -20,7 +20,6 @@ import com.uisteps.core.user.browser.Browser;
 import com.uisteps.core.user.browser.BrowserFactory;
 import com.uisteps.core.user.User;
 import com.uisteps.core.user.browser.NoBrowserException;
-import com.uisteps.core.user.Storage;
 import com.uisteps.thucydides.user.browser.ThucydidesBrowserFactory;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.webdriver.SupportedWebDriver;
@@ -32,11 +31,11 @@ import net.thucydides.core.webdriver.SupportedWebDriver;
 public class ThucydidesUser extends User {
 
     public ThucydidesUser() {
-        this(new ThucydidesBrowserFactory(), new ThucydidesStorage());
+        this(new ThucydidesBrowserFactory());
     }
 
-    public ThucydidesUser(BrowserFactory browserFactory, Storage storage) {
-        super(browserFactory, storage);
+    public ThucydidesUser(BrowserFactory browserFactory) {
+        super(browserFactory);
     }
 
     @Step
