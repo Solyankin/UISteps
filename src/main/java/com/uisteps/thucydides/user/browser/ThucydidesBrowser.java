@@ -37,8 +37,8 @@ public class ThucydidesBrowser extends Browser {
         super(ThucydidesUtils.getImplementTimeout(), null, new ThucydidesUIObjectFactory());
     }
 
-    public ThucydidesBrowser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, UIObjectInitializer initializer) {
-        super(timeOutInSeconds, driver, pageFactory, initializer);
+    public ThucydidesBrowser(long timeOutInSeconds, WebDriver driver, UIObjectFactory uiObjectFactory, UIObjectInitializer initializer) {
+        super(timeOutInSeconds, driver, uiObjectFactory, initializer);
     }
 
     @Step

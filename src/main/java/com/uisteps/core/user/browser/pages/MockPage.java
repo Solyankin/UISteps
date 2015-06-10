@@ -26,7 +26,7 @@ public class MockPage {
     private final Page page;
     
     public MockPage(Class<? extends Page> page, Browser browser) {
-        this.page = browser.getPageFactory().instatiate(page);
+        this.page = browser.getUIObjectFactory().instatiate(page);
         open(this.page, browser);
     }
     

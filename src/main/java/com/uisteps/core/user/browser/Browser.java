@@ -39,16 +39,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Browser {
 
     private WebDriver driver;
-    private final UIObjectFactory pageFactory;
+    private final UIObjectFactory uiObjectFactory;
     private UIObjectInitializer initializer;
     private final long timeOutInSeconds;
     private final WindowList windowList;
 
-    public Browser(long timeOutInSeconds, WebDriver driver, UIObjectFactory pageFactory, UIObjectInitializer initializer) {
+    public Browser(long timeOutInSeconds, WebDriver driver, UIObjectFactory uiObjectFactory, UIObjectInitializer initializer) {
         this.timeOutInSeconds = timeOutInSeconds;
         windowList = new WindowList(this, timeOutInSeconds);
         this.driver = driver;
-        this.pageFactory = pageFactory;
+        this.uiObjectFactory = uiObjectFactory;
         this.initializer = initializer;
     }
 
@@ -94,7 +94,7 @@ public class Browser {
     }
 
     public <T extends UIObject> T displayed(Class<T> uiObject) {
-        return displayed(pageFactory.instatiate(uiObject));
+        return displayed(uiObjectFactory.instatiate(uiObject));
     }
 
     public <T extends UIObject> T displayed(T uiObject) {
@@ -236,16 +236,12 @@ public class Browser {
         this.waitUntil(condition, timeOutInSeconds);
     }
 
-    public UIObjectFactory getStepLibraryFactory() {
-        return pageFactory;
-    }
-
-    public UIObjectInitializer getInitializer() {
+    public UIObjectInitializer getUIObjectInitializer() {
         return initializer;
     }
 
-    public UIObjectFactory getPageFactory() {
-        return pageFactory;
+    public UIObjectFactory getUIObjectFactory() {
+        return uiObjectFactory;
     }
 
     public long getTimeOutInSeconds() {
