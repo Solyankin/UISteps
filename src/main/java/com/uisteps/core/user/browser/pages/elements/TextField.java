@@ -29,20 +29,20 @@ public class TextField extends UIElement {
         super(wrappedElement, browser);
     }
 
-    public void sendKeys(CharSequence... keys) {
-        type(keys);
+    public Object sendKeys(CharSequence... keys) {
+        return type(keys);
     }
 
-    public void type(CharSequence... keys) {
-        browser.typeInto(this, keys);
+    public Object type(CharSequence... keys) {
+        return browser.typeInto(this, keys);
     }
 
-    public void clear() {
-        browser.clear(this);
+    public Object clear() {
+        return browser.clear(this);
     }
 
-    public void enter(CharSequence... text) {
-        browser.enterInto(this, text);
+    public Object enter(CharSequence... text) {
+        return browser.enterInto(this, text);
     }
 
     public String getText() {

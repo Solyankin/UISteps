@@ -16,9 +16,10 @@
 package com.uisteps.thucydides.run;
 
 import com.uisteps.core.run.WithUser;
-import com.uisteps.core.user.User;
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.listeners.UserStoryListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.steps.StepListener;
 
 /**
  *
@@ -26,9 +27,16 @@ import net.thucydides.core.annotations.Steps;
  */
 public class UserStory extends Story implements WithUser {
     
-    @Steps
-    protected ThucydidesUser user;
+    protected ThucydidesUser user = ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class);
 
+    public UserStory() {
+        ThucydidesUtils.registerListener(new UserStoryListener(this));
+    }
+
+    public UserStory(StepListener listener) {
+        ThucydidesUtils.registerListener(listener);
+    }
+    
     @Override
     public ThucydidesUser user() {
         return user;

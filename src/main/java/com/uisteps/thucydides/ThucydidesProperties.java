@@ -13,14 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user.browser.pages;
+package com.uisteps.thucydides;
 
 /**
  *
  * @author ASolyankin
  */
-public interface UIObject<T> {
-
-    boolean isDisplayed();
+public class ThucydidesProperties {
     
+    public ReportLevel reportLevel;
+    
+    
+    public static enum ReportLevel {
+        USER, BROWSER, PAGE;
+    }
+    
+    public ThucydidesProperties set(Object property) {
+        
+        if(property instanceof ReportLevel)  {
+            reportLevel = (ReportLevel) property;
+        } else {
+            throw new RuntimeException("Cannot set property " + property);
+        }
+        
+        return this;
+    }
 }

@@ -15,6 +15,7 @@
  */
 package com.uisteps.core.user;
 
+import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.BrowserList;
 import com.uisteps.core.user.browser.NoBrowserException;
 import com.uisteps.core.user.browser.BrowserFactory;
@@ -39,7 +40,7 @@ public class User {
     public User(BrowserFactory browserFactory) {
         this.browserFactory = browserFactory;
     }
-
+    
     public Browser inOpenedBrowser() {
 
         if (browserList.isEmpty()) {
@@ -48,6 +49,14 @@ public class User {
         return browserList.getCurrentBrowser();
     }
 
+    protected <T> Then<T> then(Class<? extends UIObject> uiObject) {
+        return inOpenedBrowser().then(uiObject);
+    }
+    
+    protected <T> Then<T> then(T value) {
+        return inOpenedBrowser().then(value);
+    }
+    
     public Browser openNewBrowser(WebDriver withDriver) {
         return in(browserFactory.getBrowser(withDriver));
     }
@@ -99,6 +108,14 @@ public class User {
     public <T extends UIObject> T onDisplayed(T uiObject) {
         return inOpenedBrowser().onDisplayed(uiObject);
     }
+    
+    protected <T extends UIObject> T displayed(Class<T> uiObject) {
+        return inOpenedBrowser().displayed(uiObject);
+    }
+
+    protected <T extends UIObject> T displayed(T uiObject) {
+        return inOpenedBrowser().displayed(uiObject);
+    }
 
     public <T extends Page> T open(Class<T> page) {
         return inOpenedBrowser().open(page);
@@ -107,7 +124,7 @@ public class User {
     public <T extends Page> T open(T page) {
         return inOpenedBrowser().open(page);
     }
-
+    
     public void openNewWindow() {
         inOpenedBrowser().openNewWindow();
     }
@@ -179,7 +196,7 @@ public class User {
     public boolean see(Class<? extends UIObject> uiObject) {
         return see(inOpenedBrowser().displayed(uiObject));
     }
-
+    
     public String getName() {
         return name;
     }

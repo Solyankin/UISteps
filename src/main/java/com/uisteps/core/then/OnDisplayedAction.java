@@ -13,38 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user.browser.pages;
+package com.uisteps.core.then;
 
 import com.uisteps.core.user.browser.Browser;
+import com.uisteps.core.user.browser.pages.UIObject;
 
 /**
  *
  * @author ASolyankin
+ * @param <T>
  */
-public class MockPage<T extends Page> {
-    
-    private final T page;
-    
-    public MockPage(Class<T> page, Browser browser) {
-        this.page = browser.getUIObjectFactory().instatiate(page);
-        open(this.page, browser);
-    }
-    
-    public MockPage(T page, Browser browser) {
-        this.page = page;
-        open(page, browser);
+public class OnDisplayedAction<T extends UIObject> extends Action {
+
+    private final Browser browser;
+    private final Class<T> uiObject;
+
+    public OnDisplayedAction(Browser browser, Class<T> uiObject) {
+        this.browser = browser;
+        this.uiObject = uiObject;
     }
 
-    private void open(Page page, Browser browser) {
-        browser.getDriver().get(page.getUrl().toString());
-    }
-    
     @Override
-    public String toString() {
-        return page.toString();
+    public T execute() {
+        return (T) browser.onDisplayed(uiObject);
+
     }
 
-    public T getPage() {
-        return page;
-    }
 }

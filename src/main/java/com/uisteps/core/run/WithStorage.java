@@ -21,7 +21,7 @@ package com.uisteps.core.run;
  */
 public interface WithStorage {
 
-    public abstract void remember(String key, Object value);
+    public abstract <T> T remember(String key, T value);
 
-    public abstract Object remembered(String key);
+    public abstract <T> T rememberedAs(String key);
 }

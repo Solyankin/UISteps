@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 ASolyankin.
  *
@@ -16,12 +15,15 @@
  */
 package com.uisteps.core.user.browser;
 
+import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.pages.UIObjectInitializer;
 import com.uisteps.core.user.browser.pages.MockPage;
 import com.uisteps.core.user.browser.pages.Page;
 import com.uisteps.core.user.browser.pages.UIObject;
 import com.uisteps.core.user.browser.pages.UIObjectFactory;
 import com.uisteps.core.user.browser.pages.Url;
+import com.uisteps.core.then.GetValueAction;
+import com.uisteps.core.then.OnDisplayedAction;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import org.openqa.selenium.JavascriptExecutor;
@@ -74,17 +76,17 @@ public class Browser {
     }
 
     public <T extends Page> T open(Class<T> page) {
-        return displayed((T) open(new MockPage(page, this)));
+        return displayed(open(new MockPage<T>(page, this)));
     }
 
     public <T extends Page> T open(T page) {
-        return displayed((T) open(new MockPage(page, this)));
+        return displayed(open(new MockPage<T>(page, this)));
     }
-    
-    protected Page open(MockPage mock) {
+
+    protected <T extends Page> T open(MockPage<T> mock) {
         return mock.getPage();
     }
-    
+
     public <T extends UIObject> T onDisplayed(Class<T> uiObject) {
         return displayed(uiObject);
     }
@@ -92,7 +94,7 @@ public class Browser {
     public <T extends UIObject> T onDisplayed(T uiObject) {
         return displayed(uiObject);
     }
-
+    
     public <T extends UIObject> T displayed(Class<T> uiObject) {
         return displayed(uiObjectFactory.instatiate(uiObject));
     }
@@ -101,7 +103,7 @@ public class Browser {
         initializer.initialize(uiObject);
         return uiObject;
     }
-
+    
     public void setDriver(WebDriver driver) {
         this.driver = driver;
     }
@@ -147,7 +149,7 @@ public class Browser {
         getDriver().manage().deleteAllCookies();
     }
 
-    public void click(WrapsElement element) {
+    public Object click(WrapsElement element) {
 
         try {
             WebElement webElement = element.getWrappedElement();
@@ -161,9 +163,10 @@ public class Browser {
         } catch (Exception ex) {
             throw new AssertionError("Cannot click " + element + "! " + ex);
         }
-    }
-
-    public void clickOnPoint(WrapsElement element, int x, int y) {
+        return null;
+    }   
+    
+    public Object clickOnPoint(WrapsElement element, int x, int y) {
 
         try {
             Actions actions = new Actions(getDriver());
@@ -172,9 +175,10 @@ public class Browser {
         } catch (Exception ex) {
             throw new AssertionError("Cannot click " + element + "on point (" + x + "; " + y + ") !\n" + ex);
         }
+        return null;
     }
 
-    public void moveMouseOver(WrapsElement element) {
+    public Object moveMouseOver(WrapsElement element) {
 
         try {
             Actions actions = new Actions(getDriver());
@@ -182,27 +186,30 @@ public class Browser {
         } catch (Exception ex) {
             throw new AssertionError("Cannot move mouse over " + element + "!\n" + ex);
         }
+        return null;
     }
 
-    public void typeInto(WrapsElement input, CharSequence... keys) {
+    public Object typeInto(WrapsElement input, CharSequence... keys) {
 
         try {
             input.getWrappedElement().sendKeys(keys);
         } catch (Exception ex) {
             throw new AssertionError("Cannot type " + Arrays.toString(keys) + " into " + input + "!\n" + ex);
         }
+        return null;
     }
 
-    public void clear(WrapsElement input) {
+    public Object clear(WrapsElement input) {
 
         try {
             input.getWrappedElement().clear();
         } catch (Exception ex) {
             throw new AssertionError("Cannot clear " + input + "!\n" + ex);
         }
+        return null;
     }
 
-    public void enterInto(WrapsElement input, CharSequence... text) {
+    public Object enterInto(WrapsElement input, CharSequence... text) {
 
         try {
             input.getWrappedElement().clear();
@@ -210,6 +217,7 @@ public class Browser {
         } catch (Exception ex) {
             throw new AssertionError("Cannot enter " + Arrays.toString(text) + " into " + input + "!\n" + ex);
         }
+        return null;
     }
 
     public String getTextFrom(WrapsElement input) {
@@ -234,8 +242,17 @@ public class Browser {
 
     public void waitUntil(ExpectedCondition<Boolean> condition) {
         this.waitUntil(condition, timeOutInSeconds);
+        
     }
 
+    public <T> Then<T> then(Class<? extends UIObject> uiObject) {
+        return new Then(new OnDisplayedAction<>(this, uiObject));
+    }
+    
+    public <T> Then<T> then(T value) {
+        return new Then(new GetValueAction<>(value));
+    }
+    
     public UIObjectInitializer getUIObjectInitializer() {
         return initializer;
     }

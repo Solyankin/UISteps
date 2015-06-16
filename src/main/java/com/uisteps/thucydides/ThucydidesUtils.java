@@ -16,10 +16,14 @@
 package com.uisteps.thucydides;
 
 import com.uisteps.core.user.browser.Browser;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Properties;
 import net.thucydides.core.Thucydides;
 import net.thucydides.core.ThucydidesSystemProperties;
 import net.thucydides.core.ThucydidesSystemProperty;
@@ -44,6 +48,7 @@ public class ThucydidesUtils extends Thucydides {
 
     public static String BROWSER_SESSION_KEY = "#BROWSER#";
     private static int driverCounter = 0;
+    private static Properties properties;
 
     public static void putToSession(Browser browser) {
         putToSession(BROWSER_SESSION_KEY, browser);
@@ -97,6 +102,41 @@ public class ThucydidesUtils extends Thucydides {
         return ThucydidesSystemProperties.getProperties();
     }
 
+    public static Properties getProperties() {
+
+        if (properties == null) {
+
+            properties = new Properties();
+
+            File file = getPropertiesFile();
+
+            try {
+                properties.load(new FileInputStream(file));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return properties;
+    }
+
+    private static File getPropertiesFile() {
+
+        String fileName = "thucydides.properties";
+        String[] directories = {"user.dir", "user.home"};
+
+        for (String directory : directories) {
+
+            File file = new File(System.getProperty(directory), fileName);
+            System.out.println("######################################## file " + file.getAbsolutePath());
+
+            if (file.exists()) {
+                return file;
+            }
+        }
+
+        throw new RuntimeException("Cannot find file thucydides.properties!");
+    }
+
     public static Integer getImplementTimeoutInSec() {
         return getImplementTimeout() / 1000;
     }
@@ -131,21 +171,20 @@ public class ThucydidesUtils extends Thucydides {
             throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + WebdriverInstances.class + "!\nCause: " + ex);
         }
     }
-    
+
     public static WebdriverInstances getDrivers() {
         String methodName = "inThisTestThread";
 
         try {
             Method method = ThucydidesWebdriverManager.class.getDeclaredMethod(methodName);
             method.setAccessible(true);
-            
+
             return (WebdriverInstances) method.invoke(null);
         } catch (InvocationTargetException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException ex) {
             throw new RuntimeException("Cannot invoke method by name " + methodName + " in class " + ThucydidesWebdriverManager.class + "!\nCause: " + ex);
         }
     }
-    
-    
+
     public static BaseStepListener getBaseStepListener() {
         String methodName = "getBaseStepListener";
 
@@ -175,5 +214,4 @@ public class ThucydidesUtils extends Thucydides {
         }
         return webdriverManager;
     }
-    
 }

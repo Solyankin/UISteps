@@ -15,11 +15,85 @@
  */
 package com.uisteps.core.user.browser.pages;
 
+import java.lang.annotation.Annotation;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  *
  * @author ASolyankin
  */
-public interface UrlFactory {
+public abstract class UrlFactory {
 
-    Url getUrlOf(Class<? extends Page> pageClass);
+    protected final String host;
+    protected final Class<? extends Annotation> urlAnnotation;
+
+    public UrlFactory(String host, Class<? extends Annotation> urlAnnotation) {
+        this.host = host;
+        this.urlAnnotation = urlAnnotation;
+    }
+
+
+    public UrlFactory(Class<? extends Annotation> urlAnnotation) {
+        this("#HOST", urlAnnotation);
+    }
+    
+
+    public Url getUrlOf(Class<? extends Page> pageClass) {
+        Url url = new Url();
+        
+        if (url.getHost().equals("")) {
+            url.setHost(getBaseUrl());
+        }
+        
+        getUrlOf(url, getPageClass(pageClass));
+        return url;
+    }
+
+    private void getUrlOf(Url url, Class<?> clazz) {
+        
+   
+        
+        if (!RootAnalizer.isRoot(clazz)) {
+            getUrlOf(url, clazz.getSuperclass());
+        }
+        
+        if (clazz.isAnnotationPresent(urlAnnotation)) {
+            String defaultUrl = getPageUrlFrom(clazz.getAnnotation(urlAnnotation));
+            
+            if (defaultUrl.contains(host)) {
+                Pattern pattern = Pattern.compile("(.*)" + host + "(.*)");
+                Matcher matcher = pattern.matcher(defaultUrl);
+                
+                if (matcher.find()) {
+                    String prefix = matcher.group(1);
+                    String postfix = matcher.group(2);
+                    
+                    if (prefix != null) {
+                        url.prependPrefix(prefix);
+                    }
+                    
+                    if (postfix != null) {
+                        url.appendPostfix(postfix);
+                    }
+                }
+            } else {
+                url.appendPostfix(defaultUrl);
+            }
+        }
+    }
+
+    protected Class<?> getPageClass(Class<?> clazz) {
+        
+        if (clazz.getName().contains("$$")) {
+            return getPageClass(clazz.getSuperclass());
+        } else {
+            return clazz;
+        }
+    }
+    
+    protected abstract String getBaseUrl();
+    
+    protected abstract String getPageUrlFrom(Annotation urlAnnotation);
 }
+

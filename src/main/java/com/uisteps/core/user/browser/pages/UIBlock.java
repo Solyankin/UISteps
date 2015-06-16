@@ -15,7 +15,9 @@
  */
 package com.uisteps.core.user.browser.pages;
 
+import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.Browser;
+import com.uisteps.core.then.GetValueAction;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
@@ -37,22 +39,23 @@ public abstract class UIBlock extends HtmlElement implements UIObject {
     }
 
     public Object afterClick() {
-        browser.click(this);
-        return null;
+        return browser.click(this);
     }
     
     public Object moveMouseOver() {
-        browser.moveMouseOver(this);
-        return null;
+        return browser.moveMouseOver(this);
     }
 
     public Object clickOnPoint(int x, int y) {
-        browser.clickOnPoint(this, x, y);
-        return null;
+        return browser.clickOnPoint(this, x, y);
     }
 
-    public Browser getBrowser() {
-        return browser;
+    protected <T> Then<T> then(Class<? extends UIObject> uiObject) {
+        return browser.then(uiObject);
+    }
+    
+    protected <T> Then<T> then(T value) {
+        return browser.then(value);
     }
     
     protected <T extends UIObject> T displayed(Class<T> uiObject) {
@@ -63,8 +66,16 @@ public abstract class UIBlock extends HtmlElement implements UIObject {
         return browser.displayed(uiObject);
     }
     
-    protected Object executeScript(String script) {
-        return browser.executeScript(script);
+    protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
+        return browser.onDisplayed(uiObject);
+    }
+
+    protected <T extends UIObject> T onDisplayed(T uiObject) {
+        return browser.onDisplayed(uiObject);
+    }
+    
+    protected Browser inOpenedBrowser() {
+        return browser;
     }
 
     protected void switchToNextWindow() {

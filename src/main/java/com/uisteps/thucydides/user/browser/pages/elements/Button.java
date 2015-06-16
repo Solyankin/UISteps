@@ -17,5 +17,4 @@ public class Button extends com.uisteps.core.user.browser.pages.elements.Button 
     public Button(WebElement wrappedElement, Browser browser) {
         super(wrappedElement, browser);
     }
-
 }

@@ -23,6 +23,8 @@ import com.uisteps.core.user.browser.pages.MockPage;
 import com.uisteps.core.user.browser.pages.UIObjectFactory;
 import com.uisteps.core.user.browser.pages.Page;
 import com.uisteps.core.user.browser.pages.UIObject;
+import com.uisteps.core.then.OnDisplayedAction;
+import com.uisteps.core.then.Then;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsElement;
@@ -43,32 +45,32 @@ public class ThucydidesBrowser extends Browser {
 
     @Step
     @Override
-    public void enterInto(WrapsElement input, CharSequence... text) {
-        super.enterInto(input, text);
+    public Object enterInto(WrapsElement input, CharSequence... text) {
+        return super.enterInto(input, text);
     }
 
     @Step
     @Override
-    public void clear(WrapsElement input) {
-        super.clear(input);
+    public Object clear(WrapsElement input) {
+        return super.clear(input);
     }
 
     @Step
     @Override
-    public void typeInto(WrapsElement input, CharSequence... keys) {
-        super.typeInto(input, keys);
+    public Object typeInto(WrapsElement input, CharSequence... keys) {
+        return super.typeInto(input, keys);
     }
 
     @Step
     @Override
-    public void clickOnPoint(WrapsElement element, int x, int y) {
-        super.clickOnPoint(element, x, y);
+    public Object clickOnPoint(WrapsElement element, int x, int y) {
+        return super.clickOnPoint(element, x, y);
     }
 
     @Step
     @Override
-    public void click(WrapsElement element) {
-        super.click(element);
+    public Object click(WrapsElement element) {
+        return super.click(element);
     }
 
     @Step
@@ -82,7 +84,7 @@ public class ThucydidesBrowser extends Browser {
     public void refreshCurrentPage() {
         super.refreshCurrentPage();
     }
-    
+
     @Step
     @Override
     protected Page open(MockPage mock) {
@@ -94,7 +96,6 @@ public class ThucydidesBrowser extends Browser {
     public <T extends UIObject> T onDisplayed(T uiObject) {
         return super.onDisplayed(uiObject);
     }
-
 
     @Step
     @Override
@@ -125,5 +126,5 @@ public class ThucydidesBrowser extends Browser {
     public void switchToNextWindow() {
         super.switchToNextWindow();
     }
-    
+
 }

@@ -13,14 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user.browser.pages;
+package com.uisteps.core.then;
 
 /**
  *
  * @author ASolyankin
  */
-public interface UIObject<T> {
-
-    boolean isDisplayed();
+public abstract class Action<T> {
+    
+    private Object[] args;
+    
+    public abstract <T> T execute();
+    
+    public Action<T> setArgs(Object... args) {
+        this.args = args;
+        return this;
+    }
+    
+    public Object[] getArgs() {
+        return args;
+    }
     
 }

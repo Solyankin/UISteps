@@ -1,6 +1,6 @@
 package com.uisteps.core.user.browser.pages;
 
-
+import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.Browser;
 import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.htmlelements.element.TypifiedElement;
@@ -9,7 +9,7 @@ import ru.yandex.qatools.htmlelements.element.TypifiedElement;
  *
  * @author ASolyankin
  */
-public class UIElement extends TypifiedElement {
+public class UIElement extends TypifiedElement implements UIObject {
 
     protected final Browser browser;
 
@@ -19,18 +19,23 @@ public class UIElement extends TypifiedElement {
     }
 
     public Object click() {
-        browser.click(this);
-        return null;
+        return browser.click(this);
     }
 
     public Object moveMouseOver() {
-        browser.moveMouseOver(this);
-        return null;
+        return browser.moveMouseOver(this);
     }
 
     public Object clickOnPoint(int x, int y) {
-        browser.clickOnPoint(this, x, y);
-        return null;
+        return browser.clickOnPoint(this, x, y);
+    }
+    
+    protected <T> Then<T> then(Class<? extends UIObject> uiObject) {
+        return browser.then(uiObject);
+    }
+    
+    protected <T> Then<T> then(T value) {
+        return browser.then(value);
     }
     
     protected <T extends UIObject> T displayed(Class<T> uiObject) {
@@ -41,7 +46,15 @@ public class UIElement extends TypifiedElement {
         return browser.displayed(uiObject);
     }
     
-    public Browser getBrowser() {
+    protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
+        return browser.onDisplayed(uiObject);
+    }
+
+    protected <T extends UIObject> T onDisplayed(T uiObject) {
+        return browser.onDisplayed(uiObject);
+    }
+    
+    protected Browser inOpenedBrowser() {
         return browser;
     }
 }

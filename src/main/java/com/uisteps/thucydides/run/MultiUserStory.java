@@ -17,10 +17,11 @@ package com.uisteps.thucydides.run;
 
 import com.uisteps.core.run.ByUser;
 import com.uisteps.core.user.User;
-import com.uisteps.core.user.UserFactory;
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.listeners.MultiUserStoryListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
 import com.uisteps.thucydides.user.ThucydidesUserFactory;
-import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.steps.StepListener;
 
 /**
  *
@@ -28,8 +29,15 @@ import net.thucydides.core.annotations.Steps;
  */
 public class MultiUserStory extends Story implements ByUser {
 
-    @Steps
-    protected ThucydidesUserFactory users;
+    protected ThucydidesUserFactory users = ThucydidesUtils.getNewStepLibrary(ThucydidesUserFactory.class);
+
+    public MultiUserStory() {
+        ThucydidesUtils.registerListener(new MultiUserStoryListener(this));
+    }
+
+    public MultiUserStory(StepListener listener) {
+        ThucydidesUtils.registerListener(listener);
+    }
 
     @Override
     public ThucydidesUser by(String user) {

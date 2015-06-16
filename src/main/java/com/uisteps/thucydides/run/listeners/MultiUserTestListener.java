@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user.browser.pages;
+package com.uisteps.thucydides.run.listeners;
+
+import com.uisteps.thucydides.run.MultiUserTest;
 
 /**
  *
  * @author ASolyankin
  */
-public interface UIObject<T> {
+public class MultiUserTestListener extends TestListener {
 
-    boolean isDisplayed();
-    
+    public MultiUserTestListener(MultiUserTest test) {
+        super(test);
+    }
+
+    @Override
+    public MultiUserTest getTest() {
+        return (MultiUserTest) super.getTest();
+    }
 }

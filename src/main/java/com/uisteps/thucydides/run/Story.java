@@ -18,8 +18,9 @@ package com.uisteps.thucydides.run;
 import com.uisteps.core.run.WithStorage;
 import com.uisteps.core.run.Verify;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesStepListener;
+import com.uisteps.thucydides.run.listeners.StoryListener;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
+import net.thucydides.core.steps.StepListener;
 import net.thucydides.jbehave.ThucydidesJUnitStory;
 
 /**
@@ -28,11 +29,14 @@ import net.thucydides.jbehave.ThucydidesJUnitStory;
  */
 public class Story extends ThucydidesJUnitStory implements Verify, WithStorage {
 
-    protected ThucydidesVerify verify;
+    public final ThucydidesVerify verify = ThucydidesUtils.getNewStepLibrary(ThucydidesVerify.class);
 
     public Story() {
-        verify = ThucydidesUtils.getNewStepLibrary(ThucydidesVerify.class);
-        ThucydidesUtils.registerListener(new ThucydidesStepListener(verify));
+        ThucydidesUtils.registerListener(new StoryListener(this));
+    }
+
+    public Story(StepListener listener) {
+        ThucydidesUtils.registerListener(listener);
     }
 
     @Override
@@ -41,12 +45,13 @@ public class Story extends ThucydidesJUnitStory implements Verify, WithStorage {
     }
 
     @Override
-    public void remember(String key, Object value) {
+    public <T> T remember(String key, T value) {
         ThucydidesUtils.putToSession(key, value);
+        return value;
     }
 
     @Override
-    public Object remembered(String key) {
-        return ThucydidesUtils.getFromSession(key);
+    public <T> T rememberedAs(String key) {
+        return (T) ThucydidesUtils.getFromSession(key);
     }
 }

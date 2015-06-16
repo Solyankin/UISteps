@@ -15,6 +15,7 @@
  */
 package com.uisteps.core.user.browser.pages;
 
+import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.Browser;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
@@ -23,11 +24,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  * @author ASolyankin
  */
 @Root
-public class Page implements UIObject {
+public class Page<T> implements UIObject<T> {
 
     private final Url url;
     private final Browser browser;
-
+    
     public Page(Browser browser, UrlFactory urlFactory) {
         this.url = urlFactory.getUrlOf(this.getClass());
         this.browser = browser;
@@ -47,10 +48,14 @@ public class Page implements UIObject {
         return executeScript("return document.readyState").equals("complete");
     }
 
-    public Browser getBrowser() {
-        return browser;
+    protected <T> Then<T> then(Class<? extends UIObject> uiObject) {
+        return browser.then(uiObject);
     }
-
+    
+    protected <T> Then<T> then(T value) {
+        return browser.then(value);
+    }
+    
     protected <T extends UIObject> T displayed(Class<T> uiObject) {
         return browser.displayed(uiObject);
     }
@@ -58,7 +63,19 @@ public class Page implements UIObject {
     protected <T extends UIObject> T displayed(T uiObject) {
         return browser.displayed(uiObject);
     }
+    
+    protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
+        return browser.onDisplayed(uiObject);
+    }
 
+    protected <T extends UIObject> T onDisplayed(T uiObject) {
+        return browser.onDisplayed(uiObject);
+    }
+    
+    protected Browser inOpenedBrowser() {
+        return browser;
+    }
+    
     protected Object executeScript(String script) {
         return browser.executeScript(script);
     }

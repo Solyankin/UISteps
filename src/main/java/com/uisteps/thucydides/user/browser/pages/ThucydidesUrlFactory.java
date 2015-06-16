@@ -15,10 +15,12 @@
  */
 package com.uisteps.thucydides.user.browser.pages;
 
+import com.uisteps.core.user.browser.pages.UrlFactory;
 import com.uisteps.core.user.browser.pages.RootAnalizer;
 import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.core.user.browser.pages.Url;
 import com.uisteps.core.user.browser.pages.Page;
+import java.lang.annotation.Annotation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.thucydides.core.annotations.DefaultUrl;
@@ -27,58 +29,35 @@ import net.thucydides.core.annotations.DefaultUrl;
  *
  * @author ASolyankin
  */
-public class ThucydidesUrlFactory implements com.uisteps.core.user.browser.pages.UrlFactory {
+public class ThucydidesUrlFactory extends UrlFactory {
+    
+    
+
+    public ThucydidesUrlFactory() {
+        super(DefaultUrl.class);
+    }
+    
+    public ThucydidesUrlFactory(String host, Class<? extends Annotation> urlAnnotation) {
+        super(host, urlAnnotation);
+    }
 
     @Override
-    public Url getUrlOf(Class<? extends Page> pageClass) {
-        Url url = new Url();
-        
-        if (url.getHost().equals("")) {
-            String baseUrl = ThucydidesUtils.getBaseUrl();
-            url.setHost(baseUrl);
-        }
-        
-        getUrlOf(url, getPageClass(pageClass));
-        return url;
-    }
-
-    private void getUrlOf(Url url, Class<?> clazz) {
-        
-        if (!RootAnalizer.isRoot(clazz)) {
-            getUrlOf(url, clazz.getSuperclass());
-        }
-        
-        if (clazz.isAnnotationPresent(DefaultUrl.class)) {
-            String defaultUrl = clazz.getAnnotation(DefaultUrl.class).value();
-            
-            if (defaultUrl.contains("#HOST")) {
-                Pattern pattern = Pattern.compile("(.*)#HOST(.*)");
-                Matcher matcher = pattern.matcher(defaultUrl);
-                
-                if (matcher.find()) {
-                    String prefix = matcher.group(1);
-                    String postfix = matcher.group(2);
-                    
-                    if (prefix != null) {
-                        url.prependPrefix(prefix);
-                    }
-                    
-                    if (postfix != null) {
-                        url.appendPostfix(postfix);
-                    }
-                }
-            } else {
-                url.appendPostfix(defaultUrl);
-            }
-        }
-    }
-
-    private Class<?> getPageClass(Class<?> clazz) {
+    protected Class<?> getPageClass(Class<?> clazz) {
         
         if (clazz.getName().contains("$$")) {
             return getPageClass(clazz.getSuperclass());
         } else {
             return clazz;
         }
+    }
+
+    @Override
+    protected String getBaseUrl() {
+        return ThucydidesUtils.getBaseUrl();
+    }
+
+    @Override
+    protected String getPageUrlFrom(Annotation urlAnnotation) {
+        return ((DefaultUrl) urlAnnotation).value();
     }
 }

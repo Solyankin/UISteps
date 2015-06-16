@@ -17,9 +17,11 @@ package com.uisteps.thucydides.run;
 
 import com.uisteps.core.run.ByUser;
 import com.uisteps.core.user.User;
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.listeners.MultiUserTestListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
 import com.uisteps.thucydides.user.ThucydidesUserFactory;
-import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.steps.StepListener;
 
 /**
  *
@@ -27,9 +29,17 @@ import net.thucydides.core.annotations.Steps;
  */
 public class MultiUserTest extends Test implements ByUser {
 
-    @Steps
-    protected ThucydidesUserFactory users;
+    protected ThucydidesUserFactory users = ThucydidesUtils.getNewStepLibrary(ThucydidesUserFactory.class);
 
+    public MultiUserTest() {
+        ThucydidesUtils.registerListener(new MultiUserTestListener(this));
+    }
+
+    public MultiUserTest(StepListener listener) {
+        ThucydidesUtils.registerListener(listener);
+    }
+    
+    
     @Override
     public ThucydidesUser by(String user) {
         return (ThucydidesUser) users.by(user);

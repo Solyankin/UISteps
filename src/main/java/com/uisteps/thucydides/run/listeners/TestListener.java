@@ -13,38 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user.browser.pages;
+package com.uisteps.thucydides.run.listeners;
 
-import com.uisteps.core.user.browser.Browser;
+import com.uisteps.thucydides.run.Test;
+import com.uisteps.thucydides.verify.ThucydidesVerify;
 
 /**
  *
  * @author ASolyankin
  */
-public class MockPage<T extends Page> {
-    
-    private final T page;
-    
-    public MockPage(Class<T> page, Browser browser) {
-        this.page = browser.getUIObjectFactory().instatiate(page);
-        open(this.page, browser);
-    }
-    
-    public MockPage(T page, Browser browser) {
-        this.page = page;
-        open(page, browser);
+public class TestListener extends ThucydidesListener {
+
+    private final Test test;
+
+    public TestListener(Test test) {
+        this.test = test;
     }
 
-    private void open(Page page, Browser browser) {
-        browser.getDriver().get(page.getUrl().toString());
+    public Test getTest() {
+        return test;
     }
-    
+
     @Override
-    public String toString() {
-        return page.toString();
+    protected ThucydidesVerify verify() {
+        return getTest().verify();
     }
 
-    public T getPage() {
-        return page;
-    }
 }

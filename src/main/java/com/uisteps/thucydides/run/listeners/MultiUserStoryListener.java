@@ -13,14 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user.browser.pages;
+package com.uisteps.thucydides.run.listeners;
+
+import com.uisteps.thucydides.run.MultiUserStory;
 
 /**
  *
  * @author ASolyankin
  */
-public interface UIObject<T> {
+public class MultiUserStoryListener extends StoryListener {
 
-    boolean isDisplayed();
-    
+    public MultiUserStoryListener(MultiUserStory story) {
+        super(story);
+    }
+
+    @Override
+    public MultiUserStory getStory() {
+        return (MultiUserStory) super.getStory();
+    }
+
 }

@@ -16,8 +16,10 @@
 package com.uisteps.thucydides.run;
 
 import com.uisteps.core.run.WithUser;
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.listeners.UserTestListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.steps.StepListener;
 import net.thucydides.junit.runners.ThucydidesRunner;
 import org.junit.runner.RunWith;
 
@@ -28,9 +30,16 @@ import org.junit.runner.RunWith;
 @RunWith(ThucydidesRunner.class)
 public class UserTest extends Test implements WithUser {
 
-    @Steps
-    protected ThucydidesUser user;
+    protected ThucydidesUser user = ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class);
 
+    public UserTest() {
+        ThucydidesUtils.registerListener(new UserTestListener(this));
+    }
+
+    public UserTest(StepListener listener) {
+        ThucydidesUtils.registerListener(listener);
+    }
+    
     @Override
     public ThucydidesUser user() {
         return user;
