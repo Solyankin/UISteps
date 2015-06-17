@@ -15,6 +15,7 @@
  */
 package com.uisteps.thucydides.run.listeners;
 
+import com.uisteps.thucydides.run.Story;
 import com.uisteps.thucydides.run.Test;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
 
@@ -24,13 +25,17 @@ import com.uisteps.thucydides.verify.ThucydidesVerify;
  */
 public class TestListener extends ThucydidesListener {
 
-    private final Test test;
+    private Test test;
 
-    public TestListener(Test test) {
+    public void setStory(Test test) {
         this.test = test;
     }
 
     public Test getTest() {
+
+        if (test == null) {
+            throw new AssertionError("Test is not set in listener");
+        }
         return test;
     }
 

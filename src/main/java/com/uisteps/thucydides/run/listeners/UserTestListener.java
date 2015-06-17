@@ -23,10 +23,6 @@ import com.uisteps.thucydides.run.UserTest;
  */
 public class UserTestListener extends TestListener {
 
-    public UserTestListener(UserTest test) {
-        super(test);
-    }
-
     @Override
     public UserTest getTest() {
         return (UserTest) super.getTest();

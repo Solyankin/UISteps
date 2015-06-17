@@ -16,6 +16,7 @@
 package com.uisteps.thucydides.run.listeners;
 
 import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.user.ThucydidesUser;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
 import java.util.Map;
 import net.thucydides.core.model.DataTable;

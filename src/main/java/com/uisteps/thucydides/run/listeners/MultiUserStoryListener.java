@@ -22,11 +22,7 @@ import com.uisteps.thucydides.run.MultiUserStory;
  * @author ASolyankin
  */
 public class MultiUserStoryListener extends StoryListener {
-
-    public MultiUserStoryListener(MultiUserStory story) {
-        super(story);
-    }
-
+    
     @Override
     public MultiUserStory getStory() {
         return (MultiUserStory) super.getStory();

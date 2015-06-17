@@ -23,10 +23,6 @@ import com.uisteps.thucydides.run.MultiUserTest;
  */
 public class MultiUserTestListener extends TestListener {
 
-    public MultiUserTestListener(MultiUserTest test) {
-        super(test);
-    }
-
     @Override
     public MultiUserTest getTest() {
         return (MultiUserTest) super.getTest();

@@ -23,10 +23,6 @@ import com.uisteps.thucydides.run.UserStory;
  */
 public class UserStoryListener extends StoryListener {
 
-    public UserStoryListener(UserStory story) {
-        super(story);
-    }
-
     @Override
     public UserStory getStory() {
         return (UserStory) super.getStory();

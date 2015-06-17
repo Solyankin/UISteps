@@ -20,7 +20,6 @@ import com.uisteps.core.run.Verify;
 import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.thucydides.run.listeners.TestListener;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
-import net.thucydides.core.steps.StepListener;
 import net.thucydides.junit.runners.ThucydidesRunner;
 import org.junit.runner.RunWith;
 
@@ -34,10 +33,15 @@ public class Test implements Verify, WithStorage {
     public final ThucydidesVerify verify = ThucydidesUtils.getNewStepLibrary(ThucydidesVerify.class);
 
     public Test() {
-        ThucydidesUtils.registerListener(new TestListener(this));
+        this(new TestListener());
     }
 
-    public Test(StepListener listener) {
+    public Test(TestListener listener) {
+        init(listener);
+    }
+
+    private void init(TestListener listener) {
+        listener.setStory(this);
         ThucydidesUtils.registerListener(listener);
     }
 

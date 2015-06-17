@@ -32,7 +32,7 @@ public class MultiUserTest extends Test implements ByUser {
     protected ThucydidesUserFactory users = ThucydidesUtils.getNewStepLibrary(ThucydidesUserFactory.class);
 
     public MultiUserTest() {
-        ThucydidesUtils.registerListener(new MultiUserTestListener(this));
+        ThucydidesUtils.registerListener(new MultiUserTestListener());
     }
 
     public MultiUserTest(StepListener listener) {

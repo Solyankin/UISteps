@@ -32,7 +32,7 @@ public class MultiUserStory extends Story implements ByUser {
     protected ThucydidesUserFactory users = ThucydidesUtils.getNewStepLibrary(ThucydidesUserFactory.class);
 
     public MultiUserStory() {
-        ThucydidesUtils.registerListener(new MultiUserStoryListener(this));
+        ThucydidesUtils.registerListener(new MultiUserStoryListener());
     }
 
     public MultiUserStory(StepListener listener) {

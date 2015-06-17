@@ -1,5 +1,6 @@
 package com.uisteps.thucydides.run.listeners;
 
+import com.uisteps.thucydides.run.Story;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
 
 /**
@@ -8,13 +9,17 @@ import com.uisteps.thucydides.verify.ThucydidesVerify;
  */
 public class StoryListener extends ThucydidesListener {
     
-    private final com.uisteps.thucydides.run.Story story;
+    private com.uisteps.thucydides.run.Story story;
 
-    public StoryListener(com.uisteps.thucydides.run.Story story) {
+    public void setStory(Story story) {
         this.story = story;
     }
 
     public com.uisteps.thucydides.run.Story getStory() {
+        
+        if(story == null) {
+            throw new AssertionError("Story is not set in listener");
+        }
         return story;
     }
     
