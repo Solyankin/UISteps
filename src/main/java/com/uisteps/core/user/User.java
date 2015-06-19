@@ -49,7 +49,7 @@ public class User {
         return browserList.getCurrentBrowser();
     }
 
-    protected <T> Then<T> then(Class<? extends UIObject> uiObject) {
+    protected <T extends UIObject> Then<T> then(Class<T> uiObject) {
         return inOpenedBrowser().then(uiObject);
     }
     

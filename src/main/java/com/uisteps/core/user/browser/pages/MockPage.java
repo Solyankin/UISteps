@@ -20,6 +20,7 @@ import com.uisteps.core.user.browser.Browser;
 /**
  *
  * @author ASolyankin
+ * @param <T>
  */
 public class MockPage<T extends Page> {
     

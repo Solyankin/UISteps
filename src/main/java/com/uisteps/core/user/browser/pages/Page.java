@@ -24,7 +24,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  * @author ASolyankin
  */
 @Root
-public class Page<T> implements UIObject<T> {
+public class Page implements UIObject {
 
     private final Url url;
     private final Browser browser;
@@ -48,7 +48,7 @@ public class Page<T> implements UIObject<T> {
         return executeScript("return document.readyState").equals("complete");
     }
 
-    protected <T> Then<T> then(Class<? extends UIObject> uiObject) {
+    protected <T extends UIObject> Then<T> then(Class<T> uiObject) {
         return browser.then(uiObject);
     }
     

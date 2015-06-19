@@ -19,7 +19,7 @@ package com.uisteps.core.user.browser.pages;
  *
  * @author ASolyankin
  */
-public interface UIObject<T> {
+public interface UIObject {
 
     boolean isDisplayed();
     

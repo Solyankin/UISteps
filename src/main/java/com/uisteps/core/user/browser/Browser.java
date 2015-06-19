@@ -245,7 +245,7 @@ public class Browser {
         
     }
 
-    public <T> Then<T> then(Class<? extends UIObject> uiObject) {
+    public <T extends UIObject> Then<T> then(Class<T> uiObject) {
         return new Then(new OnDisplayedAction<>(this, uiObject));
     }
     
