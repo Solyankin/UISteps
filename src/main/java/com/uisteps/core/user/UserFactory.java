@@ -37,34 +37,49 @@ public abstract class UserFactory {
     public UserFactory add(String user) {
         return add(user, this.user);
     }
-    
+
     public UserFactory add(String name, Class<? extends User> user) {
-        users.put(name, getInstanceOf(user));
+        users.put(name, getInstanceOf(user).setName(name));
         return this;
     }
-    
-    public User by(String user) {
+
+    public UserFactory add(String name, User user) {
+        users.put(name, user);
+        return this;
+    }
+
+    public UserFactory add(User user) {
+        return add(user.getName().toString(), user);
+    }
+
+    public UserFactory add(Class<? extends User> user) {
+        return add(user.getName(), user);
+    }
+
+    public <T extends User> T by(String user) {
 
         if (!users.containsKey(user)) {
             add(user);
         }
 
-        return users.get(user);
+        return by((T) users.get(user));
     }
 
     public <T extends User> T by(Class<T> user) {
-        T userInstance = getInstanceOf(user);
-        users.put(user.getName(), userInstance);
-        return (T) by(userInstance.getName());
+        return by(user.getName(), user);
     }
 
     public <T extends User> T by(String name, Class<T> user) {
 
-        if (!(users.containsKey(name) && users.get(name).getClass().equals(user))) {
+        if (!users.containsKey(name)) {
             add(name, user);
         }
 
-        return (T) by(name);
+        return by((T) users.get(name));
+    }
+
+    public <T extends User> T by(T user) {
+        return user;
     }
 
     public abstract <T extends User> T getInstanceOf(Class<T> user);

@@ -2,7 +2,7 @@ package com.uisteps.thucydides.user.browser.pages;
 
 import com.uisteps.core.user.browser.Browser;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
+import com.uisteps.thucydides.name.NameConvertor;
 
 /**
  *

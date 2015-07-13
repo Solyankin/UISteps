@@ -45,8 +45,6 @@ public class Verify {
         try {
             Assert.assertTrue(result.isSuccessful());
             return result;
-        } catch (AssertionError err) {
-            throw err;
         } finally {
             result.reset();
         }

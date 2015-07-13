@@ -17,17 +17,20 @@ public class UIElement extends TypifiedElement implements UIObject {
         super(wrappedElement);
         this.browser = browser;
     }
-
+    
     public Object click() {
-        return browser.click(this);
+        browser.click(this);
+        return null;
     }
 
     public Object moveMouseOver() {
-        return browser.moveMouseOver(this);
+        browser.moveMouseOver(this);
+        return null;
     }
 
     public Object clickOnPoint(int x, int y) {
-        return browser.clickOnPoint(this, x, y);
+        browser.clickOnPoint(this, x, y);
+        return null;
     }
     
     protected <T extends UIObject> Then<T> then(Class<T> uiObject) {

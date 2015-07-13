@@ -15,10 +15,8 @@
  */
 package com.uisteps.thucydides.run;
 
-import com.uisteps.core.run.WithUser;
-import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.TestListener;
-import com.uisteps.thucydides.run.listeners.UserTestListener;
+import com.uisteps.thucydides.run.containers.StepContainerWithUser;
+import com.uisteps.thucydides.run.listeners.ThucydidesUserListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
 import net.thucydides.junit.runners.ThucydidesRunner;
 import org.junit.runner.RunWith;
@@ -28,23 +26,26 @@ import org.junit.runner.RunWith;
  * @author ASolyankin
  */
 @RunWith(ThucydidesRunner.class)
-public class UserTest extends Test implements WithUser {
+public class UserTest extends ThucydidesTest implements ThucydidesVerifyWithUser {
 
-    protected ThucydidesUser user = ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class);
+    private final StepContainerWithUser stepContainer;
+    protected final ThucydidesUser user;
 
     public UserTest() {
-        this(new UserTestListener());
+        stepContainer = new StepContainerWithUser();
+        user = stepContainer.user();
     }
 
-    public UserTest(UserTestListener listener) {
-        this(ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class), listener);
+    public UserTest(ThucydidesUserListener listener) {
+        stepContainer = new StepContainerWithUser(listener);
+        user = stepContainer.user();
     }
-    
-    public UserTest(ThucydidesUser user, TestListener listener) {
-        super(listener);
-        this.user = user;
+
+    public UserTest(ThucydidesUser user, ThucydidesUserListener listener) {
+        stepContainer = new StepContainerWithUser(user, listener);
+        this.user = stepContainer.user();
     }
-    
+
     @Override
     public ThucydidesUser user() {
         return user;

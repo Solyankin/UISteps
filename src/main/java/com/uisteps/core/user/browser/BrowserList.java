@@ -15,7 +15,6 @@
  */
 package com.uisteps.core.user.browser;
 
-import com.uisteps.core.user.browser.Browser;
 import java.util.ArrayList;
 
 /**

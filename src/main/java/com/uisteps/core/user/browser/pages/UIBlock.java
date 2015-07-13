@@ -17,7 +17,6 @@ package com.uisteps.core.user.browser.pages;
 
 import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.Browser;
-import com.uisteps.core.then.GetValueAction;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
@@ -39,15 +38,18 @@ public abstract class UIBlock extends HtmlElement implements UIObject {
     }
 
     public Object afterClick() {
-        return browser.click(this);
+        browser.click(this);
+        return null;
     }
     
     public Object moveMouseOver() {
-        return browser.moveMouseOver(this);
+        browser.moveMouseOver(this);
+        return null;
     }
 
     public Object clickOnPoint(int x, int y) {
-        return browser.clickOnPoint(this, x, y);
+        browser.clickOnPoint(this, x, y);
+        return null;
     }
 
     protected <T extends UIObject> Then<T> then(Class<T> uiObject) {

@@ -28,6 +28,7 @@ import net.thucydides.core.Thucydides;
 import net.thucydides.core.ThucydidesSystemProperties;
 import net.thucydides.core.ThucydidesSystemProperty;
 import net.thucydides.core.guice.Injectors;
+import net.thucydides.core.model.TestStep;
 import net.thucydides.core.steps.BaseStepListener;
 import net.thucydides.core.steps.StepEventBus;
 import net.thucydides.core.steps.StepFactory;
@@ -164,9 +165,9 @@ public class ThucydidesUtils extends Thucydides {
         String fieldName = "driverMap";
 
         try {
-            Field configurationField = WebdriverInstances.class.getDeclaredField(fieldName);
-            configurationField.setAccessible(true);
-            return (Map<String, WebDriver>) configurationField.get(getDrivers());
+            Field field = WebdriverInstances.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return (Map<String, WebDriver>) field.get(getDrivers());
         } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException ex) {
             throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + WebdriverInstances.class + "!\nCause: " + ex);
         }
@@ -194,6 +195,18 @@ public class ThucydidesUtils extends Thucydides {
             return (BaseStepListener) method.invoke(StepEventBus.getEventBus());
         } catch (InvocationTargetException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException ex) {
             throw new RuntimeException("Cannot invoke method by name " + methodName + " in class " + StepEventBus.class + "!\nCause: " + ex);
+        }
+    }
+
+    public static TestStep getCurrentTestStep() {
+        String methodName = "getCurrentStep";
+
+        try {
+            Method method = BaseStepListener.class.getDeclaredMethod(methodName);
+            method.setAccessible(true);
+            return (TestStep) method.invoke(getBaseStepListener());
+        } catch (InvocationTargetException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException ex) {
+            throw new RuntimeException("Cannot invoke method by name " + methodName + " in class " + BaseStepListener.class + "!\nCause: " + ex);
         }
     }
 

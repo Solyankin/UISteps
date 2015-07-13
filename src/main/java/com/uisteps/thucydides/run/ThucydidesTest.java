@@ -17,28 +17,26 @@ package com.uisteps.thucydides.run;
 
 import com.uisteps.thucydides.run.containers.StepContainer;
 import com.uisteps.core.name.Named;
-import com.uisteps.core.run.VerifyWithStorage;
-import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.thucydides.run.listeners.ThucydidesListener;
-import com.uisteps.thucydides.run.storage.ThucydidesStorage;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
-import net.thucydides.jbehave.ThucydidesJUnitStory;
+import net.thucydides.junit.runners.ThucydidesRunner;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author ASolyankin
  */
-public class Story extends ThucydidesJUnitStory implements ThucydidesVerifyWithStorage {
+@RunWith(ThucydidesRunner.class)
+public class ThucydidesTest implements ThucydidesVerifyWithStorage {
 
     private final StepContainer stepContainer;
     protected final ThucydidesVerify verify;
-    
-    
-    public Story() {
+
+    public ThucydidesTest() {
         this(new ThucydidesListener());
     }
 
-    public Story(ThucydidesListener listener) {
+    public ThucydidesTest(ThucydidesListener listener) {
         stepContainer = new StepContainer(listener);
         verify = stepContainer.verify();
     }
@@ -72,5 +70,4 @@ public class Story extends ThucydidesJUnitStory implements ThucydidesVerifyWithS
     public <T> T remembered(Class<T> key) {
         return stepContainer.remembered(key);
     }
-    
 }

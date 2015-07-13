@@ -13,18 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run.listeners;
+package com.uisteps.thucydides.user.browser.pages.elements;
 
-import com.uisteps.thucydides.run.MultiUserTest;
+import com.uisteps.core.user.browser.Browser;
+import com.uisteps.thucydides.ThucydidesUtils;
+import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class MultiUserTestListener extends TestListener {
+public class FileInput extends com.uisteps.core.user.browser.pages.elements.FileInput {
 
-    @Override
-    public MultiUserTest getTest() {
-        return (MultiUserTest) super.getTest();
+    public FileInput(WebElement wrappedElement) {
+        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+    }
+
+    public FileInput(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
     }
 }

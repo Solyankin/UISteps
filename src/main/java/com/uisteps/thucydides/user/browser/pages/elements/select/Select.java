@@ -13,36 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.user;
+package com.uisteps.thucydides.user.browser.pages.elements.select;
 
-import com.uisteps.core.user.User;
-import com.uisteps.core.user.UserFactory;
+import com.uisteps.core.user.browser.Browser;
 import com.uisteps.thucydides.ThucydidesUtils;
-import net.thucydides.core.annotations.Step;
+import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class ThucydidesUserFactory extends UserFactory {
+public class Select extends com.uisteps.core.user.browser.pages.elements.select.Select {
 
-    public ThucydidesUserFactory() {
-        super(ThucydidesUser.class);
+    public Select(WebElement wrappedElement) {
+        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
     }
 
-    public ThucydidesUserFactory(Class<? extends User> user) {
-        super(user);
-    }
-
-    @Step
-    @Override
-    public ThucydidesUser by(String user) {
-        return super.by(user);
-    }
-
-    @Override
-    public <T extends User> T getInstanceOf(Class<T> user) {
-        return ThucydidesUtils.getNewStepLibrary(user);
+    public Select(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
     }
 
 }

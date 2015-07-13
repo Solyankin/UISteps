@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.run;
+package com.uisteps.thucydides.user.browser.pages.elements.radio;
+
+import com.uisteps.core.user.browser.Browser;
+import com.uisteps.thucydides.ThucydidesUtils;
+import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public interface WithStorage {
+public class RadioButtonGroup extends com.uisteps.core.user.browser.pages.elements.radio.RadioButtonGroup {
 
-    public abstract <T> T remember(String key, T value);
+    public RadioButtonGroup(WebElement wrappedElement) {
+        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+    }
 
-    public abstract <T> T rememberedAs(String key);
+    public RadioButtonGroup(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
+    }
+
 }

@@ -15,40 +15,30 @@
  */
 package com.uisteps.core.user.browser.pages.elements;
 
-import com.uisteps.core.user.browser.pages.UIElement;
 import com.uisteps.core.user.browser.Browser;
+import com.uisteps.core.user.browser.pages.UIElement;
 import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class TextField extends UIElement {
+public class FileInput extends UIElement {
 
-    public TextField(WebElement wrappedElement, Browser browser) {
+    private final ru.yandex.qatools.htmlelements.element.FileInput wrappedFileInput;
+    
+    public FileInput(WebElement wrappedElement, Browser browser) {
         super(wrappedElement, browser);
+        wrappedFileInput = new ru.yandex.qatools.htmlelements.element.FileInput(wrappedElement);
     }
 
-    public Object sendKeys(String keys) {
-        return type(keys);
+    public ru.yandex.qatools.htmlelements.element.FileInput getWrappedFileInput() {
+        return wrappedFileInput;
     }
 
-    public Object type(String keys) {
-        browser.typeInto(this, keys);
+    public Object setFileToUpload(String filePath) {
+        browser.setTo(this, filePath);
         return null;
     }
-
-    public Object clear() {
-        browser.clear(this);
-        return null;
-    }
-
-    public Object enter(String text) {
-        browser.enterInto(this, text);
-        return null;
-    }
-
-    public String getText() {
-        return browser.getTextFrom(this);
-    }
+    
 }

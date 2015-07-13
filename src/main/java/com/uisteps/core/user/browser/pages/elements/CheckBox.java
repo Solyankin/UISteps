@@ -15,40 +15,43 @@
  */
 package com.uisteps.core.user.browser.pages.elements;
 
-import com.uisteps.core.user.browser.pages.UIElement;
 import com.uisteps.core.user.browser.Browser;
+import com.uisteps.core.user.browser.pages.UIElement;
 import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class TextField extends UIElement {
+public class CheckBox extends UIElement {
 
-    public TextField(WebElement wrappedElement, Browser browser) {
+    private final ru.yandex.qatools.htmlelements.element.CheckBox wrappedCheckBox;
+    
+    public CheckBox(WebElement wrappedElement, Browser browser) {
         super(wrappedElement, browser);
+        wrappedCheckBox = new ru.yandex.qatools.htmlelements.element.CheckBox(wrappedElement);
     }
 
-    public Object sendKeys(String keys) {
-        return type(keys);
-    }
-
-    public Object type(String keys) {
-        browser.typeInto(this, keys);
-        return null;
-    }
-
-    public Object clear() {
-        browser.clear(this);
-        return null;
-    }
-
-    public Object enter(String text) {
-        browser.enterInto(this, text);
-        return null;
+    public String getLabelText() {
+        return wrappedCheckBox.getLabelText();
     }
 
     public String getText() {
-        return browser.getTextFrom(this);
+        return wrappedCheckBox.getText();
     }
+
+    public Object select() {
+        browser.select(this);
+        return null;
+    }
+
+    public Object deselect() {
+        browser.deselect(this);
+        return null;
+    }
+
+    public ru.yandex.qatools.htmlelements.element.CheckBox getWrappedCheckBox() {
+        return wrappedCheckBox;
+    }
+
 }

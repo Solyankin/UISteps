@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run.listeners;
+package com.uisteps.core.run;
 
-import com.uisteps.thucydides.run.UserStory;
+import com.uisteps.core.run.storage.WithStorage;
 
 /**
  *
  * @author ASolyankin
  */
-public class UserStoryListener extends StoryListener {
-
-    @Override
-    public UserStory getStory() {
-        return (UserStory) super.getStory();
-    }
+public interface VerifyWithStorage extends Verify, WithStorage{
+    
 }

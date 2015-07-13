@@ -10,12 +10,18 @@ import org.openqa.selenium.WebElement;
  */
 public class Link extends UIElement {
 
+    private final ru.yandex.qatools.htmlelements.element.Link wrappedLink;
+    
     public Link(WebElement wrappedElement, Browser browser) {
         super(wrappedElement, browser);
+        wrappedLink = new ru.yandex.qatools.htmlelements.element.Link(wrappedElement);
     }
 
     public String getText() {
         return browser.getTextFrom(this);
     }
 
+    public String getReference() {
+        return wrappedLink.getReference();
+    }
 }

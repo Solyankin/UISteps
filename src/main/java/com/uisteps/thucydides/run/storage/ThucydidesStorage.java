@@ -13,36 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.user;
+package com.uisteps.thucydides.run.storage;
 
-import com.uisteps.core.user.User;
-import com.uisteps.core.user.UserFactory;
-import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.core.run.storage.RememberedValue;
+import com.uisteps.core.run.storage.Storage;
+import net.thucydides.core.Thucydides;
 import net.thucydides.core.annotations.Step;
 
 /**
  *
  * @author ASolyankin
  */
-public class ThucydidesUserFactory extends UserFactory {
+public class ThucydidesStorage extends Storage {
 
-    public ThucydidesUserFactory() {
-        super(ThucydidesUser.class);
-    }
-
-    public ThucydidesUserFactory(Class<? extends User> user) {
-        super(user);
+    public ThucydidesStorage() {
+        super(Thucydides.getCurrentSession());
     }
 
     @Step
     @Override
-    public ThucydidesUser by(String user) {
-        return super.by(user);
+    public <T> T remembered(RememberedValue<T> value) {
+        return super.remembered(value);
     }
 
+    @Step
     @Override
-    public <T extends User> T getInstanceOf(Class<T> user) {
-        return ThucydidesUtils.getNewStepLibrary(user);
+    public <T> T remember(RememberedValue<T> value) {
+        return super.remember(value);
     }
 
 }

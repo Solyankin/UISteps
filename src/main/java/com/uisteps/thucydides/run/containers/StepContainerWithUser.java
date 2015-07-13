@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
+package com.uisteps.thucydides.run.containers;
 
-import com.uisteps.thucydides.run.containers.StepContainerWithUser;
 import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.ThucydidesVerifyWithUser;
 import com.uisteps.thucydides.run.listeners.ThucydidesListener;
 import com.uisteps.thucydides.run.listeners.ThucydidesUserListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
@@ -25,29 +25,26 @@ import com.uisteps.thucydides.user.ThucydidesUser;
  *
  * @author ASolyankin
  */
-public class UserStory extends Story implements ThucydidesVerifyWithUser {
+public class StepContainerWithUser extends StepContainer implements ThucydidesVerifyWithUser {
 
-    private final StepContainerWithUser stepContainer;
-    protected final ThucydidesUser user;
-
-    public UserStory() {
-        stepContainer = new StepContainerWithUser();
-        user = stepContainer.user();
-    }
-
-    public UserStory(ThucydidesUserListener listener) {
-        stepContainer = new StepContainerWithUser(listener);
-        user = stepContainer.user();
-    }
-
-    public UserStory(ThucydidesUser user, ThucydidesUserListener listener) {
-        stepContainer = new StepContainerWithUser(user, listener);
-        this.user = stepContainer.user();
-    }
-
+    private final ThucydidesUser user;
+    
     @Override
     public ThucydidesUser user() {
         return user;
     }
+    
+    public StepContainerWithUser() {
+        this(new ThucydidesUserListener());
+    }
 
+    public StepContainerWithUser(ThucydidesUserListener listener) {
+        this(ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class), listener);
+    }
+    
+    public StepContainerWithUser(ThucydidesUser user, ThucydidesListener listener) {
+        super(listener);
+        this.user = user;
+    }
+    
 }

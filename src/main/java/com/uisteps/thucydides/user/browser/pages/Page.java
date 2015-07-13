@@ -16,10 +16,11 @@
  */
 package com.uisteps.thucydides.user.browser.pages;
 
+import com.uisteps.core.name.Name;
 import com.uisteps.core.user.browser.Browser;
 import com.uisteps.core.user.browser.pages.Url;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.NameConvertor;
+import com.uisteps.thucydides.name.NameConvertor;
 
 /**
  *
@@ -36,7 +37,14 @@ public class Page extends com.uisteps.core.user.browser.pages.Page {
     }
 
     @Override
-    public String getName() {
-        return NameConvertor.humanize(getClass());
+    public Name getName() {
+
+        Name name = super.getName();
+
+        if (name.isDefault()) {
+            name.setValue(NameConvertor.humanize(getClass()));
+        }
+
+        return name;
     }
 }

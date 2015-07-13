@@ -13,18 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run.listeners;
-
-import com.uisteps.thucydides.run.UserTest;
+package com.uisteps.core.run;
 
 /**
  *
  * @author ASolyankin
  */
-public class UserTestListener extends TestListener {
-
-    @Override
-    public UserTest getTest() {
-        return (UserTest) super.getTest();
-    }
+public interface VerifyWithUser extends VerifyWithStorage, WithUser{
+    
 }

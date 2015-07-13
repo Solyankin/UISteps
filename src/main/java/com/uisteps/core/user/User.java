@@ -15,6 +15,8 @@
  */
 package com.uisteps.core.user;
 
+import com.uisteps.core.name.Name;
+import com.uisteps.core.name.Named;
 import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.BrowserList;
 import com.uisteps.core.user.browser.NoBrowserException;
@@ -31,14 +33,20 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  *
  * @author ASolyankin
  */
-public class User {
+public class User implements Named {
 
     private final BrowserList browserList = new BrowserList();
     private final BrowserFactory browserFactory;
-    private String name = "user";
+    public static final String DEFAULT_NAME = "user";
+    private Name name;
 
-    public User(BrowserFactory browserFactory) {
+    public User(BrowserFactory browserFactory, Name name) {
         this.browserFactory = browserFactory;
+        this.name = name;
+    }
+    
+    public User(BrowserFactory browserFactory) {
+        this(browserFactory, new Name(DEFAULT_NAME));
     }
     
     public Browser inOpenedBrowser() {
@@ -165,15 +173,15 @@ public class User {
         inOpenedBrowser().moveMouseOver(element);
     }
 
-    public void typeInto(WrapsElement input, CharSequence... keys) {
-        inOpenedBrowser().typeInto(input, keys);
+    public void typeInto(WrapsElement input, String text) {
+        inOpenedBrowser().typeInto(input, text);
     }
 
     public void clear(WrapsElement input) {
         inOpenedBrowser().clear(input);
     }
 
-    public void enterInto(WrapsElement input, CharSequence... text) {
+    public void enterInto(WrapsElement input, String text) {
         inOpenedBrowser().enterInto(input, text);
     }
 
@@ -197,17 +205,20 @@ public class User {
         return see(inOpenedBrowser().displayed(uiObject));
     }
     
-    public String getName() {
+    @Override
+    public Name getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public User setName(String name) {
+        this.name.setValue(name);
+        return this;
     }
 
     @Override
     public String toString() {
-        return name;
+        return name.toString();
     }
 
 }

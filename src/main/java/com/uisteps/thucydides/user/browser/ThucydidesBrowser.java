@@ -23,8 +23,11 @@ import com.uisteps.core.user.browser.pages.MockPage;
 import com.uisteps.core.user.browser.pages.UIObjectFactory;
 import com.uisteps.core.user.browser.pages.Page;
 import com.uisteps.core.user.browser.pages.UIObject;
-import com.uisteps.core.then.OnDisplayedAction;
-import com.uisteps.core.then.Then;
+import com.uisteps.core.user.browser.pages.elements.CheckBox;
+import com.uisteps.core.user.browser.pages.elements.FileInput;
+import com.uisteps.core.user.browser.pages.elements.radio.RadioButton;
+import com.uisteps.core.user.browser.pages.elements.select.Option;
+import com.uisteps.core.user.browser.pages.elements.select.Select;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsElement;
@@ -45,32 +48,32 @@ public class ThucydidesBrowser extends Browser {
 
     @Step
     @Override
-    public Object enterInto(WrapsElement input, CharSequence... text) {
-        return super.enterInto(input, text);
+    public void enterInto(WrapsElement input, String text) {
+        super.enterInto(input, text);
     }
 
     @Step
     @Override
-    public Object clear(WrapsElement input) {
-        return super.clear(input);
+    public void clear(WrapsElement input) {
+        super.clear(input);
     }
 
     @Step
     @Override
-    public Object typeInto(WrapsElement input, CharSequence... keys) {
-        return super.typeInto(input, keys);
+    public void typeInto(WrapsElement input, String text) {
+        super.typeInto(input, text);
     }
 
     @Step
     @Override
-    public Object clickOnPoint(WrapsElement element, int x, int y) {
-        return super.clickOnPoint(element, x, y);
+    public void clickOnPoint(WrapsElement element, int x, int y) {
+        super.clickOnPoint(element, x, y);
     }
 
     @Step
     @Override
-    public Object click(WrapsElement element) {
-        return super.click(element);
+    public void click(WrapsElement element) {
+        super.click(element);
     }
 
     @Step
@@ -127,4 +130,51 @@ public class ThucydidesBrowser extends Browser {
         super.switchToNextWindow();
     }
 
+    //Select
+    @Step
+    @Override
+    public void select(Option option) {
+        super.select(option);
+    }
+
+    @Step
+    @Override
+    public void deselectAllValuesFrom(Select select) {
+        super.deselectAllValuesFrom(select);
+    }
+
+    @Step
+    @Override
+    public void deselect(Option option) {
+        super.deselect(option);
+    }
+
+    //Radio button
+    @Step
+    @Override
+    public void select(RadioButton button) {
+        super.select(button);
+    }
+
+    //CheckBox
+    
+    @Step
+    @Override
+    public void select(CheckBox checkBox) {
+        checkBox.getWrappedCheckBox().select();
+    }
+
+    @Step
+    @Override
+    public void deselect(CheckBox checkBox) {
+        checkBox.getWrappedCheckBox().deselect();
+    }
+    
+    //FileInput
+    
+    @Step
+    @Override
+    public void setTo(FileInput fileInput, String filePath) {
+        fileInput.getWrappedFileInput().setFileToUpload(filePath);
+    }
 }

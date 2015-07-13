@@ -13,19 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run.listeners;
+package com.uisteps.core.run.storage;
 
-import com.uisteps.thucydides.run.MultiUserStory;
+import com.uisteps.core.name.Name;
+import com.uisteps.core.name.Named;
 
 /**
  *
  * @author ASolyankin
  */
-public class MultiUserStoryListener extends StoryListener {
+public class RememberedValue<T> implements Named {
+
+    private final Name name;
+    private final T value;
+
+    public RememberedValue(String name, T value) {
+        this.name = new Name(name);
+        this.value = value;
+    }
+    
+    public T get() {
+        return value;
+    }
     
     @Override
-    public MultiUserStory getStory() {
-        return (MultiUserStory) super.getStory();
+    public Named setName(String name) {
+        this.name.setValue(name);
+        return this;
+    }
+    
+    @Override
+    public Name getName() {
+        return name;
     }
 
+    @Override
+    public String toString() {
+        return getName().toString();
+    }
+    
 }

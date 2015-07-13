@@ -32,6 +32,14 @@ private boolean complited = true;
     }
 
     @Override
+    public Result result() {
+        complited(true);
+        return super.result();
+    }
+
+    
+    
+    @Override
     public Then that(Condition... conditions) {
         return _that(conditions);
     }

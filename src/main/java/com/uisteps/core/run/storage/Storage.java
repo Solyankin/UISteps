@@ -1,0 +1,67 @@
+/*
+ * Copyright 2015 ASolyankin.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.uisteps.core.run.storage;
+
+import com.uisteps.core.name.Named;
+import java.util.Map;
+
+/**
+ *
+ * @author ASolyankin
+ */
+public class Storage implements WithStorage {
+
+    private final Map map;
+
+    public Storage(Map map) {
+        this.map = map;
+    }
+
+    @Override
+    public <T> T remember(String key, T value) {
+        return (T) remember(new RememberedValue(key, value));
+    }
+
+    @Override
+    public <T extends Named> T remember(T value) {
+        return remember(value.getName().toString(), value);
+    }
+
+    @Override
+    public <T> T remember(T value) {
+        return remember(value.getClass().getName(), value);
+    }
+
+    @Override
+    public <T> T remembered(String key) {
+        return (T) remembered(new RememberedValue(key, null));
+    }
+
+    @Override
+    public <T> T remembered(Class<T> key) {
+        return remembered(key.getName());
+    }
+    
+    public <T> T remember(RememberedValue<T> value) {
+        map.put(value.getName(), value.get());
+        return value.get();
+    }
+    
+    public <T> T remembered(RememberedValue<T> value) {
+        return (T) map.get(value.getName());
+    }
+
+}

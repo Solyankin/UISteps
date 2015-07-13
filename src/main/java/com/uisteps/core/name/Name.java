@@ -13,36 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.user;
-
-import com.uisteps.core.user.User;
-import com.uisteps.core.user.UserFactory;
-import com.uisteps.thucydides.ThucydidesUtils;
-import net.thucydides.core.annotations.Step;
+package com.uisteps.core.name;
 
 /**
  *
  * @author ASolyankin
  */
-public class ThucydidesUserFactory extends UserFactory {
+public class Name {
+    
+    private String value;
+    private boolean isDefault = true;
 
-    public ThucydidesUserFactory() {
-        super(ThucydidesUser.class);
+    public Name(String value) {
+        this.value = value;
     }
-
-    public ThucydidesUserFactory(Class<? extends User> user) {
-        super(user);
-    }
-
-    @Step
-    @Override
-    public ThucydidesUser by(String user) {
-        return super.by(user);
+    
+    public boolean isDefault() {
+        return isDefault;
     }
 
     @Override
-    public <T extends User> T getInstanceOf(Class<T> user) {
-        return ThucydidesUtils.getNewStepLibrary(user);
+    public String toString() {
+        return value;
     }
 
+    public void setValue(String value) {
+        isDefault = false;
+        this.value = value;
+    }
+    
 }

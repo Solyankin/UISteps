@@ -15,6 +15,8 @@
  */
 package com.uisteps.core.user.browser.pages;
 
+import com.uisteps.core.name.Name;
+import com.uisteps.core.name.Named;
 import com.uisteps.core.then.Then;
 import com.uisteps.core.user.browser.Browser;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -24,22 +26,45 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  * @author ASolyankin
  */
 @Root
-public class Page implements UIObject {
+public class Page implements UIObject, Named {
 
-    private final Url url;
-    private final Browser browser;
-    
-    public Page(Browser browser, UrlFactory urlFactory) {
-        this.url = urlFactory.getUrlOf(this.getClass());
+    private Url url;
+    private UrlFactory urlFactory;
+    private Browser browser;
+    private Name name;
+    public static final String DEFAULT_NAME = "page";
+
+    public Page(Browser browser, UrlFactory urlFactory, Name name) {
+        this.urlFactory = urlFactory;
         this.browser = browser;
+        this.name = name;
+    }
+
+    public Page(Browser browser, UrlFactory urlFactory) {
+        this(browser, urlFactory, new Name(DEFAULT_NAME));
+    }
+
+    public Page(Browser browser, Url url, Name name) {
+        this.url = url;
+        this.browser = browser;
+        this.name = name;
     }
 
     public Page(Browser browser, Url url) {
-        this.url = url;
-        this.browser = browser;
+        this(browser, url, new Name(DEFAULT_NAME));
     }
-
+    
     public Url getUrl() {
+
+        if (url == null) {
+
+            if (urlFactory == null) {
+                throw new RuntimeException("Url and url factory are not set!");
+            }
+
+            url = urlFactory.getUrlOf(this.getClass());
+        }
+
         return url;
     }
 
@@ -51,11 +76,11 @@ public class Page implements UIObject {
     protected <T extends UIObject> Then<T> then(Class<T> uiObject) {
         return browser.then(uiObject);
     }
-    
+
     protected <T> Then<T> then(T value) {
         return browser.then(value);
     }
-    
+
     protected <T extends UIObject> T displayed(Class<T> uiObject) {
         return browser.displayed(uiObject);
     }
@@ -63,7 +88,7 @@ public class Page implements UIObject {
     protected <T extends UIObject> T displayed(T uiObject) {
         return browser.displayed(uiObject);
     }
-    
+
     protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
         return browser.onDisplayed(uiObject);
     }
@@ -71,11 +96,11 @@ public class Page implements UIObject {
     protected <T extends UIObject> T onDisplayed(T uiObject) {
         return browser.onDisplayed(uiObject);
     }
-    
+
     protected Browser inOpenedBrowser() {
         return browser;
     }
-    
+
     protected Object executeScript(String script) {
         return browser.executeScript(script);
     }
@@ -112,8 +137,15 @@ public class Page implements UIObject {
         browser.waitUntil(condition);
     }
 
-    public String getName() {
-        return "page";
+    @Override
+    public Name getName() {
+        return name;
+    }
+
+    @Override
+    public Page setName(String name) {
+        this.name.setValue(name);
+        return this;
     }
 
     @Override

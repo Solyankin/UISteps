@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run;
+package com.uisteps.thucydides.run.containers;
 
-import com.uisteps.thucydides.run.containers.StepContainerWithMultiUser;
 import com.uisteps.core.user.User;
+import com.uisteps.thucydides.ThucydidesUtils;
+import com.uisteps.thucydides.run.ThucydidesVerifyByUser;
+import com.uisteps.thucydides.run.listeners.ThucydidesListener;
 import com.uisteps.thucydides.run.listeners.ThucydidesMultiUserListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
 import com.uisteps.thucydides.user.ThucydidesUserFactory;
@@ -25,45 +27,46 @@ import com.uisteps.thucydides.user.ThucydidesUserFactory;
  *
  * @author ASolyankin
  */
-public class MultiUserStory extends Story implements ThucydidesVerifyByUser {
-    
-    private final StepContainerWithMultiUser stepContainer;
-    
-    public MultiUserStory() {
-        stepContainer = new StepContainerWithMultiUser();
+public class StepContainerWithMultiUser extends StepContainer implements ThucydidesVerifyByUser {
+
+    private final ThucydidesUserFactory users;
+
+    public StepContainerWithMultiUser() {
+        this(new ThucydidesMultiUserListener());
     }
 
-    public MultiUserStory(ThucydidesMultiUserListener listener) {
-        stepContainer = new StepContainerWithMultiUser(listener);
+    public StepContainerWithMultiUser(ThucydidesMultiUserListener listener) {
+        this(ThucydidesUtils.getNewStepLibrary(ThucydidesUserFactory.class), listener);
     }
 
-    public MultiUserStory(ThucydidesUserFactory users, ThucydidesMultiUserListener listener) {
-        stepContainer = new StepContainerWithMultiUser(users, listener);
+    public StepContainerWithMultiUser(ThucydidesUserFactory users, ThucydidesMultiUserListener listener) {
+        super(listener);
+        this.users = users;
     }
 
     @Override
     public ThucydidesUser by(String user) {
-        return stepContainer.by(user);
+        return users.by(user);
     }
 
     @Override
     public void add(String user) {
-        stepContainer.add(user);
+        users.add(user);
     }
 
     @Override
     public void add(String name, Class<? extends User> user) {
-        stepContainer.add(name, user);
+        users.add(name, user);
     }
 
     @Override
     public <T extends User> T by(Class<T> user) {
-        return stepContainer.by(user);
+        return users.by(user);
     }
 
     @Override
     public <T extends User> T by(String name, Class<T> user) {
-        return stepContainer.by(name, user);
+        return users.by(name, user);
     }
 
 }

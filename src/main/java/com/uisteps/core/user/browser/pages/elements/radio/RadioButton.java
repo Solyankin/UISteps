@@ -13,35 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.run.listeners;
+package com.uisteps.core.user.browser.pages.elements.radio;
 
-import com.uisteps.thucydides.run.Story;
-import com.uisteps.thucydides.run.Test;
-import com.uisteps.thucydides.verify.ThucydidesVerify;
+import com.uisteps.core.user.browser.Browser;
+import com.uisteps.core.user.browser.pages.UIElement;
+import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class TestListener extends ThucydidesListener {
+public class RadioButton extends UIElement {
 
-    private Test test;
-
-    public void setStory(Test test) {
-        this.test = test;
+    public RadioButton(WebElement wrappedElement, Browser browser) {
+        super(wrappedElement, browser);
     }
-
-    public Test getTest() {
-
-        if (test == null) {
-            throw new AssertionError("Test is not set in listener");
-        }
-        return test;
+    
+    public Object select() {
+        browser.select(this);
+        return null;
+    }
+    
+    public String getValue() {
+        return this.getWrappedElement().getAttribute("value");
     }
 
     @Override
-    protected ThucydidesVerify verify() {
-        return getTest().verify();
+    public String toString() {
+        return getName();
     }
-
+    
 }

@@ -25,11 +25,11 @@ import java.util.regex.Pattern;
  */
 public abstract class UrlFactory {
 
-    protected final String host;
+    protected final String HOST;
     protected final Class<? extends Annotation> urlAnnotation;
 
-    public UrlFactory(String host, Class<? extends Annotation> urlAnnotation) {
-        this.host = host;
+    public UrlFactory(String HOST, Class<? extends Annotation> urlAnnotation) {
+        this.HOST = HOST;
         this.urlAnnotation = urlAnnotation;
     }
 
@@ -61,8 +61,8 @@ public abstract class UrlFactory {
         if (clazz.isAnnotationPresent(urlAnnotation)) {
             String defaultUrl = getPageUrlFrom(clazz.getAnnotation(urlAnnotation));
             
-            if (defaultUrl.contains(host)) {
-                Pattern pattern = Pattern.compile("(.*)" + host + "(.*)");
+            if (defaultUrl.contains(HOST)) {
+                Pattern pattern = Pattern.compile("(.*)" + HOST + "(.*)");
                 Matcher matcher = pattern.matcher(defaultUrl);
                 
                 if (matcher.find()) {
