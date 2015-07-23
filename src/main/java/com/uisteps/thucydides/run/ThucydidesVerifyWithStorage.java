@@ -16,6 +16,7 @@
 package com.uisteps.thucydides.run;
 
 import com.uisteps.core.run.VerifyWithStorage;
+import com.uisteps.thucydides.user.ThucydidesUser;
 import com.uisteps.thucydides.verify.ThucydidesVerify;
 
 /**

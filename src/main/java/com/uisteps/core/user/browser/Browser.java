@@ -30,9 +30,6 @@ import com.uisteps.core.user.browser.pages.elements.radio.RadioButton;
 import com.uisteps.core.user.browser.pages.elements.select.Select;
 import com.uisteps.core.user.browser.pages.elements.select.Option;
 import java.net.MalformedURLException;
-import java.util.Arrays;
-import java.util.List;
-import static org.junit.Assert.assertTrue;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -214,8 +211,8 @@ public class Browser {
     public void enterInto(WrapsElement input, String text) {
 
         try {
-            clear(input);
-            typeInto(input, text);
+            input.getWrappedElement().clear();
+            input.getWrappedElement().sendKeys(text);
         } catch (Exception ex) {
             throw new AssertionError("Cannot enter " + text + " into " + input + "!" + ex);
         }

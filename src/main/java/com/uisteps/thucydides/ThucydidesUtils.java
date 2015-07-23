@@ -147,12 +147,10 @@ public class ThucydidesUtils extends Thucydides {
     }
 
     public static WebDriver getNewDriver(SupportedWebDriver supportedDriver) {
-
         WebdriverManager webdriverManager = getWebdriverManager();
 
         String driverName = "#" + (++driverCounter);
         String driverType = supportedDriver.name().toLowerCase();
-
         WebDriver driver = webdriverManager.getWebdriver(driverType);
 
         getDrivers().registerDriverCalled(driverName).forDriver(driver);

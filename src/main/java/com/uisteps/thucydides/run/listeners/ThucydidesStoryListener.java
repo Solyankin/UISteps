@@ -15,10 +15,7 @@
  */
 package com.uisteps.thucydides.run.listeners;
 
-import com.uisteps.core.name.Named;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.ThucydidesVerifyWithStorage;
-import com.uisteps.thucydides.verify.ThucydidesVerify;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Stack;
@@ -31,23 +28,23 @@ import net.thucydides.core.steps.ExecutedStepDescription;
 import net.thucydides.core.steps.StepFailure;
 import net.thucydides.core.steps.StepListener;
 import net.thucydides.core.webdriver.WebdriverInstances;
-import static org.junit.Assert.assertTrue;
 ;
 
 /**
  *
  * @author ASolyankin
+ * @param <T>
  */
-public class ThucydidesListener implements StepListener, ThucydidesVerifyWithStorage {
+public class ThucydidesStoryListener<T extends com.uisteps.thucydides.run.Story> implements StepListener{
     
-    private ThucydidesVerifyWithStorage stepContainer;
-
-    public ThucydidesVerifyWithStorage getStepContainer() {
-        return stepContainer;
+    private T story;
+    
+    public T getStory() {
+        return story;
     }
 
-    public void setStepContainer(ThucydidesVerifyWithStorage stepContainer) {
-        this.stepContainer = stepContainer;
+    public void setStory(T story) {
+        this.story = story;
     }
     
     @Override
@@ -170,39 +167,9 @@ public class ThucydidesListener implements StepListener, ThucydidesVerifyWithSto
     }
 
     protected void executeVerification() {
-        if (!verify().complited()) {
-            verify().result();
+        if (!story.verify().complited()) {
+            story.verify().result();
         }
-    }
-
-    @Override
-    public ThucydidesVerify verify() {
-        return getStepContainer().verify();
-    }
-
-    @Override
-    public <T> T remember(String key, T value) {
-        return getStepContainer().remember(key, value);
-    }
-
-    @Override
-    public <T extends Named> T remember(T value) {
-        return getStepContainer().remember(value);
-    }
-
-    @Override
-    public <T> T remember(T value) {
-        return getStepContainer().remember(value);
-    }
-
-    @Override
-    public <T> T remembered(String key) {
-        return getStepContainer().remembered(key);
-    }
-
-    @Override
-    public <T> T remembered(Class<T> key) {
-        return getStepContainer().remembered(key);
     }
 
 }

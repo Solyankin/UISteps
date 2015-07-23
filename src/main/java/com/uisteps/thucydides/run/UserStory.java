@@ -15,37 +15,31 @@
  */
 package com.uisteps.thucydides.run;
 
-import com.uisteps.thucydides.run.containers.StepContainerWithUser;
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesListener;
-import com.uisteps.thucydides.run.listeners.ThucydidesUserListener;
+import com.uisteps.thucydides.run.listeners.ThucydidesStoryListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
 
 /**
  *
  * @author ASolyankin
  */
-public class UserStory extends Story implements ThucydidesVerifyWithUser {
+public class UserStory extends Story {
 
-    private final StepContainerWithUser stepContainer;
-    protected final ThucydidesUser user;
+    public final ThucydidesUser user;
 
     public UserStory() {
-        stepContainer = new StepContainerWithUser();
-        user = stepContainer.user();
+        this(new ThucydidesStoryListener());
     }
 
-    public UserStory(ThucydidesUserListener listener) {
-        stepContainer = new StepContainerWithUser(listener);
-        user = stepContainer.user();
+    public UserStory(ThucydidesStoryListener listener) {
+        this(ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class), listener);
     }
 
-    public UserStory(ThucydidesUser user, ThucydidesUserListener listener) {
-        stepContainer = new StepContainerWithUser(user, listener);
-        this.user = stepContainer.user();
+    public UserStory(ThucydidesUser user, ThucydidesStoryListener listener) {
+        super(listener);
+        this.user = user;
     }
 
-    @Override
     public ThucydidesUser user() {
         return user;
     }
