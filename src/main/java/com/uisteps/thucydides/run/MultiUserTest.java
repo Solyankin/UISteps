@@ -26,7 +26,7 @@ import com.uisteps.thucydides.user.ThucydidesUserFactory;
  *
  * @author ASolyankin
  */
-public class MultiUserTest extends ThucydidesTest implements ThucydidesVerifyByUser {
+public class MultiUserTest extends ThucydidesTest {
 
     protected final ThucydidesUserFactory users;
 
@@ -43,27 +43,22 @@ public class MultiUserTest extends ThucydidesTest implements ThucydidesVerifyByU
         this.users = users;
     }
 
-    @Override
     public ThucydidesUser by(String user) {
         return users.by(user);
     }
 
-    @Override
     public void add(String user) {
         users.add(user);
     }
 
-    @Override
     public void add(String name, Class<? extends User> user) {
         users.add(name, user);
     }
 
-    @Override
     public <T extends User> T by(Class<T> user) {
         return users.by(user);
     }
 
-    @Override
     public <T extends User> T by(String name, Class<T> user) {
         return users.by(name, user);
     }

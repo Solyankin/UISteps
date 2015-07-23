@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 ASolyankin.
+ * Copyright 2015 A.Solyankin.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,33 +15,21 @@
  */
 package com.uisteps.thucydides.run;
 
-import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.thucydides.run.listeners.ThucydidesStoryListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
 
 /**
  *
- * @author ASolyankin
+ * @author A.Solyankin
  */
-public class UserStory extends Story {
-
-    public final ThucydidesUser user;
+public class UserStory extends BaseUserStory<ThucydidesUser> {
 
     public UserStory() {
         this(new ThucydidesStoryListener());
     }
-
+    
     public UserStory(ThucydidesStoryListener listener) {
-        this(ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class), listener);
-    }
-
-    public UserStory(ThucydidesUser user, ThucydidesStoryListener listener) {
-        super(listener);
-        this.user = user;
-    }
-
-    public ThucydidesUser user() {
-        return user;
+        super(ThucydidesUser.class, listener);
     }
 
 }

@@ -39,6 +39,7 @@ import net.thucydides.core.webdriver.ThucydidesWebdriverManager;
 import net.thucydides.core.webdriver.WebdriverInstances;
 import net.thucydides.core.webdriver.WebdriverManager;
 import net.thucydides.core.webdriver.WebdriverProxyFactory;
+import org.codehaus.groovy.ast.tools.GenericsUtils;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -62,7 +63,7 @@ public class ThucydidesUtils extends Thucydides {
     public static <T> T getNewStepLibrary(Class<T> stepLibraryClass) {
         return getStepFactory().instantiateNewStepLibraryFor(stepLibraryClass);
     }
-
+    
     public static StepFactory getStepFactory() {
         return new StepFactory();
     }

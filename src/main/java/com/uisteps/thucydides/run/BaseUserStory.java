@@ -16,34 +16,40 @@
 package com.uisteps.thucydides.run;
 
 import com.uisteps.thucydides.ThucydidesUtils;
-import com.uisteps.thucydides.run.listeners.ThucydidesTestListener;
+import com.uisteps.thucydides.run.listeners.ThucydidesStoryListener;
 import com.uisteps.thucydides.user.ThucydidesUser;
-import net.thucydides.junit.runners.ThucydidesRunner;
-import org.junit.runner.RunWith;
 
 /**
  *
  * @author ASolyankin
+ * @param <T>
  */
-@RunWith(ThucydidesRunner.class)
-public class UserTest extends ThucydidesTest {
+public class BaseUserStory<T extends ThucydidesUser> extends Story {
 
-    public final ThucydidesUser user;
+    public final T user;
 
-    public UserTest() {
-        this(new ThucydidesTestListener());
+    public BaseUserStory(Class<T> user) {
+        super();
+        this.user = ThucydidesUtils.getNewStepLibrary(user);
     }
 
-    public UserTest(ThucydidesTestListener listener) {
-        this(ThucydidesUtils.getNewStepLibrary(ThucydidesUser.class), listener);
+    public BaseUserStory(T user) {
+        super();
+        this.user = user;
+    }
+    
+    public BaseUserStory(Class<T> user, ThucydidesStoryListener listener) {
+        super(listener);
+        this.user = ThucydidesUtils.getNewStepLibrary(user);
     }
 
-    public UserTest(ThucydidesUser user, ThucydidesTestListener listener) {
+    public BaseUserStory(T user, ThucydidesStoryListener listener) {
         super(listener);
         this.user = user;
     }
 
-    public ThucydidesUser user() {
+    public T user() {
         return user;
     }
+
 }
