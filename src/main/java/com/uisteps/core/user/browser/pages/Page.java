@@ -92,6 +92,10 @@ public class Page implements UIObject, Named {
     protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
         return browser.onDisplayed(uiObject);
     }
+    
+    public <T extends UIObject> T on(Class<T> uiObject) {
+        return uiObject.cast(this);
+    }
 
     protected <T extends UIObject> T onDisplayed(T uiObject) {
         return browser.onDisplayed(uiObject);

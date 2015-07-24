@@ -31,7 +31,7 @@ public class Then<T> {
     public T then() {
         return action.<T>execute();
     }
-
+    
     public Then<T> setArgs(Object... args) {
          action.setArgs(args);
          return this;

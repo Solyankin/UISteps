@@ -32,7 +32,8 @@ public class Storage implements WithStorage {
 
     @Override
     public <T> T remember(String key, T value) {
-        return (T) remember(new RememberedValue(key, value));
+        map.put(key, value);
+        return value;
     }
 
     @Override
@@ -47,21 +48,12 @@ public class Storage implements WithStorage {
 
     @Override
     public <T> T remembered(String key) {
-        return (T) remembered(new RememberedValue(key, null));
+        return (T) map.get(key);
     }
 
     @Override
     public <T> T remembered(Class<T> key) {
         return remembered(key.getName());
-    }
-    
-    public <T> T remember(RememberedValue<T> value) {
-        map.put(value.getName(), value.get());
-        return value.get();
-    }
-    
-    public <T> T remembered(RememberedValue<T> value) {
-        return (T) map.get(value.getName());
     }
 
 }

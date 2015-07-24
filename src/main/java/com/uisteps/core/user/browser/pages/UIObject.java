@@ -22,5 +22,4 @@ package com.uisteps.core.user.browser.pages;
 public interface UIObject {
 
     boolean isDisplayed();
-    
 }

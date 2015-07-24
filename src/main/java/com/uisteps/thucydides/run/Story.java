@@ -37,7 +37,7 @@ public class Story extends ThucydidesJUnitStory {
 
     public Story(ThucydidesStoryListener listener) {
         verify = ThucydidesUtils.getNewStepLibrary(ThucydidesVerify.class);
-        storage = ThucydidesUtils.getNewStepLibrary(ThucydidesStorage.class);
+        storage = new ThucydidesStorage();
         listener.setStory(this);
         ThucydidesUtils.registerListener(listener);
     }

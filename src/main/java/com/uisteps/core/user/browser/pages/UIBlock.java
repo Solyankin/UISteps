@@ -24,7 +24,7 @@ import ru.yandex.qatools.htmlelements.element.HtmlElement;
  *
  * @author ASolyankin
  */
-public abstract class UIBlock extends HtmlElement implements UIObject {
+public class UIBlock extends HtmlElement implements UIObject {
 
     private final Browser browser;
 
@@ -74,6 +74,10 @@ public abstract class UIBlock extends HtmlElement implements UIObject {
 
     protected <T extends UIObject> T onDisplayed(T uiObject) {
         return browser.onDisplayed(uiObject);
+    }
+    
+    public <T extends UIObject> T on(Class<T> uiObject) {
+        return uiObject.cast(this);
     }
     
     protected Browser inOpenedBrowser() {

@@ -15,10 +15,8 @@
  */
 package com.uisteps.thucydides.run.storage;
 
-import com.uisteps.core.run.storage.RememberedValue;
 import com.uisteps.core.run.storage.Storage;
 import net.thucydides.core.Thucydides;
-import net.thucydides.core.annotations.Step;
 
 /**
  *
@@ -28,18 +26,6 @@ public class ThucydidesStorage extends Storage {
 
     public ThucydidesStorage() {
         super(Thucydides.getCurrentSession());
-    }
-
-    @Step
-    @Override
-    public <T> T remembered(RememberedValue<T> value) {
-        return super.remembered(value);
-    }
-
-    @Step
-    @Override
-    public <T> T remember(RememberedValue<T> value) {
-        return super.remember(value);
     }
 
 }
