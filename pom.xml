@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.uisteps</groupId>
-    <artifactId>.uisteps</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>uisteps</artifactId>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>UISteps</name>
