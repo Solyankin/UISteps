@@ -4,7 +4,7 @@
 
     <groupId>org.uisteps</groupId>
     <artifactId>uisteps</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>UISteps</name>
@@ -14,9 +14,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <github.maven-plugin>0.9</github.maven-plugin>
+        <github.maven-plugin>0.12</github.maven-plugin>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
     </properties>
     
     
