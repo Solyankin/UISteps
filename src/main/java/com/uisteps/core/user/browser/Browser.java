@@ -220,15 +220,18 @@ public class Browser {
 
     public String getTextFrom(WrapsElement input) {
         try {
-            if ("textarea".equals(input.getWrappedElement().getTagName())) {
+
+            if ("input".equals(input.getWrappedElement().getTagName())) {
+                String enteredText = input.getWrappedElement().getAttribute("value");
+                if (enteredText != null) {
+                    return enteredText;
+                } else {
+                    return "";
+                }
+            } else {
                 return input.getWrappedElement().getText();
             }
 
-            String enteredText = input.getWrappedElement().getAttribute("value");
-            if (enteredText == null) {
-                return "";
-            }
-            return enteredText;
         } catch (Exception ex) {
             throw new AssertionError("Cannot get text from " + input + "\n" + ex);
         }
@@ -284,7 +287,6 @@ public class Browser {
     }
 
     //Select
-    
     public void select(Option option) {
         option.select();
     }
@@ -301,21 +303,19 @@ public class Browser {
     public void deselect(Option option) {
         option.deselect();
     }
-    
+
     //Radio button
-    
     public void select(RadioButton button) {
         try {
-            if(!button.isSelected()) {
+            if (!button.isSelected()) {
                 button.click();
             }
         } catch (Exception ex) {
             throw new AssertionError("Cannot select radio button " + button + "\nCause:" + ex);
         }
     }
-    
+
     //CheckBox
-    
     public void select(CheckBox checkBox) {
         checkBox.getWrappedCheckBox().select();
     }
@@ -323,11 +323,10 @@ public class Browser {
     public void deselect(CheckBox checkBox) {
         checkBox.getWrappedCheckBox().deselect();
     }
-    
+
     //FileInput
-    
     public void setTo(FileInput fileInput, String filePath) {
         fileInput.getWrappedFileInput().setFileToUpload(filePath);
     }
-    
+
 }
