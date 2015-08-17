@@ -61,6 +61,12 @@
             <artifactId>thucydides-core</artifactId>
             <version>0.9.275</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.detro.ghostdriver</groupId>
+                    <artifactId>phantomjsdriver</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
