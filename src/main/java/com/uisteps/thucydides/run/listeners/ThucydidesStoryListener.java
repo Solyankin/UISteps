@@ -66,6 +66,7 @@ public class ThucydidesStoryListener<T extends com.uisteps.thucydides.run.Story>
 
     @Override
     public void testFinished(TestOutcome result) {
+        System.out.println("#####################################################################################" + result);
         closeAllBrowser();
     }
 
