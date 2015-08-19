@@ -66,7 +66,6 @@ public class ThucydidesStoryListener<T extends com.uisteps.thucydides.run.Story>
 
     @Override
     public void testFinished(TestOutcome result) {
-        System.out.println("#####################################################################################" + result);
         closeAllBrowser();
     }
 
@@ -83,23 +82,8 @@ public class ThucydidesStoryListener<T extends com.uisteps.thucydides.run.Story>
     public void skippedStepStarted(ExecutedStepDescription description) {
     }
 
-    public Stack<TestStep> getStepStack() {
-        String fieldName = "currentStepStack";
-
-        try {
-            Field field = BaseStepListener.class.getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return (Stack<TestStep>) field.get(ThucydidesUtils.getBaseStepListener());
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException ex) {
-            throw new RuntimeException("Cannot get field by name " + fieldName + " in class " + WebdriverInstances.class + "!\nCause: " + ex);
-        }
-    }
-    
-    boolean testFailed;
-    
     @Override
     public void stepFailed(StepFailure failure) {
-        testFailed = true;
     }
 
     @Override
