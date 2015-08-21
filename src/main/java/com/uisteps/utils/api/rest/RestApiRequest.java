@@ -85,7 +85,7 @@ public class RestApiRequest {
                 connection.setRequestProperty(key, headers.get(key));
             }
 
-            if (method == Method.POST) {
+            if (method == Method.POST || method == Method.PUT) {
                 connection.setDoOutput(true);
                 OutputStream writer = new BufferedOutputStream(connection.getOutputStream());
                 writer.write(request.getBytes(responseEncoding));
@@ -103,7 +103,7 @@ public class RestApiRequest {
 
         } catch (IOException | RestApiException ex) {
 
-            throw new RestApiException("Cannot send request!\n" + ex);
+            throw new RestApiException("Cannot send to " + host + " request:\n" + request + "\n" + ex);
 
         } finally {
 
@@ -113,31 +113,60 @@ public class RestApiRequest {
         }
     }
 
-    public RestApiResponse sendGET() throws RestApiException {
+    public RestApiResponse get() throws RestApiException {
         return send("", Method.GET);
     }
 
-    public RestApiResponse sendPOST(String request) throws RestApiException {
+    public RestApiResponse post(String request) throws RestApiException {
         return send(request, Method.POST);
     }
 
-    public RestApiResponse sendJSON(JSONObject json) throws RestApiException {
-        setProperty("Content-Type", "application/json");
-        return sendPOST(json.toString());
+    public RestApiResponse put(String request) throws RestApiException {
+        return send(request, Method.PUT);
     }
 
-    public RestApiResponse sendJSON(JSONArray json) throws RestApiException {
+    public RestApiResponse putJSON(JSONObject json) throws RestApiException {
         setProperty("Content-Type", "application/json");
-        return sendPOST(json.toString());
+        return put(json.toString());
     }
 
-    public RestApiResponse sendJSON(String request) throws RestApiException {
+    public RestApiResponse putJSON(JSONArray json) throws RestApiException {
+        setProperty("Content-Type", "application/json");
+        return put(json.toString());
+    }
 
+    public RestApiResponse putJSON(String request) throws RestApiException {
+        return sendJSON(request, Method.PUT);
+    }
+    
+    public RestApiResponse postJSON(JSONObject json) throws RestApiException {
+        setProperty("Content-Type", "application/json");
+        return post(json.toString());
+    }
+
+    public RestApiResponse postJSON(JSONArray json) throws RestApiException {
+        setProperty("Content-Type", "application/json");
+        return post(json.toString());
+    }
+
+    public RestApiResponse postJSON(String request) throws RestApiException {
+        return sendJSON(request, Method.POST);
+    }
+    
+    public RestApiResponse sendJSON(String request, Method method) throws RestApiException {
         try {
-            return sendJSON(new JSONObject(request));
+            if (method == Method.PUT) {
+                return RestApiRequest.this.putJSON(new JSONObject(request));
+            } else {
+                return RestApiRequest.this.postJSON(new JSONObject(request));
+            }
         } catch (JSONException ex) {
             try {
-                return sendJSON(new JSONArray(request));
+                if (method == Method.PUT) {
+                    return putJSON(new JSONArray(request));
+                } else {
+                    return postJSON(new JSONArray(request));
+                }
             } catch (JSONException e) {
                 throw new RestApiException("Illegal format of json request: " + request);
             }
