@@ -159,12 +159,6 @@
             <version>2.46.0</version>
             <type>jar</type>
         </dependency>
-  <!--      <dependency>
-            <groupId>com.github.detro.ghostdriver</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.1.0</version>
-            <type>jar</type>
-        </dependency>-->
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>jbehave-junit-runner</artifactId>
@@ -256,24 +250,6 @@
                     <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version>0.12</version>
-                <configuration>
-                    <message>Maven artifacts for ${project.version}</message>
-                    <server>github</server>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                        <phase>deploy</phase>
-                    </execution>
-                </executions>
-            </plugin>
-                
             <plugin>   
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -282,49 +258,6 @@
                     <skip>true</skip>
                 </configuration>
             </plugin>
-            <!--
-            <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.12</version>
-                <configuration>
-                    <includes>
-                        <include>**/*.java</include>
-                        <include>**/*Test.java</include>
-                        <include>**/Test*.java</include>
-                        <include>**/When*.java</include>
-                    </includes>
-                    <argLine>-Xmx512m</argLine>
-                    <parallel>classes</parallel>
-                    <systemPropertyVariables>
-                        <webdriver.driver>${webdriver.driver}</webdriver.driver>
-                        <jira.url>${jira.url}</jira.url>
-                    </systemPropertyVariables>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <plugin>
-                <groupId>net.thucydides.maven.plugins</groupId>
-                <artifactId>maven-thucydides-plugin</artifactId>
-                <version>0.9.275</version>
-                <executions>
-                    <execution>
-                        <id>thucydides-reports</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
         </plugins>
     </build>
 
@@ -336,17 +269,6 @@
                     <missing>${basedir}</missing>
                 </file>
             </activation>
-            <!--
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>net.thucydides.maven.plugins</groupId>
-                        <artifactId>maven-thucydides-plugin</artifactId>
-                        <version>${thucydides.version}</version>
-                    </plugin>
-                </plugins>
-            </reporting>
-            -->
         </profile>
         <profile>
             <id>maven3</id>
@@ -356,24 +278,6 @@
                 </file>
             </activation>
             <build>
-                <!--
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-site-plugin</artifactId>
-                        <version>3.0-beta-3</version>
-                        <configuration>
-                            <reportPlugins>
-                                <plugin>
-                                    <groupId>net.thucydides.maven.plugins</groupId>
-                                    <artifactId>maven-thucydides-plugin</artifactId>
-                                    <version>0.9.275</version>
-                                </plugin>
-                            </reportPlugins>
-                        </configuration>
-                    </plugin>
-                </plugins>
-                -->
             </build>
         </profile>
     </profiles>
