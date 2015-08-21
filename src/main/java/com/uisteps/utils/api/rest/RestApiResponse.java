@@ -15,13 +15,6 @@
  */
 package com.uisteps.utils.api.rest;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +42,7 @@ public class RestApiResponse {
         try {
             return new JSONObject(response);
         } catch (JSONException ex) {
-            throw new RestApiException("Cannot get JSONObject from response!\n" + ex);
+            throw new RestApiException("Cannot get JSONObject from response: \n" + response + "\n" + ex);
         }
     }
 
@@ -57,7 +50,7 @@ public class RestApiResponse {
         try {
             return new JSONArray(response);
         } catch (JSONException ex) {
-            throw new RestApiException("Cannot get JSONArray from response!\n" + ex);
+            throw new RestApiException("Cannot get JSONArray from response \n" + response + "\n" + ex);
         }
     }
 
