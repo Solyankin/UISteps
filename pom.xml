@@ -4,7 +4,7 @@
 
     <groupId>org.uisteps</groupId>
     <artifactId>uisteps</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
     <name>UISteps</name>
@@ -218,20 +218,11 @@
             <version>0.18</version>
             <type>jar</type>
         </dependency>
-    <!--    <dependency>
-            <groupId>com.github.klieber</groupId>
-            <artifactId>phantomjs</artifactId>
-            <version>2.0.0</version>
-            <type>zip</type>
-            <classifier>windows</classifier>
-        </dependency> -->
-    <!--    <dependency>
-            <groupId>com.github.klieber</groupId>
-            <artifactId>phantomjs</artifactId>
-            <version>1.9.7</version>
-            <type>zip</type>
-            <classifier>windows</classifier>
-        </dependency> -->
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.2.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
