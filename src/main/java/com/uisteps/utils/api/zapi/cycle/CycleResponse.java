@@ -24,18 +24,18 @@ import org.json.JSONObject;
  */
 public class CycleResponse extends ZapiResponse {
 
-    private final String name = "name";
-    private final String build = "build";
-    private final String environment = "environment";
-    private final String description = "description";
-    private final String startDate = "startDate";
-    private final String endDate = "endDate";
-    private final String projectId = "projectId";
-    private final String versionId = "versionId";
-    private final String createdBy = "createdBy";
-    private final String modifiedBy = "modifiedBy";
-    private final String id = "id";
-
+    public static final String name = "name";
+    public static final String build = "build";
+    public static final String environment = "environment";
+    public static final String description = "description";
+    public static final String startDate = "startDate";
+    public static final String endDate = "endDate";
+    public static final String projectId = "projectId";
+    public static final String versionId = "versionId";
+    public static final String createdBy = "createdBy";
+    public static final String modifiedBy = "modifiedBy";
+    public static final String id = "id"; 
+    
     public CycleResponse(JSONObject json) {
         super(json);
     }

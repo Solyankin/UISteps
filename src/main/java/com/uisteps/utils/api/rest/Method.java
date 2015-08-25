@@ -21,6 +21,6 @@ package com.uisteps.utils.api.rest;
  */
 public enum Method {
     
-    OPTIONS, GET, POST, PUT;
+    GET, POST, PUT, DELETE;
     
 }

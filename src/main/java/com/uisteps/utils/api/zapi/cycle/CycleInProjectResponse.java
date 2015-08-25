@@ -15,27 +15,37 @@
  */
 package com.uisteps.utils.api.zapi.cycle;
 
-import com.uisteps.utils.api.zapi.ZapiResponse;
 import org.json.JSONObject;
 
 /**
  *
  * @author A.Solyankin
  */
-public class UpdateCycleResponse extends ZapiResponse {
+public class CycleInProjectResponse extends CycleResponse {
 
-    public static final String id = "id";
-    public static final String responseMessage = "responseMessage";
+    public static final String totalExecutions = "totalExecutions";
+    public static final String totalExecuted = "totalExecuted";
+    public static final String projectKey = "projectKey";
+    public static final String createdByDisplay = "createdByDisplay";
 
-    public UpdateCycleResponse(JSONObject json) {
+    public CycleInProjectResponse(JSONObject json) {
         super(json);
     }
 
-    public String getId() {
-        return getString(id);
+    public String getTotalExecutions() {
+        return getString(totalExecutions);
     }
 
-    public String getResponseMessage() {
-        return getString(responseMessage);
+    public String getTotalExecuted() {
+        return getString(totalExecuted);
     }
+
+    public String getProjectKey() {
+        return getString(projectKey);
+    }
+
+    public String getCreatedByDisplay() {
+        return getString(createdByDisplay);
+    }
+
 }

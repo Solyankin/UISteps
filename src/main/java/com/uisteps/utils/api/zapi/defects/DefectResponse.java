@@ -24,9 +24,9 @@ import org.json.JSONObject;
  */
 public class DefectResponse extends ZapiResponse {
 
-    private final String key = "key";
-    private final String status = "status";
-    private final String summary = "summary";
+    public static final String key = "key";
+    public static final String status = "status";
+    public static final String summary = "summary";
 
     public DefectResponse(JSONObject json) {
         super(json);

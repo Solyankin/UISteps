@@ -16,6 +16,10 @@
 package com.uisteps.utils.api.zapi.cycle;
 
 import com.uisteps.utils.api.zapi.ZapiRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -33,17 +37,38 @@ public class CycleRequest extends ZapiRequest<CycleRequest> {
     public static final String endDate = "endDate";
     public static final String projectId = "projectId";
     public static final String versionId = "versionId";
-
+    
     public CycleRequest() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+
+        Map<String, String> months = new HashMap();
+        
+        months.put("01", "Jan");
+        months.put("02", "Feb");
+        months.put("03", "Mar");
+        months.put("04", "Apr");
+        months.put("05", "May");
+        months.put("06", "Jun");
+        months.put("07", "Jul");
+        months.put("08", "Aug");
+        months.put("09", "Sep");
+        months.put("10", "Oct");
+        months.put("11", "Nov");
+        months.put("12", "Dec");
+        
+        String[] date = dateFormat.format(new Date()).split("/");
+        String currenDate = date[0] + "/" + months.get(date[1]) + "/" + date[2];
+                   
         set(clonedCycleId, "");
         set(name, "");
         set(build, "");
         set(environment, "");
         set(description, "");
-        set(startDate, "");
-        set(endDate, "");
+        set(startDate, currenDate);
+        set(endDate, currenDate);
         set(projectId, "");
-        set(versionId, "");
+        set(versionId, "-1");
     }
 
     public String getClonedCycleId() {
@@ -124,12 +149,7 @@ public class CycleRequest extends ZapiRequest<CycleRequest> {
     }
 
     public CycleRequest setVersionId(String versionId) {
-        
-        if(versionId == null || versionId.isEmpty()) {
-            return set(CycleRequest.versionId, "-1");
-        } else {
-            return set(CycleRequest.versionId, versionId);
-        }
+        return set(CycleRequest.versionId, versionId);
     }
 
 }
