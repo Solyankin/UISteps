@@ -4,7 +4,7 @@
 
     <groupId>org.uisteps</groupId>
     <artifactId>uisteps</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
     <name>UISteps</name>
@@ -61,12 +61,6 @@
             <artifactId>thucydides-core</artifactId>
             <version>0.9.275</version>
             <type>jar</type>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.github.detro.ghostdriver</groupId>
-                    <artifactId>phantomjsdriver</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -225,11 +219,9 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>com.github.klieber</groupId>
-            <artifactId>phantomjs</artifactId>
-            <version>2.0.0</version>
-            <type>zip</type>
-            <classifier>windows</classifier>
+            <groupId>com.codeborne</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.2.1</version>
         </dependency>
     </dependencies>
     <build>
