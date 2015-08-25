@@ -22,20 +22,15 @@ import org.json.JSONObject;
  *
  * @author A.Solyankin
  */
-public class UpdateCycleResponse extends ZapiResponse {
+public class DeleteCycleResponse extends ZapiResponse {
 
-    public static final String id = "id";
-    public static final String responseMessage = "responseMessage";
+    public static final String success = "success";
 
-    public UpdateCycleResponse(JSONObject json) {
+    public DeleteCycleResponse(JSONObject json) {
         super(json);
     }
 
-    public String getId() {
-        return getString(id);
-    }
-
-    public String getResponseMessage() {
-        return getString(responseMessage);
+    public String getMessage() {
+        return getString(success);
     }
 }

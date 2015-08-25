@@ -28,24 +28,24 @@ import org.json.JSONObject;
  */
 public class ExecutionResponse extends ZapiResponse {
 
-    private final String id = "id";
-    private final String executionStatus = "executionStatus";
-    private final String executedOn = "executedOn";
-    private final String executedBy = "executedBy";
-    private final String executedByDisplay = "executedByDisplay";
-    private final String defects = "defects";
-    private final String comment = "comment";
-    private final String htmlComment = "htmlComment";
-    private final String cycleId = "cycleId";
-    private final String cycleName = "cycleName";
-    private final String versionId = "versionId";
-    private final String versionName = "versionName";
-    private final String projectId = "projectId";
-    private final String issueId = "issueId";
-    private final String issueKey = "issueKey";
-    private final String summary = "summary";
-    private final String label = "label";
-    private final String component = "component";
+    public static final String id = "id";
+    public static final String executionStatus = "executionStatus";
+    public static final String executedOn = "executedOn";
+    public static final String executedBy = "executedBy";
+    public static final String executedByDisplay = "executedByDisplay";
+    public static final String defects = "defects";
+    public static final String comment = "comment";
+    public static final String htmlComment = "htmlComment";
+    public static final String cycleId = "cycleId";
+    public static final String cycleName = "cycleName";
+    public static final String versionId = "versionId";
+    public static final String versionName = "versionName";
+    public static final String projectId = "projectId";
+    public static final String issueId = "issueId";
+    public static final String issueKey = "issueKey";
+    public static final String summary = "summary";
+    public static final String label = "label";
+    public static final String component = "component";
 
     private final Set<DefectResponse> defectsSet = new HashSet();
 

@@ -29,7 +29,7 @@ import org.json.JSONObject;
  */
 public class ExecutionsResponse extends ZapiResponse {
 
-    private final String executions = "executions";
+    public static final String executions = "executions";
     private final Set<ExecutionResponse> executionsSet = new HashSet();
 
     public ExecutionsResponse(JSONObject json) {

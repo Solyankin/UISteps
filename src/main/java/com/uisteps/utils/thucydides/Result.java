@@ -133,7 +133,7 @@ public class Result {
             String[] attrs = line.replace("\"", "").split(",");
             String component = attrs[0];
 
-            Pattern pattern = Pattern.compile("(.*)\\s(" + projectKey + "\\d+)");
+            Pattern pattern = Pattern.compile("(.*)\\s(" + projectKey + "-\\d+)");
             Matcher matcher = pattern.matcher(attrs[1]);
             matcher.find();
 

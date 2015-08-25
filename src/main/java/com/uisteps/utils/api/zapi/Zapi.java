@@ -15,18 +15,21 @@
  */
 package com.uisteps.utils.api.zapi;
 
-import com.uisteps.utils.api.rest.Method;
 import com.uisteps.utils.api.zapi.executions.ExecutionsRequest;
 import com.uisteps.utils.api.zapi.cycle.CycleRequest;
 import com.uisteps.utils.api.zapi.cycle.UpdateCycleResponse;
 import com.uisteps.utils.api.rest.RestApiException;
 import com.uisteps.utils.api.rest.RestApiRequest;
+import com.uisteps.utils.api.zapi.cycle.CycleInProjectResponse;
 import com.uisteps.utils.api.zapi.cycle.CycleResponse;
+import com.uisteps.utils.api.zapi.cycle.CyclesRequest;
+import com.uisteps.utils.api.zapi.cycle.CyclesResponse;
+import com.uisteps.utils.api.zapi.cycle.DeleteCycleResponse;
 import com.uisteps.utils.api.zapi.executions.ExecutionResponse;
 import com.uisteps.utils.api.zapi.executions.ExecutionsResponse;
+import java.util.Base64;
 import java.util.Set;
 import org.json.JSONObject;
-import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 
 /**
@@ -81,7 +84,7 @@ public class Zapi {
     }
 
     private void setAuthorization() {
-        authorization = Base64.encodeBase64String((login + ":" + password).getBytes());
+        authorization = Base64.getEncoder().encodeToString((login + ":" + password).getBytes());
     }
 
     //Cycle
@@ -106,18 +109,43 @@ public class Zapi {
 
         RestApiRequest cycleRequest = getRequest("/rest/zapi/latest/cycle");
         JSONObject json;
-        
-        if(cycleId != null && !cycleId.isEmpty()) {
-            json = cycleRequest.putJSON(cycle.getJSON()).toJSONObject();
+
+        if (cycleId != null && !cycleId.isEmpty()) {
+            json = cycleRequest.put(cycle.getJSON()).toJSONObject();
         } else {
-            json = cycleRequest.postJSON(cycle.getJSON()).toJSONObject();
+            json = cycleRequest.post(cycle.getJSON()).toJSONObject();
         }
-        
+
         return new UpdateCycleResponse(json);
     }
-    
+
     public CycleResponse getCycle(String id) throws RestApiException {
         return new CycleResponse(getRequest("/rest/zapi/latest/cycle/" + id).get().toJSONObject());
+    }
+
+    public DeleteCycleResponse deleteCycle(String id) throws RestApiException {
+        return new DeleteCycleResponse(getRequest("/rest/zapi/latest/cycle/" + id).delete().toJSONObject());
+    }
+
+    public CyclesResponse get(CyclesRequest cycles) throws RestApiException {
+        return new CyclesResponse(getRequest("/rest/zapi/latest/cycle/?projectId=" + cycles.getProjectId()).get().toJSONObject(), cycles);
+    }
+
+    public void deleteCyclesFromProject(String id) throws RestApiException {
+
+        Set<CycleInProjectResponse> cycles = get(new CyclesRequest().setProjectId(id)).getCycles();
+
+        for (CycleInProjectResponse cycle : cycles) {
+            
+            try {
+                deleteCycle(cycle.getId());
+            } catch (RestApiException ex) {
+                
+                if (ex.getResponseCode() != 400) {
+                    throw ex;
+                }
+            }
+        }
     }
 
     //Executions
@@ -141,7 +169,11 @@ public class Zapi {
     }
 
     public void quickExecute(String id, String status) throws RestApiException {
-        getRequest("/rest/zapi/latest/execution/" + id + "/quickExecute").postJSON("{'status': '" + status + "'}");
+        getRequest("/rest/zapi/latest/execution/" + id + "/quickExecute").post("{'status': '" + status + "'}");
+    }
+
+    public ExecutionResponse execute(String id, String status) throws RestApiException {
+        return new ExecutionResponse(getRequest("/rest/zapi/latest/execution/" + id + "/quickExecute").put("{'status': '" + status + "'}").toJSONObject());
     }
 
     // Tests
@@ -159,7 +191,7 @@ public class Zapi {
                 json.append("issues", issue);
             }
 
-            request.postJSON(json);
+            request.post(json);
         } catch (JSONException ex) {
             throw new RuntimeException("Cannot send " + json + " to " + request);
         }
