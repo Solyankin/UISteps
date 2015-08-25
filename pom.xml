@@ -225,6 +225,13 @@
             <type>zip</type>
             <classifier>windows</classifier>
         </dependency> -->
+        <dependency>
+            <groupId>com.github.klieber</groupId>
+            <artifactId>phantomjs</artifactId>
+            <version>1.9.7</version>
+            <type>zip</type>
+            <classifier>windows</classifier>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
