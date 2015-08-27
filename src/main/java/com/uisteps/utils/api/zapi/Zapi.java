@@ -111,8 +111,8 @@ public class Zapi {
 
         for (String arg : args) {
             String[] keyValueObj = arg.split("=");
-            
-            if(keyValueObj.length == 2) {
+
+            if (keyValueObj.length == 2) {
                 json.put(keyValueObj[0], keyValueObj[1]);
             }
         }
@@ -170,11 +170,11 @@ public class Zapi {
                 String criteriaField = json.optString("criteriaField");
                 String criteriaValue = json.optString(criteriaField);
                 String criteria = json.optString("criteria");
-/*
-                if (cycleId.isEmpty() && clonedCycleId.isEmpty() && criteriaValue.isEmpty()) {
-                    throw new RuntimeException("One of parameters must be set: cycleId, clonedCycleId or " + criteriaField);
-                }
-*/
+                /*
+                 if (cycleId.isEmpty() && clonedCycleId.isEmpty() && criteriaValue.isEmpty()) {
+                 throw new RuntimeException("One of parameters must be set: cycleId, clonedCycleId or " + criteriaField);
+                 }
+                 */
                 if (!cycleId.isEmpty() && !clonedCycleId.isEmpty()) {
                     throw new RuntimeException("One of parameters must be empty! cycleId = " + cycleId + ", clonedCycleId = " + clonedCycleId);
                 }
@@ -264,7 +264,7 @@ public class Zapi {
 
                     cycleId = api.getRequest("/rest/zapi/latest/cycle").post(cycleJSON).toJSONObject().getString("id");
                     
-                    if(clonedCycleId.isEmpty()) {
+                    if (clonedCycleId.isEmpty()) {
                         clonedCycleId = cycleId;
                     }
                 }
@@ -299,7 +299,6 @@ public class Zapi {
         StringBuilder executionsExport = new StringBuilder();
 
         JSONArray executions = api.getRequest("/rest/zapi/latest/execution?cycleId=" + clonedCycleId).get().toJSONObject().getJSONArray("executions");
-        System.out.println(executions);
 
         for (int i = 0; i < executions.length(); i++) {
             JSONObject execution = executions.getJSONObject(i);
@@ -447,6 +446,7 @@ public class Zapi {
         String projectId = cycleJSON.getString("projectId");
 
         if (createEcecutions != null && createEcecutions.getTextContent().equals("true")) {
+
             JSONObject json = new JSONObject();
             json
                     .put("versionId", versionId)
@@ -462,7 +462,7 @@ public class Zapi {
         }
 
         JSONArray executions = api.getRequest("/rest/zapi/latest/execution?cycleId=" + cycleId).get().toJSONObject().getJSONArray("executions");
-
+        
         Map<String, JSONObject> executionsMap = new HashMap();
 
         for (int i = 0; i < executions.length(); i++) {
@@ -473,11 +473,15 @@ public class Zapi {
         for (String issueKey : issues) {
             Result.Test test = testMap.get(issueKey);
 
-            api.getRequest("/rest/zapi/latest/execution/" + executionsMap.get(issueKey).getString("id") + "/quickExecute").post("{'status': '" + test.getZapiStatus() + "'}");
+            JSONObject execution = executionsMap.get(issueKey);
+
+            if (execution != null) {
+                api.getRequest("/rest/zapi/latest/execution/" + executionsMap.get(issueKey).getString("id") + "/quickExecute").post("{'status': '" + test.getZapiStatus() + "'}");
+            }
         }
 
         cycleJSON.put("endDate", getCurrentDate());
-        
+
         cycleJSON.remove("createdBy");
         cycleJSON.remove("modifiedBy");
         api.getRequest("/rest/zapi/latest/cycle").put(cycleJSON);
