@@ -34,7 +34,7 @@ import org.json.JSONObject;
  */
 public class Result {
 
-    private final String path;
+    private final File file;
     private final String charset;
     private final String projectKey;
     private final JSONArray result = new JSONArray();
@@ -45,12 +45,12 @@ public class Result {
     public static final String ISSUE = "issue";
     public static final String STATUS = "status";
 
-    public Result(String path, String charset, String projectKey) throws IOException, JSONException {
-        this.path = path;
+    public Result(File file, String charset, String projectKey) throws IOException, JSONException {
+        this.file = file;
         this.charset = charset;
         this.projectKey = projectKey;
 
-        init(path, charset, projectKey);
+        init(charset, projectKey);
     }
 
     public class Test {
@@ -96,12 +96,10 @@ public class Result {
         public String getZapiStatus() {
             return zapiStatus;
         }
-        
-        
     }
 
-    public String getPath() {
-        return path;
+    public File getFile() {
+        return file;
     }
 
     public String getCharset() {
@@ -120,9 +118,8 @@ public class Result {
         return tests;
     }
 
-    private void init(String path, String charset, String projectKey) throws IOException, JSONException {
+    private void init(String charset, String projectKey) throws IOException, JSONException {
 
-        File file = new File(path);
         List<String> lines = Files.readAllLines(file.toPath(), Charset.forName(charset));
 
         for (int i = 1; i < lines.size(); i++) {
