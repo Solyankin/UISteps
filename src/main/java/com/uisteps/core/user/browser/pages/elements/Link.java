@@ -17,10 +17,6 @@ public class Link extends UIElement {
         wrappedLink = new ru.yandex.qatools.htmlelements.element.Link(wrappedElement);
     }
 
-    public String getText() {
-        return browser.getTextFrom(this);
-    }
-
     public String getReference() {
         return wrappedLink.getReference();
     }

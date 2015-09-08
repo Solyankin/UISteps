@@ -28,9 +28,4 @@ public class TextBlock extends UIElement {
     public TextBlock(WebElement wrappedElement, Browser browser) {
         super(wrappedElement, browser);
     }
-
-    public String getText() {
-        return browser.getTextFrom(this);
-    }
-
 }

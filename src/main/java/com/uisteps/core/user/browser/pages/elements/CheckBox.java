@@ -36,10 +36,6 @@ public class CheckBox extends UIElement {
         return wrappedCheckBox.getLabelText();
     }
 
-    public String getText() {
-        return wrappedCheckBox.getText();
-    }
-
     public Object select() {
         browser.select(this);
         return null;

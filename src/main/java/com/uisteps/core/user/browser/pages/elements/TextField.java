@@ -47,8 +47,4 @@ public class TextField extends UIElement {
         browser.enterInto(this, text);
         return null;
     }
-
-    public String getText() {
-        return browser.getTextFrom(this);
-    }
 }

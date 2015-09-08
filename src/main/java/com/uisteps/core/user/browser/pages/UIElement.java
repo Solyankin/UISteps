@@ -17,6 +17,11 @@ public class UIElement extends TypifiedElement implements UIObject {
         super(wrappedElement);
         this.browser = browser;
     }
+
+    public String getText() {
+        return browser.getTextFrom(this);
+    }
+
     
     public Object click() {
         browser.click(this);
