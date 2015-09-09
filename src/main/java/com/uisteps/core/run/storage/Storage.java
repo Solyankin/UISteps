@@ -37,11 +37,6 @@ public class Storage implements WithStorage {
     }
 
     @Override
-    public <T extends Named> T remember(T value) {
-        return remember(value.getName().toString(), value);
-    }
-
-    @Override
     public <T> T remember(T value) {
         return remember(value.getClass().getName(), value);
     }
