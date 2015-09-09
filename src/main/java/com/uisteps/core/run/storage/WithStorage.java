@@ -24,8 +24,6 @@ import com.uisteps.core.name.Named;
 public interface WithStorage {
 
     <T> T remember(String key, T value);
-
-    <T extends Named> T remember(T value);
     
     <T> T remember(T value);
     
