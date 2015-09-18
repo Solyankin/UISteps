@@ -20,32 +20,18 @@ import com.uisteps.core.user.browser.Browser;
 /**
  *
  * @author ASolyankin
- * @param <T>
  */
-public class MockPage<T extends Page> {
-    
-    private final T page;
-    
-    public MockPage(Class<T> page, Browser browser) {
-        this.page = browser.getUIObjectFactory().instatiate(page);
-        open(this.page, browser);
-    }
-    
-    public MockPage(T page, Browser browser) {
-        this.page = page;
-        open(page, browser);
+public class MockPage extends Page {
+
+    private final Browser browser;
+
+    public MockPage(Url url, Browser browser) {
+        super(url);
+        this.browser = browser;
     }
 
-    private void open(Page page, Browser browser) {
-        browser.getDriver().get(page.getUrl().toString());
-    }
-    
     @Override
-    public String toString() {
-        return page.toString();
-    }
-
-    public T getPage() {
-        return page;
+    public Browser inOpenedBrowser() {
+        return browser;
     }
 }

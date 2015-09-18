@@ -16,7 +16,6 @@
 package com.uisteps.core.user.browser.pages;
 
 import com.uisteps.core.then.Then;
-import com.uisteps.core.user.browser.Browser;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 
@@ -24,88 +23,78 @@ import ru.yandex.qatools.htmlelements.element.HtmlElement;
  *
  * @author ASolyankin
  */
-public class UIBlock extends HtmlElement implements UIObject {
-
-    private final Browser browser;
-
-    public UIBlock(Browser browser) {
-        this.browser = browser;
-    }
+public abstract class UIBlock extends HtmlElement implements UIObject {
 
     @Override
     public void click() {
-        browser.click(this);
+        inOpenedBrowser().click(this);
     }
 
     public Object afterClick() {
-        browser.click(this);
+        inOpenedBrowser().click(this);
         return null;
     }
-    
+
     public Object moveMouseOver() {
-        browser.moveMouseOver(this);
+        inOpenedBrowser().moveMouseOver(this);
         return null;
     }
 
     public Object clickOnPoint(int x, int y) {
-        browser.clickOnPoint(this, x, y);
+        inOpenedBrowser().clickOnPoint(this, x, y);
         return null;
     }
 
     protected <T extends UIObject> Then<T> then(Class<T> uiObject) {
-        return browser.then(uiObject);
+        return inOpenedBrowser().then(uiObject);
     }
-    
+
     protected <T> Then<T> then(T value) {
-        return browser.then(value);
+        return inOpenedBrowser().then(value);
     }
-    
+
     protected <T extends UIObject> T displayed(Class<T> uiObject) {
-        return browser.displayed(uiObject);
+        return inOpenedBrowser().displayed(uiObject);
     }
 
     protected <T extends UIObject> T displayed(T uiObject) {
-        return browser.displayed(uiObject);
+        return inOpenedBrowser().displayed(uiObject);
     }
-    
+
     protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
-        return browser.onDisplayed(uiObject);
+        return inOpenedBrowser().onDisplayed(uiObject);
     }
 
     protected <T extends UIObject> T onDisplayed(T uiObject) {
-        return browser.onDisplayed(uiObject);
+        return inOpenedBrowser().onDisplayed(uiObject);
     }
-    
+
     public <T extends UIObject> T on(Class<T> uiObject) {
         return uiObject.cast(this);
     }
-    
-    protected Browser inOpenedBrowser() {
-        return browser;
-    }
 
     protected void switchToNextWindow() {
-        browser.switchToNextWindow();
+        inOpenedBrowser().switchToNextWindow();
     }
 
     protected void switchToPreviousWindow() {
-        browser.switchToPreviousWindow();
+        inOpenedBrowser().switchToPreviousWindow();
     }
 
     protected void switchToDefaultWindow() {
-        browser.switchToDefaultWindow();
+        inOpenedBrowser().switchToDefaultWindow();
     }
 
     protected void switchToWindowByIndex(int index) {
-        browser.switchToWindowByIndex(index);
+        inOpenedBrowser().switchToWindowByIndex(index);
     }
 
     protected void waitUntil(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {
-        browser.waitUntil(condition, timeOutInSeconds);
+        inOpenedBrowser().waitUntil(condition, timeOutInSeconds);
     }
 
     protected void waitUntil(ExpectedCondition<Boolean> condition) {
-        browser.waitUntil(condition);
+        inOpenedBrowser().waitUntil(condition);
     }
 
 }

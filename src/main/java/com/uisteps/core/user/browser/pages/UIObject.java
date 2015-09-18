@@ -15,6 +15,8 @@
  */
 package com.uisteps.core.user.browser.pages;
 
+import com.uisteps.core.user.browser.Browser;
+
 /**
  *
  * @author ASolyankin
@@ -22,4 +24,6 @@ package com.uisteps.core.user.browser.pages;
 public interface UIObject {
 
     boolean isDisplayed();
+    
+    Browser inOpenedBrowser();
 }

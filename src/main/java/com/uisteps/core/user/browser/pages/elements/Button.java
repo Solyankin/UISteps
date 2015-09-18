@@ -16,17 +16,16 @@
 package com.uisteps.core.user.browser.pages.elements;
 
 import com.uisteps.core.user.browser.pages.UIElement;
-import com.uisteps.core.user.browser.Browser;
 import org.openqa.selenium.WebElement;
 
 /**
  *
  * @author ASolyankin
  */
-public class Button extends UIElement {
+public abstract class Button extends UIElement {
 
-    public Button(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    public Button(WebElement wrappedElement) {
+        super(wrappedElement);
     }
 
 }

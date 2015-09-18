@@ -57,6 +57,13 @@ public class ThucydidesUtils extends Thucydides {
     }
 
     public static Browser getCurrentBrowser() {
+        
+        if(getFromSession(BROWSER_SESSION_KEY) == null) {
+            System.out.println("#####################################################");
+        } else {
+            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        }
+        
         return (Browser) getFromSession(BROWSER_SESSION_KEY);
     }
 

@@ -18,7 +18,6 @@ package com.uisteps.core.user.browser.pages;
 import com.uisteps.core.name.Name;
 import com.uisteps.core.name.Named;
 import com.uisteps.core.then.Then;
-import com.uisteps.core.user.browser.Browser;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
 /**
@@ -26,43 +25,40 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
  * @author ASolyankin
  */
 @Root
-public class Page implements UIObject, Named {
+public abstract class Page implements UIObject, Named {
 
     private Url url;
     private UrlFactory urlFactory;
-    private Browser browser;
     private Name name;
     public static final String DEFAULT_NAME = "page";
 
-    public Page(Browser browser, UrlFactory urlFactory, Name name) {
+    public Page(UrlFactory urlFactory, Name name) {
         this.urlFactory = urlFactory;
-        this.browser = browser;
         this.name = name;
     }
 
-    public Page(Browser browser, UrlFactory urlFactory) {
-        this(browser, urlFactory, new Name(DEFAULT_NAME));
+    public Page(UrlFactory urlFactory) {
+        this(urlFactory, new Name(DEFAULT_NAME));
     }
 
-    public Page(Browser browser, Url url, Name name) {
+    public Page(Url url, Name name) {
         this.url = url;
-        this.browser = browser;
         this.name = name;
     }
 
-    public Page(Browser browser, Url url) {
-        this(browser, url, new Name(DEFAULT_NAME));
+    public Page(Url url) {
+        this(url, new Name(DEFAULT_NAME));
     }
-    
+
     public Url getUrl() {
 
         if (url == null) {
 
-            if (urlFactory == null) {
+            if (urlFactory != null) {
+                url = urlFactory.getUrlOf(this.getClass());
+            } else {
                 throw new RuntimeException("Url and url factory are not set!");
             }
-
-            url = urlFactory.getUrlOf(this.getClass());
         }
 
         return url;
@@ -74,76 +70,72 @@ public class Page implements UIObject, Named {
     }
 
     protected <T extends UIObject> Then<T> then(Class<T> uiObject) {
-        return browser.then(uiObject);
+        return inOpenedBrowser().then(uiObject);
     }
 
     protected <T> Then<T> then(T value) {
-        return browser.then(value);
+        return inOpenedBrowser().then(value);
     }
 
     protected <T extends UIObject> T displayed(Class<T> uiObject) {
-        return browser.displayed(uiObject);
+        return inOpenedBrowser().displayed(uiObject);
     }
 
     protected <T extends UIObject> T displayed(T uiObject) {
-        return browser.displayed(uiObject);
+        return inOpenedBrowser().displayed(uiObject);
     }
 
     protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
-        return browser.onDisplayed(uiObject);
+        return inOpenedBrowser().onDisplayed(uiObject);
     }
-    
+
     public <T extends UIObject> T on(Class<T> uiObject) {
         return uiObject.cast(this);
     }
 
     protected <T extends UIObject> T onDisplayed(T uiObject) {
-        return browser.onDisplayed(uiObject);
-    }
-
-    protected Browser inOpenedBrowser() {
-        return browser;
+        return inOpenedBrowser().onDisplayed(uiObject);
     }
 
     protected Object executeScript(String script) {
-        return browser.executeScript(script);
+        return inOpenedBrowser().executeScript(script);
     }
 
     public String getTitle() {
-        if(this.browser == null) {
+        if (this.inOpenedBrowser() == null) {
             System.out.println("==================================================");
         } else {
             System.out.println("**************************************************");
         }
-        return browser.getCurrentTitle();
+        return inOpenedBrowser().getCurrentTitle();
     }
 
     protected void switchToNextWindow() {
-        browser.switchToNextWindow();
+        inOpenedBrowser().switchToNextWindow();
     }
 
     protected void switchToPreviousWindow() {
-        browser.switchToPreviousWindow();
+        inOpenedBrowser().switchToPreviousWindow();
     }
 
     protected void switchToDefaultWindow() {
-        browser.switchToDefaultWindow();
+        inOpenedBrowser().switchToDefaultWindow();
     }
 
     protected void switchToWindowByIndex(int index) {
-        browser.switchToWindowByIndex(index);
+        inOpenedBrowser().switchToWindowByIndex(index);
     }
 
     public void refresh() {
-        browser.refreshCurrentPage();
+        inOpenedBrowser().refreshCurrentPage();
     }
 
     protected void waitUntil(ExpectedCondition<Boolean> condition, long timeOutInSeconds) {
-        browser.waitUntil(condition, timeOutInSeconds);
+        inOpenedBrowser().waitUntil(condition, timeOutInSeconds);
     }
 
     protected void waitUntil(ExpectedCondition<Boolean> condition) {
-        browser.waitUntil(condition);
+        inOpenedBrowser().waitUntil(condition);
     }
 
     @Override
@@ -157,6 +149,11 @@ public class Page implements UIObject, Named {
         return this;
     }
 
+    public Page setUrl(Url url) {
+        this.url = url;
+        return this;
+    }
+    
     @Override
     public String toString() {
         return getName() + " by url <a href='" + this.getUrl() + "' target='blank'>" + this.getUrl() + "</a> with title " + this.getTitle();

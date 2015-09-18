@@ -26,9 +26,9 @@ import com.uisteps.core.then.GetValueAction;
 import com.uisteps.core.then.OnDisplayedAction;
 import com.uisteps.core.user.browser.pages.elements.CheckBox;
 import com.uisteps.core.user.browser.pages.elements.FileInput;
-import com.uisteps.core.user.browser.pages.elements.radio.RadioButton;
-import com.uisteps.core.user.browser.pages.elements.select.Select;
-import com.uisteps.core.user.browser.pages.elements.select.Option;
+import com.uisteps.core.user.browser.pages.elements.Select;
+import com.uisteps.core.user.browser.pages.elements.Select.Option;
+import com.uisteps.core.user.browser.pages.elements.RadioButtonGroup.RadioButton;
 import java.net.MalformedURLException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -67,43 +67,42 @@ public class Browser {
         this.initializer = initializer;
     }
 
-    public Page openUrl(String url) {
+    public void openUrl(String url) {
         try {
-            return open(new Url(url));
+            open(new Url(url));
         } catch (MalformedURLException ex) {
             throw new AssertionError("Cannot open url " + url + "\nCause:" + ex);
         }
     }
 
-    public Page open(Url url) {
-        return open(new Page(this, url));
+    public void open(Url url) {
+        open(new MockPage(url, this));
     }
 
+    public <T extends Page> T open(Class<T> page, Url url) {
+        return open(uiObjectFactory.instatiate(page), url);
+    }
+    
+    public <T extends Page> T open(T page, Url url) {
+        page.setUrl(url);
+        return open(page);
+    }
+    
     public <T extends Page> T open(Class<T> page) {
-        return displayed(open(new MockPage<T>(page, this)));
+        return open(uiObjectFactory.instatiate(page));
     }
 
     public <T extends Page> T open(T page) {
-        return displayed(open(new MockPage<T>(page, this)));
-    }
-
-    protected <T extends Page> T open(MockPage<T> mock) {
-        return mock.getPage();
+        getDriver().get(page.getUrl().toString());
+        initializer.initialize(page);
+        return page;
     }
 
     public <T extends UIObject> T onDisplayed(Class<T> uiObject) {
-        return onDisplayed(displayed(uiObject));
+        return onDisplayed(uiObjectFactory.instatiate(uiObject));
     }
 
     public <T extends UIObject> T onDisplayed(T uiObject) {
-        return displayed(uiObject);
-    }
-
-    public <T extends UIObject> T displayed(Class<T> uiObject) {
-        return displayed(uiObjectFactory.instatiate(uiObject));
-    }
-
-    public <T extends UIObject> T displayed(T uiObject) {
         initializer.initialize(uiObject);
         return uiObject;
     }

@@ -27,7 +27,7 @@ import com.uisteps.core.user.browser.pages.elements.CheckBox;
 import com.uisteps.core.user.browser.pages.elements.FileInput;
 import com.uisteps.core.user.browser.pages.elements.radio.RadioButton;
 import com.uisteps.core.user.browser.pages.elements.select.Option;
-import com.uisteps.core.user.browser.pages.elements.select.Select;
+import com.uisteps.core.user.browser.pages.elements.Select;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.internal.WrapsElement;

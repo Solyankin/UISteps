@@ -1,7 +1,6 @@
 package com.uisteps.core.user.browser.pages;
 
 import com.uisteps.core.then.Then;
-import com.uisteps.core.user.browser.Browser;
 import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.htmlelements.element.TypifiedElement;
 
@@ -9,60 +8,54 @@ import ru.yandex.qatools.htmlelements.element.TypifiedElement;
  *
  * @author ASolyankin
  */
-public class UIElement extends TypifiedElement implements UIObject {
+public abstract class UIElement extends TypifiedElement implements UIObject {
 
-    protected final Browser browser;
-
-    public UIElement(WebElement wrappedElement, Browser browser) {
+    public UIElement(WebElement wrappedElement) {
         super(wrappedElement);
-        this.browser = browser;
     }
-
+    
+    
     public String getText() {
-        return browser.getTextFrom(this);
+        return inOpenedBrowser().getTextFrom(this);
     }
 
     
     public Object click() {
-        browser.click(this);
+        inOpenedBrowser().click(this);
         return null;
     }
 
     public Object moveMouseOver() {
-        browser.moveMouseOver(this);
+        inOpenedBrowser().moveMouseOver(this);
         return null;
     }
 
     public Object clickOnPoint(int x, int y) {
-        browser.clickOnPoint(this, x, y);
+        inOpenedBrowser().clickOnPoint(this, x, y);
         return null;
     }
     
     protected <T extends UIObject> Then<T> then(Class<T> uiObject) {
-        return browser.then(uiObject);
+        return inOpenedBrowser().then(uiObject);
     }
     
     protected <T> Then<T> then(T value) {
-        return browser.then(value);
+        return inOpenedBrowser().then(value);
     }
     
     protected <T extends UIObject> T displayed(Class<T> uiObject) {
-        return browser.displayed(uiObject);
+        return inOpenedBrowser().displayed(uiObject);
     }
 
     protected <T extends UIObject> T displayed(T uiObject) {
-        return browser.displayed(uiObject);
+        return inOpenedBrowser().displayed(uiObject);
     }
     
     protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
-        return browser.onDisplayed(uiObject);
+        return inOpenedBrowser().onDisplayed(uiObject);
     }
 
     protected <T extends UIObject> T onDisplayed(T uiObject) {
-        return browser.onDisplayed(uiObject);
-    }
-    
-    protected Browser inOpenedBrowser() {
-        return browser;
+        return inOpenedBrowser().onDisplayed(uiObject);
     }
 }

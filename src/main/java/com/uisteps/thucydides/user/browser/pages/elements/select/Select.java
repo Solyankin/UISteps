@@ -23,7 +23,7 @@ import org.openqa.selenium.WebElement;
  *
  * @author ASolyankin
  */
-public class Select extends com.uisteps.core.user.browser.pages.elements.select.Select {
+public class Select extends com.uisteps.core.user.browser.pages.elements.Select {
 
     public Select(WebElement wrappedElement) {
         super(wrappedElement, ThucydidesUtils.getCurrentBrowser());

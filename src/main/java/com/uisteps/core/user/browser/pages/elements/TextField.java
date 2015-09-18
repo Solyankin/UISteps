@@ -23,10 +23,10 @@ import org.openqa.selenium.WebElement;
  *
  * @author ASolyankin
  */
-public class TextField extends UIElement {
+public abstract class TextField extends UIElement {
 
-    public TextField(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    public TextField(WebElement wrappedElement) {
+        super(wrappedElement);
     }
 
     public Object sendKeys(String keys) {
@@ -34,17 +34,17 @@ public class TextField extends UIElement {
     }
 
     public Object type(String keys) {
-        browser.typeInto(this, keys);
+        inOpenedBrowser().typeInto(this, keys);
         return null;
     }
 
     public Object clear() {
-        browser.clear(this);
+        inOpenedBrowser().clear(this);
         return null;
     }
 
     public Object enter(String text) {
-        browser.enterInto(this, text);
+        inOpenedBrowser().enterInto(this, text);
         return null;
     }
 }

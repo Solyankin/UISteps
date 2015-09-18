@@ -23,7 +23,7 @@ import org.openqa.selenium.WebElement;
  *
  * @author ASolyankin
  */
-public class RadioButtonGroup extends com.uisteps.core.user.browser.pages.elements.radio.RadioButtonGroup {
+public class RadioButtonGroup extends com.uisteps.core.user.browser.pages.elements.RadioButtonGroup {
 
     public RadioButtonGroup(WebElement wrappedElement) {
         super(wrappedElement, ThucydidesUtils.getCurrentBrowser());

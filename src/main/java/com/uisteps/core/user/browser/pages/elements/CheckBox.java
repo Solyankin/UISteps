@@ -15,7 +15,6 @@
  */
 package com.uisteps.core.user.browser.pages.elements;
 
-import com.uisteps.core.user.browser.Browser;
 import com.uisteps.core.user.browser.pages.UIElement;
 import org.openqa.selenium.WebElement;
 
@@ -23,12 +22,12 @@ import org.openqa.selenium.WebElement;
  *
  * @author ASolyankin
  */
-public class CheckBox extends UIElement {
+public abstract class CheckBox extends UIElement {
 
     private final ru.yandex.qatools.htmlelements.element.CheckBox wrappedCheckBox;
     
-    public CheckBox(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    public CheckBox(WebElement wrappedElement) {
+        super(wrappedElement);
         wrappedCheckBox = new ru.yandex.qatools.htmlelements.element.CheckBox(wrappedElement);
     }
 
@@ -37,12 +36,12 @@ public class CheckBox extends UIElement {
     }
 
     public Object select() {
-        browser.select(this);
+        inOpenedBrowser().select(this);
         return null;
     }
 
     public Object deselect() {
-        browser.deselect(this);
+        inOpenedBrowser().deselect(this);
         return null;
     }
 

@@ -23,9 +23,9 @@ import org.openqa.selenium.WebElement;
  *
  * @author ASolyankin
  */
-public class TextBlock extends UIElement {
+public abstract class TextBlock extends UIElement {
 
-    public TextBlock(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    public TextBlock(WebElement wrappedElement) {
+        super(wrappedElement);
     }
 }

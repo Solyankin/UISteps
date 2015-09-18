@@ -23,12 +23,12 @@ import org.openqa.selenium.WebElement;
  *
  * @author ASolyankin
  */
-public class FileInput extends UIElement {
+public abstract class FileInput extends UIElement {
 
     private final ru.yandex.qatools.htmlelements.element.FileInput wrappedFileInput;
     
-    public FileInput(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    public FileInput(WebElement wrappedElement) {
+        super(wrappedElement);
         wrappedFileInput = new ru.yandex.qatools.htmlelements.element.FileInput(wrappedElement);
     }
 
@@ -37,7 +37,7 @@ public class FileInput extends UIElement {
     }
 
     public Object setFileToUpload(String filePath) {
-        browser.setTo(this, filePath);
+        inOpenedBrowser().setTo(this, filePath);
         return null;
     }
     

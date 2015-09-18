@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.core.user.browser.pages.elements.radio;
+package com.uisteps.core.user.browser.pages.elements;
 
 import com.uisteps.core.user.browser.Browser;
 import com.uisteps.core.user.browser.pages.UIElement;
@@ -26,12 +26,12 @@ import ru.yandex.qatools.htmlelements.element.Radio;
  *
  * @author ASolyankin
  */
-public class RadioButtonGroup extends UIElement {
+public abstract class RadioButtonGroup extends UIElement {
 
     private final Radio wrappedRadio;
 
-    public RadioButtonGroup(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    public RadioButtonGroup(WebElement wrappedElement) {
+        super(wrappedElement);
         wrappedRadio = new Radio(wrappedElement);
     }
 
@@ -40,7 +40,7 @@ public class RadioButtonGroup extends UIElement {
         List<RadioButton> buttons = new ArrayList();
 
         for (WebElement button : wrappedRadio.getButtons()) {
-            buttons.add(new RadioButton(button, browser));
+            buttons.add(new RadioButton(button));
         }
 
         return buttons;
@@ -50,7 +50,7 @@ public class RadioButtonGroup extends UIElement {
 
         for (WebElement button : wrappedRadio.getButtons()) {
             if (button.isSelected()) {
-                return new RadioButton(button, browser);
+                return new RadioButton(button);
             }
         }
         return null;
@@ -71,17 +71,42 @@ public class RadioButtonGroup extends UIElement {
         return null;
     }
 
-    
     public void selectByIndex(int index) {
         List<RadioButton> buttons = getButtons();
 
         if (index < 0 || index >= buttons.size()) {
             throw new AssertionError(String.format("Cannot locate radio button with index: %d", index));
         }
-        
+
         RadioButton button = buttons.get(index);
         button.setName(button.getName() + "from " + this.getName());
-        
+
         button.select();
+    }
+
+    public class RadioButton extends UIElement {
+
+        public RadioButton(WebElement wrappedElement) {
+            super(wrappedElement);
+        }
+
+        public Object select() {
+            inOpenedBrowser().select(this);
+            return null;
+        }
+
+        public String getValue() {
+            return this.getWrappedElement().getAttribute("value");
+        }
+
+        @Override
+        public String toString() {
+            return getName();
+        }
+
+        @Override
+        public Browser inOpenedBrowser() {
+            return RadioButtonGroup.this.inOpenedBrowser();
+        }
     }
 }
