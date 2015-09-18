@@ -110,6 +110,11 @@ public class Page implements UIObject, Named {
     }
 
     public String getTitle() {
+        if(this.browser == null) {
+            System.out.println("==================================================");
+        } else {
+            System.out.println("**************************************************");
+        }
         return browser.getCurrentTitle();
     }
 

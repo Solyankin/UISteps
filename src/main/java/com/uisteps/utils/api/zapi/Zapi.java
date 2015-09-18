@@ -170,11 +170,16 @@ public class Zapi {
                 String criteriaField = json.optString("criteriaField");
                 String criteriaValue = json.optString(criteriaField);
                 String criteria = json.optString("criteria");
-                /*
-                 if (cycleId.isEmpty() && clonedCycleId.isEmpty() && criteriaValue.isEmpty()) {
-                 throw new RuntimeException("One of parameters must be set: cycleId, clonedCycleId or " + criteriaField);
-                 }
-                 */
+                String metaFilter = json.optString("metafilter");
+
+                if (cycleId.isEmpty() && clonedCycleId.isEmpty() && criteriaValue.isEmpty() && metaFilter.isEmpty()) {
+                    throw new RuntimeException("One of parameters must be set: metaFilter, cycleId, clonedCycleId or " + criteriaField);
+                }
+
+                if (!criteriaField.isEmpty() && criteriaValue.isEmpty()) {
+                    throw new RuntimeException("Criteria " + criteriaField + " must not be empty!");
+                }
+
                 if (!cycleId.isEmpty() && !clonedCycleId.isEmpty()) {
                     throw new RuntimeException("One of parameters must be empty! cycleId = " + cycleId + ", clonedCycleId = " + clonedCycleId);
                 }
@@ -193,22 +198,32 @@ public class Zapi {
                     }
                 }
 
-                JSONObject cycle = null;
-                String startDate = "";
-                String environment = "";
-                String description = "";
-                String build = "";
+                JSONObject cycle;
+                String startDate;
+                String environment;
+                String description;
+                String build;
 
-                boolean createEcecutions = false;
+                boolean createEcecutions;
 
                 if (!cycleId.isEmpty()) {
                     cycle = api.getRequest("/rest/zapi/latest/cycle/" + cycleId).get().toJSONObject();
-                    cycleName = cycle.getString("name") + " " + cycleName;
-                    startDate = cycle.getString("startDate");
+
+                    if (cycleName.isEmpty() || criteriaField.equals("cycleName")) {
+                        cycleName = cycle.getString("name");
+                    }
+
+                    startDate = getStartdate(cycle.getString("startDate"));
 
                     if (startDate.isEmpty()) {
                         startDate = getCurrentDate();
                     }
+
+                    environment = cycle.getString("environment");
+                    description = cycle.getString("description");
+                    build = cycle.getString("build");
+                    createEcecutions = false;
+
                 } else if (!clonedCycleId.isEmpty() || !criteriaField.isEmpty()) {
 
                     if (clonedCycleId.isEmpty()) {
@@ -216,26 +231,34 @@ public class Zapi {
                     }
 
                     cycle = api.getRequest("/rest/zapi/latest/cycle/" + clonedCycleId).get().toJSONObject();
-                    cycleName = cycle.getString("name") + " " + cycleName;
+
+                    if (cycleName.isEmpty() || criteriaField.equals("cycleName")) {
+                        cycleName = cycle.getString("name");
+                    }
+
+                    if (!cycleName.startsWith("AUTO EXECUTED:")) {
+                        cycleName = "AUTO EXECUTED:" + cycleName;
+                    }
+                    
+                    startDate = getStartdate("");
+
+                    environment = cycle.getString("environment");
+                    description = cycle.getString("description");
+                    build = cycle.getString("build");
+                    createEcecutions = false;
+
+                } else {
 
                     if (!cycleName.startsWith("AUTO EXECUTED:")) {
                         cycleName = "AUTO EXECUTED:" + cycleName;
                     }
 
-                    startDate = getCurrentDate();
-
-                } else {
-                    cycleName = "AUTO EXECUTED:" + cycleName;
+                    startDate = getStartdate("");
+                    
                     environment = json.optString("environment");
                     description = json.optString("description");
                     build = json.optString("build");
                     createEcecutions = true;
-                }
-
-                if (cycle != null) {
-                    environment = cycle.getString("environment");
-                    description = cycle.getString("description");
-                    build = cycle.getString("build");
                 }
 
                 JSONObject cycleJSON = new JSONObject();
@@ -263,13 +286,13 @@ public class Zapi {
                     cycleJSON.put("clonedCycleId", clonedCycleId);
 
                     cycleId = api.getRequest("/rest/zapi/latest/cycle").post(cycleJSON).toJSONObject().getString("id");
-                    
+
                     if (clonedCycleId.isEmpty()) {
                         clonedCycleId = cycleId;
                     }
                 }
 
-                exportToPom(file, cycleId, clonedCycleId, projectKey, json.optString("metafilter"), createEcecutions, api);
+                exportToPom(file, cycleId, clonedCycleId, projectKey, metaFilter, createEcecutions, api);
                 break;
 
             case "result":
@@ -286,6 +309,15 @@ public class Zapi {
                 throw new RuntimeException("Cannot execute mode " + mode + "!");
         }
 
+    }
+    
+    private String getStartdate(String startDate) {
+
+        if (startDate == null || startDate.isEmpty()) {
+            return getCurrentDate();
+        } else {
+            return startDate;
+        }
     }
 
     private String getCurrentDate() {
@@ -393,26 +425,70 @@ public class Zapi {
     }
 
     private boolean checkCondition(String criteria, String value) {
+        return new Criteria(criteria).check(value);
+    }
 
-        String[] conditions = criteria.split(":");
+    private enum CriteriaCondition {
 
-        if (conditions.length == 1) {
-            return conditions[0].equals(value);
+        ENDS, STARTS, CONTAINS, EQUALS;
+    }
+
+    private class Criteria {
+
+        private final CriteriaCondition condition;
+        private final String value;
+
+        Criteria(String criteria) {
+            String[] conditions = criteria.split(":");
+
+            if (conditions.length == 1) {
+                condition = CriteriaCondition.EQUALS;
+                value = conditions[0];
+            } else {
+                value = conditions[1];
+
+                switch (conditions[0]) {
+                    case "starts":
+                        condition = CriteriaCondition.STARTS;
+                        break;
+                    case "ends":
+                        condition = CriteriaCondition.ENDS;
+                        break;
+                    case "contains":
+                        condition = CriteriaCondition.CONTAINS;
+                        break;
+                    case "equals":
+                        condition = CriteriaCondition.EQUALS;
+                        break;
+                    default:
+                        throw new RuntimeException("Illegal criteria condition " + conditions[0]);
+                }
+            }
         }
 
-        String condition = conditions[0];
-
-        switch (condition) {
-            case "starts":
-                return value.startsWith(criteria);
-            case "ends":
-                return value.endsWith(criteria);
-            case "contains":
-                return value.contains(criteria);
-            default:
-                return value.equals(criteria);
-
+        public CriteriaCondition getCondition() {
+            return condition;
         }
+
+        public String getValue() {
+            return value;
+        }
+
+        public boolean check(String value) {
+            switch (condition) {
+                case EQUALS:
+                    return value.equals(this.value);
+                case STARTS:
+                    return value.startsWith(this.value);
+                case ENDS:
+                    return value.endsWith(this.value);
+                case CONTAINS:
+                    return value.contains(this.value);
+                default:
+                    return false;
+            }
+        }
+
     }
 
     private void exportResultToZephyr(File file, File pom, String charset, RestApi api) throws IOException, JSONException, ParserConfigurationException, SAXException, RestApiException {
@@ -462,7 +538,7 @@ public class Zapi {
         }
 
         JSONArray executions = api.getRequest("/rest/zapi/latest/execution?cycleId=" + cycleId).get().toJSONObject().getJSONArray("executions");
-        
+
         Map<String, JSONObject> executionsMap = new HashMap();
 
         for (int i = 0; i < executions.length(); i++) {

@@ -15,7 +15,6 @@
  */
 package com.uisteps.core.run.storage;
 
-import com.uisteps.core.name.Named;
 
 /**
  *
