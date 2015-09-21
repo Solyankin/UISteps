@@ -26,10 +26,11 @@ import org.openqa.selenium.WebElement;
 public class CheckBox extends com.uisteps.core.user.browser.pages.elements.CheckBox {
 
     public CheckBox(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public CheckBox(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 }

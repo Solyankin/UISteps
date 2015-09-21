@@ -11,10 +11,11 @@ import org.openqa.selenium.WebElement;
 public class Button extends com.uisteps.core.user.browser.pages.elements.Button {
 
     public Button(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public Button(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 }

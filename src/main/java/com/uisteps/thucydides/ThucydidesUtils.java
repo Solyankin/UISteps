@@ -57,13 +57,6 @@ public class ThucydidesUtils extends Thucydides {
     }
 
     public static Browser getCurrentBrowser() {
-        
-        if(getFromSession(BROWSER_SESSION_KEY) == null) {
-            System.out.println("#####################################################");
-        } else {
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        }
-        
         return (Browser) getFromSession(BROWSER_SESSION_KEY);
     }
 
@@ -136,7 +129,6 @@ public class ThucydidesUtils extends Thucydides {
         for (String directory : directories) {
 
             File file = new File(System.getProperty(directory), fileName);
-            System.out.println("######################################## file " + file.getAbsolutePath());
 
             if (file.exists()) {
                 return file;

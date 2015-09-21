@@ -77,14 +77,6 @@ public abstract class Page implements UIObject, Named {
         return inOpenedBrowser().then(value);
     }
 
-    protected <T extends UIObject> T displayed(Class<T> uiObject) {
-        return inOpenedBrowser().displayed(uiObject);
-    }
-
-    protected <T extends UIObject> T displayed(T uiObject) {
-        return inOpenedBrowser().displayed(uiObject);
-    }
-
     protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
         return inOpenedBrowser().onDisplayed(uiObject);
     }
@@ -102,11 +94,6 @@ public abstract class Page implements UIObject, Named {
     }
 
     public String getTitle() {
-        if (this.inOpenedBrowser() == null) {
-            System.out.println("==================================================");
-        } else {
-            System.out.println("**************************************************");
-        }
         return inOpenedBrowser().getCurrentTitle();
     }
 

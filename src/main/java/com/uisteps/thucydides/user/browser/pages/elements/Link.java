@@ -11,11 +11,12 @@ import org.openqa.selenium.WebElement;
 public class Link extends com.uisteps.core.user.browser.pages.elements.Link {
 
     public Link(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public Link(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 
 }

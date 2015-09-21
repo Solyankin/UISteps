@@ -11,10 +11,11 @@ import org.openqa.selenium.WebElement;
 public class TextField extends com.uisteps.core.user.browser.pages.elements.TextField {
 
     public TextField(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public TextField(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 }

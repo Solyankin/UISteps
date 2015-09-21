@@ -10,17 +10,13 @@ import com.uisteps.thucydides.name.NameConvertor;
  */
 public class UIBlock extends com.uisteps.core.user.browser.pages.UIBlock {
 
-  
-    public UIBlock() {
-       super(ThucydidesUtils.getCurrentBrowser());
-    }
-
-    public UIBlock(Browser browser) {
-        super(browser);
-    }
-    
     @Override
     public String toString() {
         return NameConvertor.humanize(getClass());
+    }
+
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 }

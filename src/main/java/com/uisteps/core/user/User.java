@@ -44,11 +44,11 @@ public class User implements Named {
         this.browserFactory = browserFactory;
         this.name = name;
     }
-    
+
     public User(BrowserFactory browserFactory) {
         this(browserFactory, new Name(DEFAULT_NAME));
     }
-    
+
     public Browser inOpenedBrowser() {
 
         if (browserList.isEmpty()) {
@@ -60,11 +60,11 @@ public class User implements Named {
     protected <T extends UIObject> Then<T> then(Class<T> uiObject) {
         return inOpenedBrowser().then(uiObject);
     }
-    
+
     protected <T> Then<T> then(T value) {
         return inOpenedBrowser().then(value);
     }
-    
+
     public Browser openNewBrowser(WebDriver withDriver) {
         return in(browserFactory.getBrowser(withDriver));
     }
@@ -101,12 +101,20 @@ public class User implements Named {
         return browserList.size();
     }
 
-    public Page openUrl(String url) {
-        return inOpenedBrowser().openUrl(url);
+    public void openUrl(String url) {
+        inOpenedBrowser().openUrl(url);
     }
 
-    public Page open(Url url) {
-        return inOpenedBrowser().open(url);
+    public void open(Url url) {
+        inOpenedBrowser().open(url);
+    }
+
+    public <T extends Page> T open(Class<T> page, Url url) {
+        return inOpenedBrowser().open(page, url);
+    }
+
+    public <T extends Page> T open(T page, Url url) {
+        return inOpenedBrowser().open(page, url);
     }
 
     public <T extends UIObject> T onDisplayed(Class<T> uiObject) {
@@ -116,14 +124,6 @@ public class User implements Named {
     public <T extends UIObject> T onDisplayed(T uiObject) {
         return inOpenedBrowser().onDisplayed(uiObject);
     }
-    
-    protected <T extends UIObject> T displayed(Class<T> uiObject) {
-        return inOpenedBrowser().displayed(uiObject);
-    }
-
-    protected <T extends UIObject> T displayed(T uiObject) {
-        return inOpenedBrowser().displayed(uiObject);
-    }
 
     public <T extends Page> T open(Class<T> page) {
         return inOpenedBrowser().open(page);
@@ -132,7 +132,7 @@ public class User implements Named {
     public <T extends Page> T open(T page) {
         return inOpenedBrowser().open(page);
     }
-    
+
     public void openNewWindow() {
         inOpenedBrowser().openNewWindow();
     }
@@ -202,9 +202,9 @@ public class User implements Named {
     }
 
     public boolean see(Class<? extends UIObject> uiObject) {
-        return see(inOpenedBrowser().displayed(uiObject));
+        return see(inOpenedBrowser().getUIObjectFactory().instatiate(uiObject));
     }
-    
+
     @Override
     public Name getName() {
         return name;

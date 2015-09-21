@@ -53,14 +53,6 @@ public abstract class UIBlock extends HtmlElement implements UIObject {
         return inOpenedBrowser().then(value);
     }
 
-    protected <T extends UIObject> T displayed(Class<T> uiObject) {
-        return inOpenedBrowser().displayed(uiObject);
-    }
-
-    protected <T extends UIObject> T displayed(T uiObject) {
-        return inOpenedBrowser().displayed(uiObject);
-    }
-
     protected <T extends UIObject> T onDisplayed(Class<T> uiObject) {
         return inOpenedBrowser().onDisplayed(uiObject);
     }

@@ -19,6 +19,7 @@ package com.uisteps.thucydides.user.browser.pages;
 import com.uisteps.core.name.Name;
 import com.uisteps.core.user.browser.Browser;
 import com.uisteps.core.user.browser.pages.Url;
+import com.uisteps.core.user.browser.pages.UrlFactory;
 import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.thucydides.name.NameConvertor;
 
@@ -29,11 +30,23 @@ import com.uisteps.thucydides.name.NameConvertor;
 public class Page extends com.uisteps.core.user.browser.pages.Page {
 
     public Page() {
-        super(ThucydidesUtils.getCurrentBrowser(), new ThucydidesUrlFactory());
+        super(new ThucydidesUrlFactory());
     }
 
-    public Page(Browser browser, Url url) {
-        super(browser, url);
+    public Page(UrlFactory urlFactory, Name name) {
+        super(urlFactory, name);
+    }
+
+    public Page(UrlFactory urlFactory) {
+        super(urlFactory);
+    }
+
+    public Page(Url url, Name name) {
+        super(url, name);
+    }
+
+    public Page(Url url) {
+        super(url);
     }
 
     @Override
@@ -46,5 +59,10 @@ public class Page extends com.uisteps.core.user.browser.pages.Page {
         }
 
         return name;
+    }
+
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 }

@@ -19,14 +19,14 @@ import com.uisteps.thucydides.user.browser.pages.ThucydidesUIObjectFactory;
 import com.uisteps.thucydides.ThucydidesUtils;
 import com.uisteps.core.user.browser.Browser;
 import com.uisteps.core.user.browser.pages.UIObjectInitializer;
-import com.uisteps.core.user.browser.pages.MockPage;
+;
 import com.uisteps.core.user.browser.pages.UIObjectFactory;
 import com.uisteps.core.user.browser.pages.Page;
 import com.uisteps.core.user.browser.pages.UIObject;
 import com.uisteps.core.user.browser.pages.elements.CheckBox;
 import com.uisteps.core.user.browser.pages.elements.FileInput;
-import com.uisteps.core.user.browser.pages.elements.radio.RadioButton;
-import com.uisteps.core.user.browser.pages.elements.select.Option;
+import com.uisteps.core.user.browser.pages.elements.RadioButtonGroup.RadioButton;
+import com.uisteps.core.user.browser.pages.elements.Select.Option;
 import com.uisteps.core.user.browser.pages.elements.Select;
 import net.thucydides.core.annotations.Step;
 import org.openqa.selenium.WebDriver;
@@ -36,6 +36,8 @@ import org.openqa.selenium.internal.WrapsElement;
  *
  * @author ASolyankin
  */
+
+
 public class ThucydidesBrowser extends Browser {
 
     public ThucydidesBrowser() {
@@ -90,8 +92,8 @@ public class ThucydidesBrowser extends Browser {
 
     @Step
     @Override
-    protected Page open(MockPage mock) {
-        return super.open(mock);
+    public <T extends Page> T open(T page) {
+        return super.open(page);
     }
 
     @Step
@@ -157,7 +159,6 @@ public class ThucydidesBrowser extends Browser {
     }
 
     //CheckBox
-    
     @Step
     @Override
     public void select(CheckBox checkBox) {
@@ -169,9 +170,8 @@ public class ThucydidesBrowser extends Browser {
     public void deselect(CheckBox checkBox) {
         checkBox.getWrappedCheckBox().deselect();
     }
-    
+
     //FileInput
-    
     @Step
     @Override
     public void setTo(FileInput fileInput, String filePath) {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.uisteps.thucydides.user.browser.pages.elements.radio;
+package com.uisteps.thucydides.user.browser.pages.elements;
 
 import com.uisteps.core.user.browser.Browser;
 import com.uisteps.thucydides.ThucydidesUtils;
@@ -26,11 +26,12 @@ import org.openqa.selenium.WebElement;
 public class RadioButtonGroup extends com.uisteps.core.user.browser.pages.elements.RadioButtonGroup {
 
     public RadioButtonGroup(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public RadioButtonGroup(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 
 }

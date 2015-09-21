@@ -26,10 +26,11 @@ import org.openqa.selenium.WebElement;
 public class FileInput extends com.uisteps.core.user.browser.pages.elements.FileInput {
 
     public FileInput(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public FileInput(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 }

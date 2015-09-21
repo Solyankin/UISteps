@@ -11,10 +11,11 @@ import org.openqa.selenium.WebElement;
 public class TextBlock extends com.uisteps.core.user.browser.pages.elements.TextBlock {
 
     public TextBlock(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public TextBlock(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
 }

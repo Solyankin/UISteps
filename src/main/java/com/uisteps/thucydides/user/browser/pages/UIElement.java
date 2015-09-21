@@ -1,6 +1,5 @@
 package com.uisteps.thucydides.user.browser.pages;
 
-
 import com.uisteps.core.user.browser.Browser;
 import com.uisteps.thucydides.ThucydidesUtils;
 import org.openqa.selenium.WebElement;
@@ -11,12 +10,13 @@ import org.openqa.selenium.WebElement;
  */
 public class UIElement extends com.uisteps.core.user.browser.pages.UIElement {
 
-
     public UIElement(WebElement wrappedElement) {
-        super(wrappedElement, ThucydidesUtils.getCurrentBrowser());
+        super(wrappedElement);
     }
 
-    public UIElement(WebElement wrappedElement, Browser browser) {
-        super(wrappedElement, browser);
+    @Override
+    public Browser inOpenedBrowser() {
+        return ThucydidesUtils.getCurrentBrowser();
     }
+
 }
